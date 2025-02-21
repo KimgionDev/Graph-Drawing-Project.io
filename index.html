@@ -15,20 +15,37 @@
 </head>
 
 <body>
+
   <div class="container-fluid">
     <div class="row head">
       <header>
-        <h1>Graph</h1>
+        <div class="header__left">
+          <img src="./assets/img/header_icon.png" alt="header_icon">
+          <h1 id="header__left-heading">Graphify</h1>
+        </div>
       </header>
     </div>
   </div>
 
   <div class="container-fluid">
-    <div class="row d-flex flex-row justify-content-center align-items-center">
+    <div class="row d-flex flex-row justify-content-center">
 
       <!--LEFT COLUMN-->
-      <div class="left-col col-xl-3">
+      <div class="left-col col-xl-3 col-lg-3 col-md-4">
 
+        <div id="iptGraph">
+          <label for="graphInput"><h4>Nhập các cung :</h4></label><br>
+          <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
+          <div class="selectGraph justify-content-center d-flex">
+            <label for="graphType">Chọn loại đồ thị:</label>
+            <select class="form-select form-select-sm" id="graphType">
+              <option value="directed">Có hướng</option>
+              <option value="undirected">Vô hướng</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Infor Graph -->
         <div id="graphInfo">
           <label for="nodeCountInput">Số lượng đỉnh:</label>
           <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
@@ -37,17 +54,10 @@
           <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
         </div>
 
-        <div>
-          <label for="graphInput">Nhập các cung:</label><br>
-          <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea><br>
-          <label for="graphType">Chọn loại đồ thị:</label>
-          <select id="graphType">
-            <option value="directed">Đồ thị có hướng</option>
-            <option value="undirected">Đồ thị vô hướng</option>
-          </select><br>
-        </div>
+        <!-- Button -->
+        <div id="btn__input_graph">
 
-        <!-- Kiểu smooth của cung -->
+          <!-- Kiểu smooth của cung -->
         <div>
           <label for="smoothType">Chọn kiểu của cung:</label>
           <select id="smoothType">
@@ -60,7 +70,9 @@
           </select><br>
         </div>
 
-        <button onclick="generateGraph()">Tạo đồ thị</button>
+          <button onclick="generateGraph()" type="button" class="btn btn-primary">Tạo đồ thị</button>
+          <button type="button" class="btn btn-primary">Thêm nút</button>
+        </div>
 
       </div>
 
