@@ -5,54 +5,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LÝ THUYẾT ĐỒ THỊ</title>
-  <link rel="icon" type="image/png" href="./assets/img/favicon.icon.png">
-
-  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/main.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <header>
-    <h1>Graph</h1>
-  </header>
-
-  <div class="container">
-    <div id="input-container">
-      <div id="graphInfo">
-        <label for="nodeCountInput">Số lượng đỉnh:</label>
-        <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
-        <br>
-        <label for="edgeCountInput">Số lượng cung:</label>
-        <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
-      </div>
-      <label for="graphInput">Nhập các cung:</label><br>
-      <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea><br>
-
-      <label for="graphType">Chọn loại đồ thị:</label>
-      <select id="graphType">
-        <option value="directed">Đồ thị có hướng</option>
-        <option value="undirected">Đồ thị vô hướng</option>
-      </select><br>
-
-      <!-- Kiểu smooth của cung -->
-      <label for="smoothType">Chọn kiểu của cung:</label>
-      <select id="smoothType">
-        <option value="dynamic">Dynamic</option>
-        <option value="vertical">Vertical</option>
-        <option value="curvedCW">CurvedCW</option>
-        <option value="straightCross">StraightCross</option>
-        <option value="diagonalCross">DiagonalCross</option>
-        <option value="continuous">Continuous</option>
-      </select><br>
-
-      <button onclick="generateGraph()">Tạo đồ thị</button>
+  <div class="container-fluid">
+    <div class="row head">
+      <header>
+        <h1>Graph</h1>
+      </header>
     </div>
-
-    <div id="cy"></div> <!-- Đồ thị -->
   </div>
 
-  <script src="main.js"></script>
+  <div class="container-fluid">
+    <div class="row d-flex flex-row justify-content-center align-items-center">
 
+      <!--LEFT COLUMN-->
+      <div class="left-col col-xl-3">
+
+        <div id="graphInfo">
+          <label for="nodeCountInput">Số lượng đỉnh:</label>
+          <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
+          <br>
+          <label for="edgeCountInput">Số lượng cung:</label>
+          <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+        </div>
+
+        <div>
+          <label for="graphInput">Nhập các cung:</label><br>
+          <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea><br>
+          <label for="graphType">Chọn loại đồ thị:</label>
+          <select id="graphType">
+            <option value="directed">Đồ thị có hướng</option>
+            <option value="undirected">Đồ thị vô hướng</option>
+          </select><br>
+        </div>
+
+        <!-- Kiểu smooth của cung -->
+        <div>
+          <label for="smoothType">Chọn kiểu của cung:</label>
+          <select id="smoothType">
+            <option value="dynamic">Dynamic</option>
+            <option value="vertical">Vertical</option>
+            <option value="curvedCW">CurvedCW</option>
+            <option value="straightCross">StraightCross</option>
+            <option value="diagonalCross">DiagonalCross</option>
+            <option value="continuous">Continuous</option>
+          </select><br>
+        </div>
+
+        <button onclick="generateGraph()">Tạo đồ thị</button>
+
+      </div>
+
+      <!--MID COLUMN-->
+        <!-- GRAPH HERE -->
+      <div id="cy" class="mid-col col-xl-6"></div>
+
+      <!--RIGHT COLUMN-->
+      <div class="right-col col-xl-3 col-lg-3 col-md-4">
+        <div class="right-col__content d-flex flex-column justify-content-center align-items-center">
+          <div class="selectAlg col-md-6">
+            <P>CHỌN THUẬT TOÁN CÁC THỨ TẠI ĐÂY!</P>
+          </div>
+          <div class="fakeLang col-md-6">
+            <p>NGÔN NGỮ GIẢ TẠI ĐÂY!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="main.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <style>
+        /* Các style đã có trước đó */
         body,
         h1,
         p {
@@ -122,7 +123,7 @@
                 <br>
                 <label for="edgeCountInput">Số lượng cung:</label>
                 <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
-            </div><br>
+            </div>
             <label for="graphInput">Nhập các cung:</label><br>
             <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea><br>
 
@@ -135,8 +136,8 @@
             <!-- Kiểu smooth của cung -->
             <label for="smoothType">Chọn kiểu của cung:</label>
             <select id="smoothType">
-                <option value="vertical">Vertical</option>
                 <option value="dynamic">Dynamic</option>
+                <option value="vertical">Vertical</option>
                 <option value="curvedCW">CurvedCW</option>
                 <option value="straightCross">StraightCross</option>
                 <option value="diagonalCross">DiagonalCross</option>
@@ -144,6 +145,8 @@
             </select><br>
 
             <button onclick="generateGraph()">Tạo đồ thị</button>
+            <!-- Thêm nút BFS -->
+            <button onclick="startBFS()">Duyệt BFS</button>
         </div>
 
         <div id="cy"></div> <!-- Đồ thị -->
@@ -168,6 +171,9 @@
                     const target = edgeData[1];
                     currentMaxNode = Math.max(currentMaxNode, source, target);
                 }
+                else if (edgeData.length = 1) {
+                    currentMaxNode = Math.max(currentMaxNode, edgeData);
+                }
             });
 
             // Cập nhật giá trị đỉnh và cung trong input
@@ -176,13 +182,13 @@
             document.getElementById('nodeCountInput').value = nodeCount;
             document.getElementById('edgeCountInput').value = edgeCount;
         }
-
-        // Hàm tạo đồ thị
+        
+        // Hàm tạo đồ thị và lưu đồ thị dưới dạng danh sách kề
         function generateGraph() {
             const inputText = document.getElementById('graphInput').value.trim();
             const lines = inputText.split('\n');
-            const graphType = document.getElementById('graphType').value; // Lấy loại đồ thị từ lựa chọn
-            const smoothType = document.getElementById('smoothType').value; // Lấy kiểu smooth
+            const graphType = document.getElementById('graphType').value; // Loại đồ thị (có hướng hoặc vô hướng)
+            const smoothType = document.getElementById('smoothType').value; // Kiểu smooth
 
             // Danh sách các đỉnh
             let nodes = [];
@@ -190,7 +196,7 @@
                 nodes.push({
                     id: i,
                     label: '' + i,
-                    color: '#000',
+                    color: '#000', // Màu mặc định là đen
                     font: {
                         color: '#fff',
                         size: 30,
