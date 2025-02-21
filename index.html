@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LÝ THUYẾT ĐỒ THỊ</title>
+  <link rel="stylesheet" href="main.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Graph</h1>
+  </header>
+
+  <div class="container">
+    <div id="input-container">
+      <div id="graphInfo">
+        <label for="nodeCountInput">Số lượng đỉnh:</label>
+        <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
+        <br>
+        <label for="edgeCountInput">Số lượng cung:</label>
+        <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+      </div>
+      <label for="graphInput">Nhập các cung:</label><br>
+      <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea><br>
+
+      <label for="graphType">Chọn loại đồ thị:</label>
+      <select id="graphType">
+        <option value="directed">Đồ thị có hướng</option>
+        <option value="undirected">Đồ thị vô hướng</option>
+      </select><br>
+
+      <!-- Kiểu smooth của cung -->
+      <label for="smoothType">Chọn kiểu của cung:</label>
+      <select id="smoothType">
+        <option value="dynamic">Dynamic</option>
+        <option value="vertical">Vertical</option>
+        <option value="curvedCW">CurvedCW</option>
+        <option value="straightCross">StraightCross</option>
+        <option value="diagonalCross">DiagonalCross</option>
+        <option value="continuous">Continuous</option>
+      </select><br>
+
+      <button onclick="generateGraph()">Tạo đồ thị</button>
+    </div>
+
+    <div id="cy"></div> <!-- Đồ thị -->
+  </div>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>

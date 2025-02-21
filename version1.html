@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lÝ THUYẾT ĐỒ THỊ</title>
+    <link rel="stylesheet" href="main.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <style>
+        body,
+        h1,
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        h1 {
+            color: blue;
+            font-size: 2rem;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        #input-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            flex: 1;
+            max-width: 600px;
+        }
+
+        #graphInput {
+            width: 100%;
+            margin-top: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+
+        #cy {
+            width: 60%;
+            height: 550px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #graphType,
+        #smoothType {
+            margin-top: 15px;
+        }
+
+        #graphInfo {
+            margin-bottom: 15px;
+        }
+
+        #graphInfo input {
+            width: 50px;
+            margin-top: 5px;
+            margin-left: 5px;
+            padding: 5px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Graph</h1>
+    </header>
+
+    <div class="container">
+        <div id="input-container">
+            <div id="graphInfo">
+                <label for="nodeCountInput">Số lượng đỉnh:</label>
+                <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
+                <br>
+                <label for="edgeCountInput">Số lượng cung:</label>
+                <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+            </div><br>
+            <label for="graphInput">Nhập các cung:</label><br>
+            <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea><br>
+
+            <label for="graphType">Chọn loại đồ thị:</label>
+            <select id="graphType">
+                <option value="directed">Đồ thị có hướng</option>
+                <option value="undirected">Đồ thị vô hướng</option>
+            </select><br>
+
+            <!-- Kiểu smooth của cung -->
+            <label for="smoothType">Chọn kiểu của cung:</label>
+            <select id="smoothType">
+                <option value="vertical">Vertical</option>
+                <option value="dynamic">Dynamic</option>
+                <option value="curvedCW">CurvedCW</option>
+                <option value="straightCross">StraightCross</option>
+                <option value="diagonalCross">DiagonalCross</option>
+                <option value="continuous">Continuous</option>
+            </select><br>
+
+            <button onclick="generateGraph()">Tạo đồ thị</button>
+        </div>
+
+        <div id="cy"></div> <!-- Đồ thị -->
+    </div>
+
+    <script>
+        let network = null;
+        let nodeCount = 0;    // Biến đếm số lượng đỉnh
+        let edgeCount = 0;    // Biến đếm số lượng cung
+
+        // Hàm cập nhật số lượng đỉnh và số lượng cung
+        function updateGraphInfo() {
+            const inputText = document.getElementById('graphInput').value.trim();
+            const lines = inputText.split('\n');
+            let currentMaxNode = 0;
+            let edgeCount = lines.length;
+
+            lines.forEach(line => {
+                const edgeData = line.split(' ').map(Number);
+                if (edgeData.length >= 2) {
+                    const source = edgeData[0];
+                    const target = edgeData[1];
+                    currentMaxNode = Math.max(currentMaxNode, source, target);
+                }
+            });
+
+            // Cập nhật giá trị đỉnh và cung trong input
+            nodeCount = currentMaxNode;
+            edgeCount = edgeCount;
+            document.getElementById('nodeCountInput').value = nodeCount;
+            document.getElementById('edgeCountInput').value = edgeCount;
+        }
+
+        // Hàm tạo đồ thị
+        function generateGraph() {
+            const inputText = document.getElementById('graphInput').value.trim();
+            const lines = inputText.split('\n');
+            const graphType = document.getElementById('graphType').value; // Lấy loại đồ thị từ lựa chọn
+            const smoothType = document.getElementById('smoothType').value; // Lấy kiểu smooth
+
+            // Danh sách các đỉnh
+            let nodes = [];
+            for (let i = 1; i <= nodeCount; i++) {
+                nodes.push({
+                    id: i,
+                    label: '' + i,
+                    color: '#000',
+                    font: {
+                        color: '#fff',
+                        size: 30,
+                        face: 'arial',
+                        background: 'none'
+                    }
+                });
+            }
+
+            // Danh sách các cung
+            let edges = [];
+            let edgeOccurrences = {}; //số lần cung giữa 2 đỉnh xuất hiện
+
+            lines.forEach(line => {
+                const edgeData = line.split(' ').map(Number);
+                const source = edgeData[0];
+                const target = edgeData[1];
+                const weight = edgeData[2] || 0;
+
+                // Kiểm tra xem cung đã tồn tại chưa
+                const edgeKey = source + '-' + target;
+                if (!edgeOccurrences[edgeKey]) {
+                    edgeOccurrences[edgeKey] = 0;
+                }
+                edgeOccurrences[edgeKey]++;
+
+                const offset = edgeOccurrences[edgeKey] * 0.5;  // Offset tạo độ cong
+
+                const edge = {
+                    from: source,
+                    to: target,
+                    label: weight ? String(weight) : '',  // Hiển thị trọng số
+                    arrows: graphType === 'directed' ? {
+                        to: {
+                            enabled: true,
+                            scaleFactor: 0.6
+                        }
+                    } : undefined,
+                    color: { color: '#000' },
+                    smooth: {
+                        type: smoothType,
+                        forceDirection: 'none',
+                        roundness: offset
+                    },
+                    length: 400,
+                    width: 1.85,
+                    font: {
+                        size: 17,
+                        align: 'top',
+                        color: 'black',
+                        background: 'white',
+                        strokeWidth: 1,
+                        strokeColor: '#fff',
+                    }
+                };
+                edges.push(edge);
+            });
+
+            // Thiết lập Vis.js
+            const container = document.getElementById('cy');
+            const data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            const options = {
+                physics: {
+                    enabled: true, // Kích hoạt chuyển động của các đỉnh khi kéo
+                },
+                manipulation: {
+                    enabled: true,
+                    addNode: function (data, callback) {
+                        // Tạo đỉnh mới
+                        data.id = ++nodeCount;
+                        nodes.push({ id: nodeCount, label: '' + nodeCount });
+                        updateGraphInput();
+                        callback(data);
+                    },
+                    addEdge: function (data, callback) {
+                        // Tạo cung mới
+                        edgeCount++;
+                        edges.push({ from: data.from, to: data.to });
+                        updateGraphInput();
+                        callback(data);
+                    },
+                    editEdge: function (data, callback) {
+                        callback(data);
+                    }
+                },
+                edges: {
+                    smooth: {
+                        type: smoothType,
+                        forceDirection: 'none'
+                    },
+                    font: {
+                        align: 'middle'
+                    }
+                },
+                interaction: {
+                    dragNodes: true,
+                    dragView: true,
+                },
+            };
+
+            if (network) {
+                network.destroy();
+            }
+
+            // Tạo mới đồ thị
+            network = new vis.Network(container, data, options);
+        }
+    </script>
+
+</body>
+
+</html>
