@@ -20,24 +20,44 @@ body {
 }
 
 header {
-  text-align: center;
+  /* text-align: center; */
   margin-bottom: 20px;
   width: 100%;
+  background-color: var(--third-color);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
 }
 
-.head h1 {
+.header__left{
+  display: flex;
+  text-align: left;
+  margin: 5px;
+}
+
+.header__left #header__left-heading {
   color: var(--primary-color);
   font-size: 3rem;
+  margin-left: 10px;
 }
 
+#iptGraph{
+  margin: 10px;
+}
+
+#iptGraph h4{
+  height: 35px;
+  min-height: 35px;
+  margin: 10px 0 0 5px;
+}
 
 #graphInput {
+  padding: 10px;
   width: 100%;
-  margin-top: 10px;
+  margin: 5px;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 #cy {
@@ -72,8 +92,23 @@ header {
 .right-col__content > div,.mid-col{
   background-color: white;
 }
+
+.form-select{
+  margin-left: 5px;
+  width: 50% !important;
+  /* padding-right: 0.375rem !important; */
+}
+
+@media (max-width: 993px) {
+  .left-col, .right-col {
+    margin: 12px !important ;
+  }
+}
+
 .left-col, .right-col {
+  font-weight: 500;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -82,3 +117,4 @@ header {
   overflow: hidden;
   background-color: var(--third-color);
 }
+
