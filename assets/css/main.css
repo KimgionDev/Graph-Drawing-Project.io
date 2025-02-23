@@ -88,6 +88,10 @@ header {
   border-radius: 4px;
 }
 
+#nodeCountInput, #edgeCountInput {
+  appearance: textfield;
+}
+
 .graphInfor > div{
   margin: 5px 5px;
 }
@@ -96,12 +100,14 @@ header {
   flex-wrap: nowrap;
   align-items: stretch;
 }
-
+.container{
+  max-width: 98%;
+}
 .mid-col{
   background-color: var(--fourth-color);
 }
 
-.right-col__content > div{
+.right-col__content{
   background-color: white;
 }
 
@@ -123,37 +129,46 @@ header {
 
 .left-col, .mid-col, .right-col{
   flex-direction: column;
-  padding: 10px 2px;
+  padding: 10px 10px;
   border: 1px solid #ccc;
-
+  margin: 0px 5px;
 }
 
-.btn-func{
-  background-color: var(--second-color);
-  padding: 2px 5px;
+.left-col{
+  align-items: flex-start;
+}
+.btn-func, .btn-browse{
+  background-color: var(--primary-color);
   border: none;
   border-radius: 5px;
-  color: black;
-  transition: 0.15s ease-in-out;
+  color: white;
+  transition: 0.2s ease-out;
   margin: 5px 5px;
 }
-.btn-func:hover{
-  background-color: var(--primary-color);
-  color: white;
+.btn-browse{
+  width: 100%;
+  margin: 2px 0px;
+}
+.btn-func:hover, .btn-browse:hover{
+  background-color: var(--second-color);
+  color: black;
+  box-shadow: 0px 0px 15px var(--second-color) ;
 }
 
 .right-col__content{
   width: 100%;
   height: 100%;
   position: relative;
+  
 }
 .form-control, .form-select{
-  transition: 0.2s ease-in-out !important;
+  transition: 0.2s ease-in-out;
+  width: max-content;
 }
 .form-select:focus, .form-control:focus{
-  box-shadow: none !important;
-  outline: none !important;
-  border: 1px solid var(--primary-color) !important;
+  box-shadow: none;
+  outline: none;
+  border: 1px solid var(--primary-color);
   
 }
 textarea#graphInput{
@@ -165,12 +180,41 @@ textarea#graphInput:focus {
   outline: none; /* Loại bỏ viền mặc định */
 }
 
-@media (max-width: 993px) {
-  .left-col, .right-col {
-    margin: 12px !important ;
-  }
+.fakeLang{
+  max-width: 100%;
+  width: calc(100% - 20px);
+  height: 300px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  margin: 0px 10px;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
+.selectAlg label{
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.selectAlg .form-select{
+  width: 100%;
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.result-box{
+  width: 100%;
+  height: 100%;
+  border: 2px solid #333;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p{
+  margin: 0;
+}
 @media screen and (max-width: 955px) {
   .all-content{
     flex-direction: column;
