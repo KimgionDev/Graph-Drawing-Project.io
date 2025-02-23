@@ -27,14 +27,16 @@
   </div>
 
   <div class="container-fluid">
-    <div class="row d-flex flex-row justify-content-center">
+    <div class="all-content row d-flex justify-content-center">
 
       <!--LEFT COLUMN-->
-      <div class="left-col col-xl-3 col-lg-3 col-md-4">
+      <div class="left-col col-xl-3">
 
         <div id="iptGraph">
+          
           <label for="graphInput"><h4>Nhập các cung :</h4></label><br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
+          
           <div class="selectGraph justify-content-center d-flex">
             <label for="graphType">Chọn loại đồ thị:</label>
             <select class="form-select form-select-sm" id="graphType">
@@ -43,23 +45,13 @@
             </select>
           </div>
         </div>
-
-        <!-- Infor Graph -->
-        <div id="graphInfo">
-          <label for="nodeCountInput">Số lượng đỉnh:</label>
-          <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
-          <br>
-          <label for="edgeCountInput">Số lượng cung:</label>
-          <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
-        </div>
-
         <!-- Button -->
         <div id="btn__input_graph">
 
           <!-- Kiểu smooth của cung -->
         <div>
           <label for="smoothType">Chọn kiểu của cung:</label>
-          <select id="smoothType">
+          <select id="smoothType" class="form-select form-select-sm">
             <option value="dynamic">Dynamic</option>
             <option value="vertical">Vertical</option>
             <option value="curvedCW">CurvedCW</option>
@@ -76,14 +68,40 @@
       </div>
 
       <!--MID COLUMN-->
+      
         <!-- GRAPH HERE -->
-      <div id="cy" class="mid-col col-xl-6"></div>
+      <div class="mid-col col-xl-6">
+        <div id="cy" class=""></div>
+        <!-- Infor Graph -->
+        <div id="graphInfo" class="graphInfor d-flex flex-row justify-content-center">
+          <div class="nodeCount">
+            <label for="nodeCountInput">Số lượng đỉnh:</label>
+            <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
+          </div>
+          <div class="edgeCount">
+            <label for="edgeCountInput">Số lượng cung:</label>
+            <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+          </div>
+        </div>
+      </div>
 
       <!--RIGHT COLUMN-->
-      <div class="right-col col-xl-3 col-lg-3 col-md-4">
-        <div class="right-col__content d-flex flex-column justify-content-center align-items-center">
-          <div class="selectAlg col-md-6">
-            <P>CHỌN THUẬT TOÁN CÁC THỨ TẠI ĐÂY!</P>
+      <div class="right-col col-xl-3">
+        <div class="right-col__content d-flex flex-column">
+          <div class="col-md-6">
+            <div class="selectAlg">
+              <label for="">Chọn thuật toán</label>
+              <select class="form-select form-select-lg mb-3" aria-label="Large select example">
+                <option selected>BFS</option>
+                <option value="1">BFS</option>
+                <option value="2">BFS</option>
+                <option value="3">BFS</option>
+              </select>
+            </div>
+            <div class="point start input-group">
+              <span class="input-group-text">Đỉnh bắt đầu</span>
+              <input type="number" aria-label="" class="form-control">
+            </div>
           </div>
           <div class="fakeLang col-md-6">
             <p>NGÔN NGỮ GIẢ TẠI ĐÂY!</p>
