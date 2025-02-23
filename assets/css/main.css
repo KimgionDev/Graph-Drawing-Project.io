@@ -94,7 +94,7 @@ label > h4{
   border-radius: 4px;
 }
 
-#nodeCountInput, #edgeCountInput {
+#nodeCountInput, #edgeCountInput, #startNodeInput {
   appearance: textfield;
 }
 
@@ -218,6 +218,7 @@ textarea#graphInput:focus {
 
 .selectAlg .form-select, .selectGraph .form-select {
   width: 100%;
+  min-height: fit-content;
   font-size: 1.15rem;
 }
 
