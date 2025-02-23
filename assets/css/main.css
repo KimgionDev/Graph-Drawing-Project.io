@@ -8,11 +8,13 @@
 }
 
 :root {
-  --primary-color: #0077b6;
+  --primary-color: #003566;
   --second-color: #48cae4;
-  --third-color: #caf0f861;
-  --fourth-color: #ffe564;
+  --third-color: #1b263b;
+  --fourth-color: #1b4965;
+  --bs-border-2: #02c39a;
   --bs-border: #333;
+  --bs-font: #fefeff;
 }
 
 .montserrat {
@@ -22,7 +24,7 @@
 
 body {
   font-family: "Montserrat", sans-serif !important;
-  background-color: #f5f5f5;
+  background-color: #0f1b31;
   color: #333;
   display: flex;
   justify-content: center;
@@ -38,6 +40,9 @@ header {
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 }
 
+label > h4{
+  color: var(--second-color);
+}
 .header__left{
   display: flex;
   text-align: left;
@@ -45,7 +50,7 @@ header {
 }
 
 .header__left #header__left-heading {
-  color: var(--primary-color);
+  color: var(--second-color);
   font-size: 3rem;
   margin-left: 10px;
 }
@@ -64,10 +69,10 @@ header {
   padding: 10px;
   width: 100%;
   font-size: 1rem;
-  border: 1px solid var(--bs-border);
-  border-radius: 4px;
+  border: 2px solid var(--bs-border-2);
+  border-radius: 7px;
   box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); */
 }
 
 #cy {
@@ -85,7 +90,7 @@ header {
   margin-left: 5px;
   padding: 5px;
   font-size: 1rem;
-  border: 1px solid var(--bs-border);
+  border: 1px solid var(--bs-border-2);
   border-radius: 4px;
 }
 
@@ -114,6 +119,7 @@ header {
 
 .nodeCount label, .edgeCount label{
   font-weight: 500;
+  color: var(--bs-font);
 }
 
 .left-col, .right-col {
@@ -170,7 +176,7 @@ header {
 .form-select:focus, .form-control:focus{
   box-shadow: none;
   outline: none;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--bs-border-2);
   
 }
 
@@ -207,7 +213,7 @@ textarea#graphInput:focus {
   font-weight: 600;
   font-size: 1.1rem;
   left: 10px;
-  color: #333;
+  color: var(--primary-color) !important;
 }
 
 .selectAlg .form-select, .selectGraph .form-select {
