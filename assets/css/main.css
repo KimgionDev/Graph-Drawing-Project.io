@@ -10,8 +10,9 @@
 :root {
   --primary-color: #0077b6;
   --second-color: #48cae4;
-  --third-color: #caf0f8;
-  --fourth-color: #ffd500;
+  --third-color: #caf0f861;
+  --fourth-color: #ffe564;
+  --bs-border: #333;
 }
 
 .montserrat {
@@ -63,7 +64,7 @@ header {
   padding: 10px;
   width: 100%;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--bs-border);
   border-radius: 4px;
   box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -75,6 +76,7 @@ header {
   position: relative;
   overflow: hidden;
   background-color: white;
+  border-radius: 7px;
 }
 
 #graphInfo input {
@@ -83,7 +85,7 @@ header {
   margin-left: 5px;
   padding: 5px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--bs-border);
   border-radius: 4px;
 }
 
@@ -129,7 +131,8 @@ header {
 .left-col, .mid-col, .right-col{
   flex-direction: column;
   padding: 10px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--bs-border);
+  border-radius: 7px;
   margin: 0px 5px;
 }
 
@@ -174,6 +177,7 @@ header {
 
 textarea#graphInput{
   transition: 0.2s ease-in-out;
+  height: 378px;
 }
 
 textarea#graphInput:focus {
@@ -199,21 +203,25 @@ textarea#graphInput:focus {
   box-sizing: border-box;
 }
 
-.selectAlg label{
+.selectAlg label, .selectGraph label{
   font-weight: 600;
   font-size: 1.1rem;
   left: 10px;
   color: #333;
 }
 
-.selectAlg .form-select{
+.selectAlg .form-select, .selectGraph .form-select {
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.15rem;
 }
 
+.selectGraph .form-select option{
+  position: relative;
+}
 .result-box{
   width: 100%;
   height: 100%;
+  min-height: 30px;
   border: 2px solid #333;
   border-radius: 5px;
   display: flex;

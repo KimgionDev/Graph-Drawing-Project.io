@@ -33,29 +33,15 @@
       <div class="left-col col-xl-3">
 
         <div id="iptGraph">
-          
-          <label for="graphInput"><h4>Nhập các cung :</h4></label><br>
-          <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
-          
-          <div class="selectGraph d-flex">
-            <label for="graphType">Chọn loại đồ thị:</label>
+          <div class="selectGraph form-floating  d-flex flex-column align-items-start mb-1">
             <select class="form-select form-select-sm" id="graphType">
               <option value="directed">Có hướng</option>
               <option value="undirected">Vô hướng</option>
             </select>
+            <label for="graphType">Chọn loại đồ thị:</label>
           </div>
-          <!-- Kiểu smooth của cung -->
-          <div>
-            <label for="smoothType">Chọn kiểu của cung:</label>
-            <select id="smoothType" class="form-select form-select-sm">
-              <option value="dynamic">Dynamic</option>
-              <option value="vertical">Vertical</option>
-              <option value="curvedCW">CurvedCW</option>
-              <option value="straightCross">StraightCross</option>
-              <option value="diagonalCross">DiagonalCross</option>
-              <option value="continuous">Continuous</option>
-            </select>
-          </div>
+          <label for="graphInput"><h4>Nhập các cung:</h4></label><br>
+          <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
         <!-- Button -->
         <div id="btn__input_graph">
@@ -87,7 +73,7 @@
           <div class="selectAlg form-floating  d-flex flex-column align-items-start mb-1">
             <select id="traversalType" class="form-select form-select-lg" aria-label="Large select example">
               <option value="bfs">Duyệt BFS</option>
-              <option value="dfs">Duyệt DFS</option>
+              <option value="dfs">Duyệt DFS (Stack)</option>
               <option id="" value="1">BFS</option>
               <option id="" value="2">BFS</option>
               <option id="" value="3">BFS</option>
