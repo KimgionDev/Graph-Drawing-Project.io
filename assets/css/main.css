@@ -34,8 +34,7 @@ header {
   /* text-align: center; */
   margin-bottom: 20px;
   width: 100%;
-  background-color: var(--third-color);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 }
 
 .header__left{
@@ -171,6 +170,8 @@ header {
   border: 1px solid var(--primary-color);
   
 }
+
+
 textarea#graphInput{
   transition: 0.2s ease-in-out;
 }
@@ -178,6 +179,13 @@ textarea#graphInput{
 textarea#graphInput:focus {
   border:1px solid var(--primary-color); /* Sử dụng biến màu primary nếu có */
   outline: none; /* Loại bỏ viền mặc định */
+}
+
+.form-floating > .form-select {
+	padding-top: 1.625rem;
+	padding-bottom: .625rem;
+	width: 100%;
+	margin-top: 5px;
 }
 
 .fakeLang{
@@ -194,12 +202,13 @@ textarea#graphInput:focus {
 .selectAlg label{
   font-weight: 600;
   font-size: 1.1rem;
+  left: 10px;
+  color: #333;
 }
 
 .selectAlg .form-select{
   width: 100%;
   font-size: 1rem;
-  padding: 5px;
 }
 
 .result-box{

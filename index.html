@@ -84,8 +84,7 @@
       <!--RIGHT COLUMN-->
       <div class="right-col col-xl-3 container">
         <div class="right-col__content row d-flex flex-column">
-          <div class="selectAlg d-flex flex-column align-items-start mb-1">
-            <label for="traversalType">Chọn thuật toán</label>
+          <div class="selectAlg form-floating  d-flex flex-column align-items-start mb-1">
             <select id="traversalType" class="form-select form-select-lg" aria-label="Large select example">
               <option value="bfs">Duyệt BFS</option>
               <option value="dfs">Duyệt DFS</option>
@@ -93,6 +92,7 @@
               <option id="" value="2">BFS</option>
               <option id="" value="3">BFS</option>
             </select>
+            <label for="traversalType">Chọn thuật toán</label>
           </div>
           <div class="pointStart input-group mb-1">
             <span class="input-group-text">Đỉnh bắt đầu</span>
@@ -117,7 +117,7 @@
   </div>
 
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/bfs.js"></script>
+  <script src="assets/js/bfs&dfs.js"></script>
 </body>
 
 </html>
