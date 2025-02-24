@@ -23,7 +23,9 @@
       <header>
         <div class="header__left">
           <img src="./assets/img/header_icon.png" alt="header_icon">
-          <h1 id="header__left-heading">Graphify</h1>
+          <a href="index.html">
+            <h1 id="header__left-heading">Graphify</h1>
+          </a>
         </div>
       </header>
     </div>
@@ -36,13 +38,7 @@
       <div class="left-col col-xl-3">
 
         <div id="iptGraph">
-          <!-- <div class="selectGraph form-floating  d-flex flex-column align-items-start mb-1">
-            <select class="form-select form-select-sm" id="graphType">
-              <option value="directed">Có hướng</option>
-              <option value="undirected">Vô hướng</option>
-            </select>
-            <label for="graphType">Chọn loại đồ thị:</label>
-          </div> -->
+
           <div class="mydict">
             <div id="graphType">
                 <label>
@@ -55,7 +51,6 @@
                 </label>
             </div>
           </div>
-          <!-- <label for="graphInput"><h4>Nhập các cung</h4></label><br> -->
            <br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
@@ -88,24 +83,17 @@
           <div class="selectAlg form-floating  d-flex flex-column align-items-start">
             <select id="traversalType" class="form-select form-select-lg" aria-label="Large select example">
               <option value="bfs">Duyệt BFS</option>
+              <option value="bfs-fullGraph">Duyệt BFS (toàn đồ thị)</option>
               <option value="dfs">Duyệt DFS (Stack)</option>
-              <option id="" value="1">BFS</option>
-              <option id="" value="2">BFS</option>
-              <option id="" value="3">BFS</option>
+              <option value="dfs-recursion">Duyệt DFS (Đệ quy)</option>
+              <option value="dfs-fullGraph">Duyệt DFS (Stack - full)</option>
+              <option value="dfs-recursion-fullGraph">Duyệt DFS (Đệ quy - full)</option>
             </select>
             <label for="traversalType">Chọn thuật toán</label>
           </div>
           <div class="pointStart input-group">
             <span class="input-group-text">Đỉnh bắt đầu</span>
             <input id="startNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
-            <label for="">Duyệt toàn <br> bộ đồ thị</label>
-            <div class="toggle-button-cover">
-              <div id="button-3" class="button r">
-                <input id="" class="checkbox" type="checkbox">
-                <div class="knobs"></div>
-                <div class="layer"></div>
-              </div>
-            </div>
           </div>
           <div class="input-group speedSlide">
             <span class="input-group-text">Tốc độ duyệt</span>
