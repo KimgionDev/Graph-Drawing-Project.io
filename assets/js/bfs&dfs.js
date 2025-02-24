@@ -231,38 +231,43 @@ function performDFSRecursion() {
 
     dfsRecursion(graph, startNode, new Set(), delay, 0, []);
 }
-function dfsRecursion(graph, vertex, visited = new Set(), delay, currentDelay) {
+function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
     if (visited.has(vertex)) return;
 
-    // Đánh dấu đã duyệt nhưng chưa cập nhật danh sách
     visited.add(vertex);
 
-    // Đợi `delay` rồi mới thực hiện hiển thị
+    // Tô màu đỉnh hiện tại
     setTimeout(() => {
-        // Tô màu đỉnh hiện tại
         cy.$(`#${vertex}`).style('background-color', 'green');
 
-        // Lấy danh sách các đỉnh đã duyệt từ DOM
+        // Cập nhật danh sách thứ tự đã duyệt
         let visitedOrder = document.getElementById('visitedOrder').innerText;
         if (visitedOrder.length > 0) {
             visitedOrder += ' - ';
         }
         visitedOrder += vertex;
-
-        // Cập nhật danh sách duyệt sau khi đỉnh được tô màu
         document.getElementById('visitedOrder').innerText = visitedOrder;
 
-        // Nếu có đỉnh kề, tiếp tục duyệt
+        // Duyệt tiếp các đỉnh kề
         if (graph[vertex]) {
-            const neighbors = graph[vertex].slice().sort((a, b) => a - b); // Sắp xếp tăng dần
-            let newDelay = currentDelay + delay;
+            const neighbors = graph[vertex].slice().sort((a, b) => a - b);
+            let index = 0;
 
-            for (const neighbor of neighbors) {
-                if (!visited.has(neighbor)) {
-                    dfsRecursion(graph, neighbor, visited, delay, newDelay);
-                    newDelay += delay;
+            function visitNextNeighbor() {
+                if (index < neighbors.length) {
+                    const neighbor = neighbors[index++];
+                    if (!visited.has(neighbor)) {
+                        dfsRecursion(graph, neighbor, visited, delay, visitNextNeighbor);
+                    } else {
+                        visitNextNeighbor(); // Nếu đã duyệt, tiếp tục với đỉnh kề tiếp theo
+                    }
+                } else if (callback) {
+                    callback(); // Gọi lại để tiếp tục DFS
                 }
             }
+            visitNextNeighbor();
+        } else if (callback) {
+            callback();
         }
-    }, currentDelay);
+    }, delay);
 }
