@@ -36,14 +36,18 @@
       <div class="left-col col-xl-3">
 
         <div id="iptGraph">
-          <div class="selectGraph form-floating  d-flex flex-column align-items-start mb-1">
-            <select class="form-select form-select-sm" id="graphType">
-              <option value="directed">Có hướng</option>
-              <option value="undirected">Vô hướng</option>
-            </select>
-            <label for="graphType">Chọn loại đồ thị:</label>
+          <div class="mydict">
+            <div id="graphType">
+                <label>
+                    <input type="radio" name="graphType" value="directed" checked>
+                    <span>Có hướng</span>
+                </label>
+                <label>
+                    <input type="radio" name="graphType" value="undirected">
+                    <span>Vô hướng</span>
+                </label>
+            </div>
           </div>
-          
           <label for="graphInput"><h4>Nhập các cung:</h4></label><br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
@@ -103,7 +107,7 @@
           <div class="resultBrowse">
             <p>Kết quả duyệt:</p>
             <div class="result-box">
-              <div id="visitedOrder""></div>
+              <div id="visitedOrder"></div>
             </div>
           </div>
         </div>
@@ -197,8 +201,7 @@ function updateGraphInfo() {
 function generateGraph() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
-    const graphType = document.getElementById('graphType').value; // Loại đồ thị (có hướng hoặc vô hướng)
-
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
     // Danh sách các đỉnh
     let nodes = [];
     for (let i = 1; i <= nodeCount; i++) {

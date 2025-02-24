@@ -14,7 +14,6 @@ function performTraversal() {
 
 function resetTraversal() {
     cy.nodes().style('background-color', ''); 
-
     // Reset thứ tự đã duyệt
     document.getElementById('visitedOrder').innerText = '';
 }
@@ -31,8 +30,7 @@ function performBFS() {
     let graph = {};
 
     // Lấy loại đồ thị (có hướng hoặc vô hướng)
-    const graphType = document.getElementById('graphType').value;
-
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
     // Tạo đồ thị từ các cung nhập vào
     lines.forEach(line => {
         const edgeData = line.split(' ').map(Number);
@@ -119,8 +117,7 @@ function performDFS() {
     let graph = {};
 
     // Lấy loại đồ thị (có hướng hoặc vô hướng)
-    const graphType = document.getElementById('graphType').value;
-
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
     // Tạo đồ thị từ các cung nhập vào
     lines.forEach(line => {
         const edgeData = line.split(' ').map(Number);
