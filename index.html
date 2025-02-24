@@ -36,13 +36,26 @@
       <div class="left-col col-xl-3">
 
         <div id="iptGraph">
-          <div class="selectGraph form-floating  d-flex flex-column align-items-start mb-1">
+          <!-- <div class="selectGraph form-floating  d-flex flex-column align-items-start mb-1">
             <select class="form-select form-select-sm" id="graphType">
               <option value="directed">Có hướng</option>
               <option value="undirected">Vô hướng</option>
             </select>
             <label for="graphType">Chọn loại đồ thị:</label>
+          </div> -->
+          <div class="mydict">
+            <div id="graphType">
+                <label>
+                    <input type="radio" name="graphType" value="directed" checked>
+                    <span>Có hướng</span>
+                </label>
+                <label>
+                    <input type="radio" name="graphType" value="undirected">
+                    <span>Vô hướng</span>
+                </label>
+            </div>
           </div>
+        
           
           <label for="graphInput"><h4>Nhập các cung:</h4></label><br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
@@ -50,7 +63,6 @@
         <!-- Button -->
         <div id="btn__input_graph" class="d-flex justify-content-center">
           <button onclick="generateGraph()" type="button" class="btn-func btn">Tạo đồ thị</button>
-          <!-- <button type="button" class="btn-func btn">Thêm nút</button> -->
         </div>
 
       </div>

@@ -68,7 +68,7 @@ function updateGraphInfo() {
 function generateGraph() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
-    const graphType = document.getElementById('graphType').value; // Loại đồ thị (có hướng hoặc vô hướng)
+    const graphType = document.querySelector('input[name="graphType"]:checked').value // Loại đồ thị (có hướng hoặc vô hướng)
 
     // Danh sách các đỉnh
     let nodes = [];
