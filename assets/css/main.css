@@ -103,7 +103,6 @@ label > h4{
 }
 #nodeCountInput:focus, #edgeCountInput:focus {
   outline: none;
-
 }
 
 .graphInfor > div{
@@ -217,7 +216,7 @@ label > h4{
   font-size: 0.7rem;
   text-wrap: wrap;
   margin: 0px 5px;
-  text-align: center;
+  text-align: left;
 }
 
 
@@ -227,7 +226,7 @@ textarea#graphInput{
 }
 
 textarea#graphInput:focus {
-  border:1px solid var(--primary-color); /* Sử dụng biến màu primary nếu có */
+  border: 2px solid var(--bs-border-2); /* Sử dụng biến màu primary nếu có */
   outline: none; /* Loại bỏ viền mặc định */
 }
 
