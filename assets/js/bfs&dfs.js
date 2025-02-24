@@ -1,5 +1,8 @@
 // Hàm duyệt BFS hoặc DFS
 function performTraversal() {
+    // Reset giá trị trước khi bắt đầu duyệt
+    resetTraversal();
+
     const traversalType = document.getElementById('traversalType').value;
 
     if (traversalType === 'bfs') {
@@ -8,6 +11,14 @@ function performTraversal() {
         performDFS();
     }
 }
+
+function resetTraversal() {
+    cy.nodes().style('background-color', ''); 
+
+    // Reset thứ tự đã duyệt
+    document.getElementById('visitedOrder').innerText = '';
+}
+
 
 function performBFS() {
     // Lấy thông tin các cung đã nhập
@@ -35,7 +46,6 @@ function performBFS() {
                 graph[source].push(target);
             }
 
-
             // Nếu đồ thị là vô hướng, thêm cung ngược lại
             else if (graphType === 'undirected') {
                 graph[source].push(target);
@@ -52,6 +62,7 @@ function bfs(graph, start) {
     const queue = [start]; // Hàng đợi chứa các đỉnh cần duyệt
     const visited = new Set(); // Tập hợp lưu các đỉnh đã duyệt
     const result = []; // Mảng lưu thứ tự duyệt
+    const visitedEdges = new Set(); // Tập hợp lưu các cung đã duyệt
     const delay = 1000; // Thời gian trễ giữa các lần duyệt (1 giây)
 
     // Hàm duyệt đỉnh
@@ -97,7 +108,6 @@ function bfs(graph, start) {
     visitNext();
 }
 
-
 function performDFS() {
     // Lấy thông tin các cung đã nhập
     const inputText = document.getElementById('graphInput').value.trim();
@@ -140,13 +150,14 @@ function dfs(graph, start) {
     const stack = [start]; // Ngăn xếp chứa các đỉnh cần duyệt
     const visited = new Set(); // Tập hợp lưu các đỉnh đã duyệt
     const result = []; // Mảng lưu thứ tự duyệt
+    const visitedEdges = new Set(); // Tập hợp lưu các cung đã duyệt
     const delay = 1000; // Thời gian trễ giữa các lần duyệt (1 giây)
 
     // Hàm duyệt đỉnh
     function visitNext() {
         if (stack.length === 0) return; // Dừng nếu không còn đỉnh để duyệt
 
-        const vertex = stack.pop(); // Lấy đỉnh cuối cùng trong ngăn xếp
+        const vertex = stack.pop(); 
 
         if (!visited.has(vertex)) {
             visited.add(vertex); // Đánh dấu đỉnh đã duyệt
@@ -164,7 +175,7 @@ function dfs(graph, start) {
                 for (const neighbor of graph[vertex]) {
                     if (!visited.has(neighbor)) {
                         neighborsToAdd.push(neighbor);
-                    }
+                     }
                 }
             }
 
@@ -184,6 +195,8 @@ function dfs(graph, start) {
     }
     visitNext();
 }
+
+
 
 
 
