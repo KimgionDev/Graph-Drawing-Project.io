@@ -1,4 +1,3 @@
-// Hàm duyệt BFS hoặc DFS
 function performTraversal() {
     // Reset giá trị trước khi bắt đầu duyệt
     resetTraversal();
@@ -9,6 +8,8 @@ function performTraversal() {
         performBFS();
     } else if (traversalType === 'dfs') {
         performDFS();
+    } else if (traversalType === 'dfs-recursion') {
+        performDFSRecursion(); // Gọi DFS đệ quy
     }
 }
 
@@ -22,6 +23,7 @@ document.getElementById('speedSlider').addEventListener('input', function() {
     document.getElementById('speedValue').innerText = this.value + ' ms';
 });
 
+// BFS queue
 function performBFS() {
     // Lấy thông tin các cung đã nhập
     const inputText = document.getElementById('graphInput').value.trim();
@@ -109,6 +111,7 @@ function bfs(graph, start) {
     visitNext();
 }
 
+// DFS stack
 function performDFS() {
     // Lấy thông tin các cung đã nhập
     const inputText = document.getElementById('graphInput').value.trim();
@@ -195,6 +198,101 @@ function dfs(graph, start) {
     }
     visitNext();
 }
+
+// Hàm gọi DFS đệ quy
+function performDFSRecursion() {
+    // Lấy thông tin các cung đã nhập
+    const inputText = document.getElementById('graphInput').value.trim();
+    const lines = inputText.split('\n');
+    const startNode = parseInt(document.getElementById('startNodeInput').value);
+    let graph = {};
+
+    // Lấy loại đồ thị (có hướng hoặc vô hướng)
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+
+    // Tạo đồ thị từ các cung nhập vào
+    lines.forEach(line => {
+        const edgeData = line.split(' ').map(Number);
+        if (edgeData.length >= 2) {
+            const source = edgeData[0];
+            const target = edgeData[1];
+
+            // Tạo đồ thị theo dạng adjacency list
+            if (!graph[source]) graph[source] = [];
+            if (!graph[target]) graph[target] = [];
+
+            // Thêm cung vào đồ thị
+            if (graphType === 'directed') {
+                graph[source].push(target);
+            }
+
+            // Nếu đồ thị là vô hướng, thêm cung ngược lại
+            else if (graphType === 'undirected') {
+                graph[source].push(target);
+                graph[target].push(source);
+            }
+        }
+    });
+
+    // Lấy giá trị delay từ thanh trượt
+    const delay = parseInt(document.getElementById('speedSlider').value);
+
+    // Chạy thuật toán DFS đệ quy từ đỉnh bắt đầu
+    dfsRecursion(graph, startNode, new Set(), [], delay, 0);
+}
+
+// Hàm DFS đệ quy với sắp xếp các đỉnh kề và delay giữa các đỉnh
+function dfsRecursion(graph, vertex, visited = new Set(), result = [], delay, currentDelay) {
+    // Nếu đỉnh đã được duyệt, không làm gì
+    if (visited.has(vertex)) {
+        return;
+    }
+
+    // Đánh dấu đỉnh đã duyệt
+    visited.add(vertex);
+    result.push(vertex); // Thêm đỉnh vào kết quả
+
+    // Tô màu xanh lá cho đỉnh đang duyệt sau một khoảng thời gian delay
+    setTimeout(() => {
+        cy.$(`#${vertex}`).style('background-color', 'green');
+    
+        // Cập nhật thứ tự đã duyệt
+        document.getElementById('visitedOrder').innerText = result.join(' - ');
+    }, currentDelay);
+
+    // Duyệt các đỉnh kề chưa được duyệt
+    if (graph[vertex]) {
+        // Lấy danh sách các đỉnh kề
+        const neighbors = graph[vertex];
+        let newDelay = currentDelay;  // Biến để giữ trễ hiện tại giữa các đỉnh
+
+        // Sắp xếp các đỉnh kề theo thứ tự mong muốn (tăng dần)
+        neighbors.sort((a, b) => a - b);  // Sắp xếp đỉnh kề theo thứ tự tăng dần
+
+        // Duyệt các đỉnh kề đồng bộ với delay
+        for (const neighbor of neighbors) {
+            // Chỉ duyệt các đỉnh chưa được duyệt
+            if (!visited.has(neighbor)) {
+                newDelay += delay;  // Tăng thời gian trễ sau mỗi đỉnh
+
+                // Thực hiện đệ quy sau một khoảng thời gian trễ
+               
+                    dfsRecursion(graph, neighbor, visited, result, delay, newDelay);
+             
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
