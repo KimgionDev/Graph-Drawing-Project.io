@@ -80,7 +80,7 @@ function bfs(graph, start) {
             cy.$(`#${vertex}`).style('background-color', 'red');
 
             // Cập nhật thứ tự đã duyệt
-            document.getElementById('visitedOrder').innerText = result.join(' ');
+            document.getElementById('visitedOrder').innerText = result.join(' - ');
 
             // Thêm các đỉnh kề chưa duyệt vào hàng đợi
             const neighborsToAdd = [];
