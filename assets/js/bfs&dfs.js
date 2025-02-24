@@ -19,6 +19,9 @@ function resetTraversal() {
     document.getElementById('visitedOrder').innerText = '';
 }
 
+document.getElementById('speedSlider').addEventListener('input', function() {
+    document.getElementById('speedValue').innerText = this.value + ' ms';
+});
 
 function performBFS() {
     // Lấy thông tin các cung đã nhập
@@ -28,7 +31,7 @@ function performBFS() {
     let graph = {};
 
     // Lấy loại đồ thị (có hướng hoặc vô hướng)
-    const graphType = document.querySelector('input[name="graphType"]:checked').value
+    const graphType = document.getElementById('graphType').value;
 
     // Tạo đồ thị từ các cung nhập vào
     lines.forEach(line => {
@@ -63,7 +66,7 @@ function bfs(graph, start) {
     const visited = new Set(); // Tập hợp lưu các đỉnh đã duyệt
     const result = []; // Mảng lưu thứ tự duyệt
     const visitedEdges = new Set(); // Tập hợp lưu các cung đã duyệt
-    const delay = 1000; // Thời gian trễ giữa các lần duyệt (1 giây)
+    const delay = parseInt(document.getElementById('speedSlider').value); // Lấy giá trị từ thanh trượt
 
     // Hàm duyệt đỉnh
     function visitNext() {
@@ -116,7 +119,7 @@ function performDFS() {
     let graph = {};
 
     // Lấy loại đồ thị (có hướng hoặc vô hướng)
-    const graphType = document.querySelector('input[name="graphType"]:checked').value
+    const graphType = document.getElementById('graphType').value;
 
     // Tạo đồ thị từ các cung nhập vào
     lines.forEach(line => {
@@ -151,7 +154,7 @@ function dfs(graph, start) {
     const visited = new Set(); // Tập hợp lưu các đỉnh đã duyệt
     const result = []; // Mảng lưu thứ tự duyệt
     const visitedEdges = new Set(); // Tập hợp lưu các cung đã duyệt
-    const delay = 1000; // Thời gian trễ giữa các lần duyệt (1 giây)
+    const delay = parseInt(document.getElementById('speedSlider').value); // Lấy giá trị từ thanh trượt
 
     // Hàm duyệt đỉnh
     function visitNext() {
