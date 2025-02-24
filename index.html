@@ -12,8 +12,11 @@
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="shortcut icon" href="assets/img/graph.ico" type="image/x-icon">
 </head>
-
 <body>
+  <!-- Spinner loading -->
+  <div id="loading-screen">
+    <div class="spinner"></div>
+  </div>
 
   <div class="container-fluid">
     <div class="row head">
@@ -40,13 +43,14 @@
             </select>
             <label for="graphType">Chọn loại đồ thị:</label>
           </div>
+          
           <label for="graphInput"><h4>Nhập các cung:</h4></label><br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
         <!-- Button -->
-        <div id="btn__input_graph">
+        <div id="btn__input_graph" class="d-flex justify-content-center">
           <button onclick="generateGraph()" type="button" class="btn-func btn">Tạo đồ thị</button>
-          <button type="button" class="btn-func btn">Thêm nút</button>
+          <!-- <button type="button" class="btn-func btn">Thêm nút</button> -->
         </div>
 
       </div>
@@ -70,7 +74,7 @@
       <!--RIGHT COLUMN-->
       <div class="right-col col-xl-3 container">
         <div class="right-col__content row d-flex flex-column">
-          <div class="selectAlg form-floating  d-flex flex-column align-items-start mb-1">
+          <div class="selectAlg form-floating  d-flex flex-column align-items-start">
             <select id="traversalType" class="form-select form-select-lg" aria-label="Large select example">
               <option value="bfs">Duyệt BFS</option>
               <option value="dfs">Duyệt DFS (Stack)</option>
@@ -80,7 +84,7 @@
             </select>
             <label for="traversalType">Chọn thuật toán</label>
           </div>
-          <div class="pointStart input-group mb-1">
+          <div class="pointStart input-group">
             <span class="input-group-text">Đỉnh bắt đầu</span>
             <input id="startNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
           </div>
@@ -101,9 +105,23 @@
     </div>
 
   </div>
-
+  <script>
+    window.addEventListener("load", function() {
+        let loadingScreen = document.getElementById("loading-screen");
+        
+        setTimeout(() => {
+            loadingScreen.style.transition = "opacity 0.6s ease";
+            loadingScreen.style.opacity = "0";
+        }, 200); 
+        
+        setTimeout(() => {
+            loadingScreen.style.display = "none";
+        }, 600);
+    });
+  </script> 
   <script src="assets/js/main.js"></script>
   <script src="assets/js/bfs&dfs.js"></script>
+  
 </body>
 
 </html>
