@@ -167,7 +167,7 @@ function dfs(graph, start) {
             cy.$(`#${vertex}`).style('background-color', 'blue');
 
             // Cập nhật thứ tự đã duyệt
-            document.getElementById('visitedOrder').innerText = result.join(' ');
+            document.getElementById('visitedOrder').innerText = result.join(' - ');
 
             // Thêm các đỉnh kề chưa duyệt vào ngăn xếp
             const neighborsToAdd = [];
