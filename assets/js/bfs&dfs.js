@@ -201,100 +201,68 @@ function dfs(graph, start) {
 
 // Hàm gọi DFS đệ quy
 function performDFSRecursion() {
-    // Lấy thông tin các cung đã nhập
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
     const startNode = parseInt(document.getElementById('startNodeInput').value);
     let graph = {};
 
-    // Lấy loại đồ thị (có hướng hoặc vô hướng)
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
 
-    // Tạo đồ thị từ các cung nhập vào
     lines.forEach(line => {
         const edgeData = line.split(' ').map(Number);
         if (edgeData.length >= 2) {
             const source = edgeData[0];
             const target = edgeData[1];
 
-            // Tạo đồ thị theo dạng adjacency list
             if (!graph[source]) graph[source] = [];
             if (!graph[target]) graph[target] = [];
 
-            // Thêm cung vào đồ thị
             if (graphType === 'directed') {
                 graph[source].push(target);
-            }
-
-            // Nếu đồ thị là vô hướng, thêm cung ngược lại
-            else if (graphType === 'undirected') {
+            } else {
                 graph[source].push(target);
                 graph[target].push(source);
             }
         }
     });
 
-    // Lấy giá trị delay từ thanh trượt
     const delay = parseInt(document.getElementById('speedSlider').value);
+    document.getElementById('visitedOrder').innerText = ''; // Reset danh sách trước khi chạy
 
-    // Chạy thuật toán DFS đệ quy từ đỉnh bắt đầu
-    dfsRecursion(graph, startNode, new Set(), [], delay, 0);
+    dfsRecursion(graph, startNode, new Set(), delay, 0, []);
 }
+function dfsRecursion(graph, vertex, visited = new Set(), delay, currentDelay) {
+    if (visited.has(vertex)) return;
 
-// Hàm DFS đệ quy với sắp xếp các đỉnh kề và delay giữa các đỉnh
-function dfsRecursion(graph, vertex, visited = new Set(), result = [], delay, currentDelay) {
-    // Nếu đỉnh đã được duyệt, không làm gì
-    if (visited.has(vertex)) {
-        return;
-    }
-
-    // Đánh dấu đỉnh đã duyệt
+    // Đánh dấu đã duyệt nhưng chưa cập nhật danh sách
     visited.add(vertex);
-    result.push(vertex); // Thêm đỉnh vào kết quả
 
-    // Tô màu xanh lá cho đỉnh đang duyệt sau một khoảng thời gian delay
+    // Đợi `delay` rồi mới thực hiện hiển thị
     setTimeout(() => {
+        // Tô màu đỉnh hiện tại
         cy.$(`#${vertex}`).style('background-color', 'green');
-    
-        // Cập nhật thứ tự đã duyệt
-        document.getElementById('visitedOrder').innerText = result.join(' - ');
-    }, currentDelay);
 
-    // Duyệt các đỉnh kề chưa được duyệt
-    if (graph[vertex]) {
-        // Lấy danh sách các đỉnh kề
-        const neighbors = graph[vertex];
-        let newDelay = currentDelay;  // Biến để giữ trễ hiện tại giữa các đỉnh
+        // Lấy danh sách các đỉnh đã duyệt từ DOM
+        let visitedOrder = document.getElementById('visitedOrder').innerText;
+        if (visitedOrder.length > 0) {
+            visitedOrder += ' - ';
+        }
+        visitedOrder += vertex;
 
-        // Sắp xếp các đỉnh kề theo thứ tự mong muốn (tăng dần)
-        neighbors.sort((a, b) => a - b);  // Sắp xếp đỉnh kề theo thứ tự tăng dần
+        // Cập nhật danh sách duyệt sau khi đỉnh được tô màu
+        document.getElementById('visitedOrder').innerText = visitedOrder;
 
-        // Duyệt các đỉnh kề đồng bộ với delay
-        for (const neighbor of neighbors) {
-            // Chỉ duyệt các đỉnh chưa được duyệt
-            if (!visited.has(neighbor)) {
-                newDelay += delay;  // Tăng thời gian trễ sau mỗi đỉnh
+        // Nếu có đỉnh kề, tiếp tục duyệt
+        if (graph[vertex]) {
+            const neighbors = graph[vertex].slice().sort((a, b) => a - b); // Sắp xếp tăng dần
+            let newDelay = currentDelay + delay;
 
-                // Thực hiện đệ quy sau một khoảng thời gian trễ
-               
-                    dfsRecursion(graph, neighbor, visited, result, delay, newDelay);
-             
+            for (const neighbor of neighbors) {
+                if (!visited.has(neighbor)) {
+                    dfsRecursion(graph, neighbor, visited, delay, newDelay);
+                    newDelay += delay;
+                }
             }
         }
-    }
+    }, currentDelay);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
