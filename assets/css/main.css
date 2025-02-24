@@ -12,6 +12,7 @@
   --second-color: #48cae4;
   --third-color: #1b263b;
   --fourth-color: #1b4965;
+  --fifth-color: #03a9f4;
   --bs-border-2: #02c39a;
   --bs-border: #333;
   --bs-font: #fefeff;
@@ -219,6 +220,7 @@ label > h4{
   text-align: center;
 }
 
+
 textarea#graphInput{
   transition: 0.2s ease-in-out;
   height: 378px;
@@ -247,6 +249,7 @@ textarea#graphInput:focus {
   box-sizing: border-box;
 }
 
+
 .selectAlg label, .selectGraph label{
   font-weight: 600;
   font-size: 1.1rem;
@@ -263,6 +266,85 @@ textarea#graphInput:focus {
 .selectGraph .form-select option{
   position: relative;
 }
+
+.speedSlide span{
+  font-size: 0.7rem;
+}
+
+.speedSlide label{
+  flex: 1;
+}
+.speedSlide input{
+  margin: 0px 5px;
+}
+/* From Uiverse.io by Galahhad */ 
+/* level settings 👇 */
+
+.slider {
+  /* slider */
+  --slider-width: 100%;
+  --slider-height: 6px;
+  --slider-bg: var(--fifth-color);
+  --slider-border-radius: 999px;
+  /* level */
+  --level-color: #fff;
+  --level-transition-duration: .1s;
+  /* icon */
+  --icon-margin: 15px;
+  --icon-color: var(--slider-bg);
+  --icon-size: 25px;
+}
+
+.slider {
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.slider .volume {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: var(--icon-margin);
+  color: var(--icon-color);
+  width: var(--icon-size);
+  height: auto;
+}
+
+.slider .level {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--slider-width);
+  height: var(--slider-height);
+  background: var(--slider-bg);
+  overflow: hidden;
+  border-radius: 7px;
+  -webkit-transition: height var(--level-transition-duration);
+  -o-transition: height var(--level-transition-duration);
+  transition: height var(--level-transition-duration);
+  cursor: inherit;
+}
+
+.slider .level::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+  -webkit-box-shadow: -200px 0 0 200px var(--level-color);
+  box-shadow: -200px 0 0 200px var(--level-color);
+}
+
+.slider:hover .level {
+  height: calc(var(--slider-height) * 2);
+}
+
 .result-box{
   width: 100%;
   height: 100%;

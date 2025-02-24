@@ -106,9 +106,11 @@
               </div>
             </div>
           </div>
-          <div class="input-group">
+          <div class="input-group speedSlide">
             <span class="input-group-text">Tốc độ duyệt</span>
-            <input type="range" id="speedSlider" class="form-control" min="200" max="5000" step="100">
+            <label class="slider">
+              <input type="range" id="speedSlider" class="level" min="200" max="5000" step="100">
+            </label>
           </div>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-browse" onclick="performTraversal()">Duyệt</button>
@@ -117,7 +119,7 @@
             <p>Mã giả tại đây</p>
           </div>
           <div class="resultBrowse">
-            <p>Kết quả duyệt:</p>
+            <p>Kết quả</p>
             <div class="result-box">
               <div id="visitedOrder""></div>
             </div>
