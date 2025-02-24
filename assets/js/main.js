@@ -184,3 +184,60 @@ function generateGraph() {
         }
     });
 }
+
+// document.getElementById("graphInput").addEventListener("input", function(event) {
+//     let input = event.target.value;
+
+//     // Chỉ cho phép số nguyên, dấu cách và xuống dòng
+//     let cleanedInput = input.replace(/[^0-9\s\n]/g, '');
+
+//     // Kiểm tra nếu có ký tự không hợp lệ bị xóa
+//     if (input !== cleanedInput) {
+//         alert("Chỉ được nhập số nguyên theo định dạng: u v (mỗi cặp số cách nhau 1 khoảng trắng, mỗi cung cách nhau một dòng)");
+//         event.target.value = cleanedInput;
+//     }
+// });
+
+document.getElementById("graphInput").addEventListener("input", function(event) {
+    let input = event.target.value;
+
+    // Chỉ cho phép số nguyên, dấu cách và xuống dòng (cho phép nhập Space tạm thời)
+    let cleanedInput = input.replace(/[^0-9\s\n]/g, '');
+
+    // Xử lý từng dòng nhập vào
+    cleanedInput = cleanedInput.split('\n').map(line => {
+        let parts = line.split(/\s+/).filter(part => part !== ''); // Loại bỏ khoảng trắng thừa
+
+        // Nếu dòng trống hoặc chỉ có Space, giữ nguyên (cho phép nhập tiếp)
+        if (line.trim() === "") {
+            return line;
+        }
+
+        // Nếu đang nhập dở (1 hoặc 2 số và có dấu cách phía sau), giữ nguyên
+        if (parts.length === 1 || parts.length === 2) {
+            return parts.join(' ') + (line.endsWith(" ") ? " " : ""); // Giữ dấu cách để nhập tiếp
+        }
+
+        // Nếu dòng có đúng 2 hoặc 3 số hợp lệ, chuẩn hóa lại
+        if (parts.length === 2 || parts.length === 3) {
+            return parts.join(' ');
+        }
+
+        // Nếu nhập quá 3 số, cảnh báo và chỉ giữ 3 số đầu
+        if (parts.length > 3) {
+            alert("Mỗi dòng chỉ được nhập tối đa 3 số nguyên!");
+            return parts.slice(0, 3).join(' '); // Chỉ lấy 3 số đầu tiên
+        }
+
+        return "";
+    }).join('\n');
+
+    // Cập nhật lại giá trị vào ô nhập liệu (chỉ khi có sự thay đổi thực sự)
+    if (event.target.value !== cleanedInput) {
+        event.target.value = cleanedInput;
+    }
+
+    // Kiểm tra bổ sung để debug
+    console.log("Input:", input);
+    console.log("Cleaned Input:", cleanedInput);
+});
