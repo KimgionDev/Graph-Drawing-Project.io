@@ -196,6 +196,29 @@ label > h4{
   
 }
 
+.pointStart{
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.pointStart span{
+  font-size: 0.7rem;
+}
+
+.pointStart #startNodeInput{
+  margin-right: 3px;
+  font-size: 0.7rem;
+
+}
+
+.pointStart label{
+  font-size: 0.7rem;
+  text-wrap: wrap;
+  margin: 0px 5px;
+  text-align: center;
+}
+
 textarea#graphInput{
   transition: 0.2s ease-in-out;
   height: 378px;
@@ -216,7 +239,7 @@ textarea#graphInput:focus {
 .fakeLang{
   max-width: 100%;
   width: calc(100% - 20px);
-  height: 300px;
+  height: 250px;
   border: 2px solid #333;
   border-radius: 5px;
   margin: 0px 10px;
@@ -304,10 +327,10 @@ textarea#graphInput:focus {
 }
 
 .mydict input[type="radio"]:checked + span {
-  box-shadow: 0 0 0 0.0625em #0043ed;
-  background-color: #dee7ff;
+  box-shadow: 0 0 0 0.0625em var(--second-color);
+  background-color: var(--second-color);
   z-index: 1;
-  color: #0043ed;
+  color: var(--bs-font);
 }
 
 label span {
@@ -321,7 +344,7 @@ label span {
   letter-spacing: .05em;
   color: #3e4963;
   text-align: center;
-  transition: background-color .5s ease;
+  transition: background-color 0.5s ease;
 }
 
 label:first-child span {
@@ -332,9 +355,119 @@ label:last-child span {
   border-radius: 0 .375em .375em 0;
 }
 
+/* From Uiverse.io by JaydipPrajapati1910 */ 
+.toggle-button-cover {
+  display: table-cell;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.button-cover {
+  height: 100px;
+  margin: 20px;
+  background-color: #fff;
+  box-shadow: 0 10px 20px -8px #c5d6d6;
+  border-radius: 4px;
+}
+
+.button-cover:before {
+  counter-increment: button-counter;
+  content: counter(button-counter);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #d7e3e3;
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px;
+}
+
+.button-cover,
+.knobs,
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.button {
+  position: relative;
+  top: 50%;
+  width: 74px;
+  height: 36px;
+  margin: -20px auto 0 auto;
+  overflow: hidden;
+}
+
+.checkbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.knobs {
+  z-index: 2;
+}
+
+.layer {
+  width: 100%;
+  background-color: #ebf7fc;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+
+.button.r,
+.button.r .layer {
+  border-radius: 100px;
+}
+
+#button-3 .knobs::before {
+	content: "YES";
+	position: absolute;
+	top: 7px;
+	left: 4px;
+	width: 25.8px;
+	height: 22.2px;
+	color: #fff;
+	font-size: 9.8px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1;
+	padding: 7px 4px;
+	background-color: #03a9f4;
+	border-radius: 50%;
+	transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+}
+
+#button-3 .checkbox:active + .knobs:before {
+  width: 46px;
+  border-radius: 100px;
+}
+
+#button-3 .checkbox:checked:active + .knobs:before {
+  margin-left: -26px;
+}
+
+#button-3 .checkbox:checked + .knobs:before {
+  content: "NO";
+  left: 42px;
+  background-color: #ccc;
+}
+
+#button-3 .checkbox:checked ~ .layer {
+  background-color: #dedede5c;
+}
 p{
   margin: 0;
 }
+
 @media screen and (max-width: 955px) {
   .all-content{
     flex-direction: column;

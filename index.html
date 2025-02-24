@@ -55,8 +55,6 @@
                 </label>
             </div>
           </div>
-        
-          
           <label for="graphInput"><h4>Nhập các cung</h4></label><br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
@@ -99,6 +97,18 @@
           <div class="pointStart input-group">
             <span class="input-group-text">Đỉnh bắt đầu</span>
             <input id="startNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
+            <label for="">Duyệt toàn <br> bộ đồ thị</label>
+            <div class="toggle-button-cover">
+              <div id="button-3" class="button r">
+                <input class="checkbox" type="checkbox">
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">Tốc độ duyệt</span>
+            <input type="range" id="speedSlider" class="form-control" min="200" max="5000" step="100">
           </div>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-browse" onclick="performTraversal()">Duyệt</button>
