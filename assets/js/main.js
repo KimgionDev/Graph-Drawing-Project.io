@@ -68,7 +68,7 @@ function updateGraphInfo() {
 function generateGraph() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
-    const graphType = document.querySelector('input[name="graphType"]:checked').value // Loại đồ thị (có hướng hoặc vô hướng)
+    const graphType = document.querySelector('input[name="graphType"]:checked').value; // Loại đồ thị (có hướng hoặc vô hướng)
 
     // Danh sách các đỉnh
     let nodes = [];
@@ -93,13 +93,16 @@ function generateGraph() {
     }
 
     lines.forEach(line => {
-        const edgeData = line.split(' ').map(Number);
+        const edgeData = line.split(' ').map(str => parseFloat(str)); // Sử dụng parseFloat để xử lý cả số âm và số thực
         if (edgeData.length >= 2) {
             const source = edgeData[0];
             const target = edgeData[1];
-            const weight = edgeData[2] || 0;
-
+            const weight = edgeData[2] || 0; // Trọng số có thể là số âm
             // Kiểm tra xem cung đã tồn tại chưa
+            if (source < 0 || target < 0){
+                alert('Cung khong am');
+                return NULL;
+            }
             const edgeKey = source + '-' + target;
             if (!edgeOccurrences[edgeKey]) {
                 edgeOccurrences[edgeKey] = 0;
@@ -117,14 +120,14 @@ function generateGraph() {
                 data: {
                     source: '' + source,
                     target: '' + target,
-                    weight: weight ? String(weight) : ''
+                    weight: weight ? String(weight) : '' // Hiển thị trọng số, có thể là số âm
                 },
                 style: {
                     'line-color': '#000',
                     'target-arrow-color': '#000',
                     'width': 2,
                     'line-style': 'bezier', // Default curved edges
-                    'label': weight ? String(weight) : '', // Display weight on the edge
+                    'label': weight ? String(weight) : '', // Hiển thị trọng số trên cung
                     'text-background-color': '#fff',  // Background color for the label to make it stand out
                     'text-background-opacity': 1,
                     'text-border-width': 1,
@@ -185,24 +188,11 @@ function generateGraph() {
     });
 }
 
-// document.getElementById("graphInput").addEventListener("input", function(event) {
-//     let input = event.target.value;
-
-//     // Chỉ cho phép số nguyên, dấu cách và xuống dòng
-//     let cleanedInput = input.replace(/[^0-9\s\n]/g, '');
-
-//     // Kiểm tra nếu có ký tự không hợp lệ bị xóa
-//     if (input !== cleanedInput) {
-//         alert("Chỉ được nhập số nguyên theo định dạng: u v (mỗi cặp số cách nhau 1 khoảng trắng, mỗi cung cách nhau một dòng)");
-//         event.target.value = cleanedInput;
-//     }
-// });
-
 document.getElementById("graphInput").addEventListener("input", function(event) {
     let input = event.target.value;
 
-    // Chỉ cho phép số nguyên, dấu cách và xuống dòng (cho phép nhập Space tạm thời)
-    let cleanedInput = input.replace(/[^0-9\s\n]/g, '');
+    // Chỉ cho phép số nguyên, dấu cách, xuống dòng, và dấu "-" cho số âm
+    let cleanedInput = input.replace(/[^0-9\s\n\-]/g, '');
 
     // Xử lý từng dòng nhập vào
     cleanedInput = cleanedInput.split('\n').map(line => {
@@ -222,7 +212,6 @@ document.getElementById("graphInput").addEventListener("input", function(event) 
         if (parts.length === 2 || parts.length === 3) {
             return parts.join(' ');
         }
-
         // Nếu nhập quá 3 số, cảnh báo và chỉ giữ 3 số đầu
         if (parts.length > 3) {
             alert("Mỗi dòng chỉ được nhập tối đa 3 số nguyên!");
@@ -236,8 +225,4 @@ document.getElementById("graphInput").addEventListener("input", function(event) 
     if (event.target.value !== cleanedInput) {
         event.target.value = cleanedInput;
     }
-
-    // Kiểm tra bổ sung để debug
-    console.log("Input:", input);
-    console.log("Cleaned Input:", cleanedInput);
 });
