@@ -63,6 +63,10 @@ function updateGraphInfo() {
     document.getElementById('nodeCountInput').value = nodeCount;
     document.getElementById('edgeCountInput').value = edgeCount;
 }
+function isValidFloat(num) {
+    // Kiểm tra xem num có phải là số thực hợp lệ không
+    return !isNaN(num) && num.toString().indexOf('.') !== -1;
+}
 
 // Hàm tạo đồ thị và lưu đồ thị dưới dạng danh sách kề
 function generateGraph() {
@@ -99,8 +103,8 @@ function generateGraph() {
             const target = edgeData[1];
             const weight = edgeData[2] || 0; // Trọng số có thể là số âm
             // Kiểm tra xem cung đã tồn tại chưa
-            if (source < 0 || target < 0){
-                alert('Cung khong am');
+            if (source < 0 || target < 0 || isValidFloat(source) || isValidFloat(target)){
+                alert('Cung khong am hoac so thuc');
                 return NULL;
             }
             const edgeKey = source + '-' + target;
@@ -192,7 +196,7 @@ document.getElementById("graphInput").addEventListener("input", function(event) 
     let input = event.target.value;
 
     // Chỉ cho phép số nguyên, dấu cách, xuống dòng, và dấu "-" cho số âm
-    let cleanedInput = input.replace(/[^0-9\s\n\-]/g, '');
+    let cleanedInput = input.replace(/[^0-9\s\n\.\-]/g, '');
 
     // Xử lý từng dòng nhập vào
     cleanedInput = cleanedInput.split('\n').map(line => {
