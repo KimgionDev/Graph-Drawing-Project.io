@@ -44,7 +44,10 @@ header {
 label > h4{
   color: var(--second-color);
 }
-
+.container__head{
+  height: 100%;
+  max-height: 78px;
+}
 .header__left{
   display: flex;
   text-align: left;
