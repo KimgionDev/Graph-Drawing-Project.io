@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="shortcut icon" href="assets/img/graph.ico" type="image/x-icon">
 </head>
+
 <body>
   <!-- Spinner loading -->
   <div id="loading-screen">
@@ -68,11 +69,11 @@
         <div id="graphInfo" class="graphInfor d-flex flex-row justify-content-center">
           <div class="nodeCount">
             <label for="nodeCountInput">Số lượng đỉnh</label>
-            <input type="number" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
+            <input type="" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
           </div>
           <div class="edgeCount">
             <label for="edgeCountInput">Số lượng cung</label>
-            <input type="number" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+            <input type="" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
           </div>
         </div>
       </div>
@@ -80,7 +81,7 @@
       <!--RIGHT COLUMN-->
       <div class="right-col col-xl-3 container">
         <div class="right-col__content row d-flex flex-column">
-          <div class="selectAlg form-floating  d-flex flex-column align-items-start">
+          <div class="selectAlg form-floating  d-flex flex-column align-items-start mb-2 mt-1">
             <select id="traversalType" class="form-select form-select-lg" aria-label="Large select example">
               <option value="bfs">Duyệt BFS</option>
               <option value="bfs-fullGraph">Duyệt BFS (toàn đồ thị)</option>
@@ -91,17 +92,19 @@
             </select>
             <label for="traversalType">Chọn thuật toán</label>
           </div>
-          <div class="pointStart input-group">
+          <div class="pointStart input-group mb-2">
             <span class="input-group-text">Đỉnh bắt đầu</span>
             <input id="startNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
           </div>
-          <div class="input-group speedSlide">
+          <div class="input-group speedSlide mb-2">
             <span class="input-group-text">Tốc độ duyệt</span>
             <label class="slider">
+              <p id="decreaseSpeed">-</p>
               <input type="range" id="speedSlider" class="level" min="200" max="5000" step="100">
+              <p id="increaseSpeed">+</p>
             </label>
           </div>
-          <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center mb-2">
             <button type="button" class="btn btn-browse" onclick="performTraversal()">Duyệt</button>
           </div>
           <div class="fakeLang">
@@ -110,7 +113,7 @@
           <div class="resultBrowse">
             <p>Kết quả</p>
             <div class="result-box">
-              <div id="visitedOrder""></div>
+              <div id="visitedOrder"></div>
             </div>
           </div>
         </div>
