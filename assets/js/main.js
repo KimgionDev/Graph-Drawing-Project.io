@@ -1,3 +1,9 @@
+const themeToggle = document.querySelector(".themeInp");
+
+themeToggle.addEventListener('change', ()=> {
+    document.body.classList.toggle('light_theme_var');
+})
+
 let cy = null;
 let nodeCount = 0;    // Biến đếm số lượng đỉnh
 let edgeCount = 0;    // Biến đếm số lượng cung
