@@ -21,7 +21,7 @@
 
   <div class="container-fluid container__head">
     <div class="row head">
-      <header>
+      <header class="d-flex">
         <div class="header__left">
           <a href="./index.html">
             <img src="./assets/img/header_icon.png" alt="header_icon">
@@ -29,8 +29,11 @@
           <a href="./index.html">
             <h1 id="header__left-heading">Graphify</h1>
           </a>
+          
+        </div>
+        <div class="header__right d-flex">
           <div class="form-check form-switch darkLight">
-            <input class="form-check-input themeInp" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+            <input class="form-check-input themeInp m-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
             <label class="form-check-label" for="flexSwitchCheckChecked">Chế độ tối</label>
           </div>
         </div>
@@ -127,18 +130,7 @@
     </div>
   </div>
   <script>
-    window.addEventListener("load", function() {
-        let loadingScreen = document.getElementById("loading-screen");
-        
-        setTimeout(() => {
-            loadingScreen.style.transition = "opacity 0.6s ease";
-            loadingScreen.style.opacity = "0";
-        }, 200); 
-        
-        setTimeout(() => {
-            loadingScreen.style.display = "none";
-        }, 600);
-    });
+
   </script> 
   <script src="assets/js/main.js"></script>
   <script src="assets/js/bfs&dfs.js"></script>

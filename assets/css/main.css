@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
+* {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -21,23 +21,25 @@
   --text-color: #333;
   --btn-color: #003566;
   --btn-text-color: #F5F5F5;
+  --btn-swt-color: white;
 }
 
 .light_theme_var {
   --bs-border-2: #9E9E9E;
-  --second-color: #2196F3; 
-  --third-color: #F0E5D3;  
-  --fourth-color: #EADFC8;
-  --bg-color: #EDE0C8;     
-  --border-color: #BDBDBD; 
+  --second-color: #2196F3;
+  --third-color: #f4f3ee;
+  --fourth-color: #D6CCC2;
+  --bg-color: #f5ebe0;
+  --border-color: #BDBDBD;
   --header-color: #64B5F6;
-  --btn-color: #2196F3;    
-  --btn-text-color: #0F1A5A ; 
-  --text-color: #3E2723;   
-  --bs-font: #37474F;      
+  --btn-color: #2f94c6;
+  --btn-text-color: white;
+  --text-color: #3E2723;
+  --bs-font: white;
+  --btn-swt-color: #3E2723;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -55,47 +57,67 @@ body {
   flex-wrap: wrap;
   margin: auto;
   height: 100vh;
+  transition: 0.3s ease-in-out;
 }
 
 header {
   width: 100%;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
   background-color: var(--bg-color);
+  transition: 0.3s ease-in-out;
 }
 
-.darkLight{
-  position: absolute;
-  right: 25px;
-  top: 27px;
-  color: var(--btn-text-color);
-}
 
-label > h4{
+
+label>h4 {
   color: var(--second-color);
 }
 
-.container__head{
+.container__head {
   height: 100%;
   max-height: 78px;
 }
 
-.header__left{
+.header__left {
   display: flex;
   text-align: left;
   margin: 5px;
 }
 
+.header__left a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header__right {
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.darkLight {
+  color: var(--btn-text-color);
+  max-width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.darkLight label {
+  color: var(--btn-swt-color) !important;
+}
+
 .header__left #header__left-heading {
   color: var(--second-color);
   font-size: 3rem;
-  margin-left: 10px;
 }
 
-#iptGraph{
+#iptGraph {
   margin: 10px;
 }
 
-#iptGraph h4{
+#iptGraph h4 {
   height: 35px;
   min-height: 35px;
   margin: 10px 0 0 5px;
@@ -111,11 +133,11 @@ label > h4{
   /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); */
 }
 
-#btn__input_graph{
+#btn__input_graph {
   width: 100%;
 }
 
-#btn__input_graph button{
+#btn__input_graph button {
   width: 90%;
 }
 
@@ -138,49 +160,54 @@ label > h4{
   border-radius: 4px;
 }
 
-#nodeCountInput, #edgeCountInput, #startNodeInput {
+#nodeCountInput,
+#edgeCountInput,
+#startNodeInput {
   appearance: textfield;
   text-align: center;
   font-weight: 500;
   font-size: 1rem !important;
 }
 
-#nodeCountInput:focus, #edgeCountInput:focus {
+#nodeCountInput:focus,
+#edgeCountInput:focus {
   outline: none;
 }
 
-.graphInfor > div{
+.graphInfor>div {
   margin: 5px 5px;
 }
 
-.row{
+.row {
   flex-wrap: nowrap;
   align-items: stretch;
 }
 
-.container{
+.container {
   max-width: 98%;
 }
 
-.mid-col{
+.mid-col {
   background-color: var(--fourth-color);
 }
 
-.right-col__content{
+.right-col__content {
   background-color: white;
   border-radius: 7px;
 }
 
-.right-col__content > div{
+.right-col__content>div {
   margin-bottom: 6px;
 }
 
-.nodeCount label, .edgeCount label{
+.nodeCount label,
+.edgeCount label {
   font-weight: 500;
-  color: var(--bs-font);
+  color: var(--btn-swt-color);
 }
 
-.left-col, .right-col {
+.left-col,
+.right-col {
   font-weight: 500;
   display: flex;
   flex-direction: column;
@@ -192,7 +219,9 @@ label > h4{
   background-color: var(--third-color);
 }
 
-.left-col, .mid-col, .right-col{
+.left-col,
+.mid-col,
+.right-col {
   flex-direction: column;
   padding: 10px 10px;
   border: 1px solid var(--border-color);
@@ -201,11 +230,12 @@ label > h4{
   transition: all 1s ease;
 }
 
-.left-col{
+.left-col {
   align-items: flex-start;
 }
 
-.btn-func, .btn-browse{
+.btn-func,
+.btn-browse {
   background-color: var(--btn-color);
   border: none;
   border-radius: 5px;
@@ -215,64 +245,69 @@ label > h4{
   margin: 5px 5px;
 }
 
-.btn-browse{
+.btn-browse {
   width: 100%;
   margin: 2px 0px;
 }
 
-.btn-func:hover, .btn-browse:hover{
+.btn-func:hover,
+.btn-browse:hover {
   background-color: var(--second-color);
   color: black;
-  box-shadow: 0px 0px 9px var(--second-color) ;
+  box-shadow: 0px 0px 9px var(--second-color);
   transform: translateY(-2px);
   transition: 0.3s ease-out;
 }
 
-.btn-func:active, .btn-browse:active{
-  background-color: var(--bs-border-2) !important;
+.btn-func:active,
+.btn-browse:active {
+  background-color: var(--fifth-color) !important;
   transform: scale(0.9);
+  border-color: var(--fifth-color);
 }
 
-.right-col__content{
+.right-col__content {
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-.form-control, .form-select{
+.form-control,
+.form-select {
   transition: 0.2s ease-in-out;
   width: max-content;
 }
 
-.form-select:focus, .form-control:focus{
+.form-select:focus,
+.form-control:focus {
   box-shadow: none;
   outline: none;
   border: 1px solid var(--bs-border-2);
 }
 
-.pointStart{
+.pointStart {
   width: 100%;
   flex-direction: row;
   flex-wrap: nowrap;
 }
 
-.pointStart span{
+.pointStart span {
   font-size: 0.7rem;
 }
 
-.pointStart #startNodeInput{
+.pointStart #startNodeInput {
   margin-right: 3px;
   font-size: 0.7rem;
 }
 
-.pointStart label{
+.pointStart label {
   font-size: 0.7rem;
   text-wrap: wrap;
   margin: 0px 5px;
   text-align: left;
 }
 
-.speedSlide #decreaseSpeed{
+.speedSlide #decreaseSpeed {
   font-size: 1rem !important;
   position: absolute;
   top: -23px;
@@ -281,7 +316,7 @@ label > h4{
   font-weight: 500;
 }
 
-.speedSlide #increaseSpeed{
+.speedSlide #increaseSpeed {
   font-size: 1.3rem !important;
   position: absolute;
   top: -27px;
@@ -290,24 +325,24 @@ label > h4{
   font-weight: 500;
 }
 
-textarea#graphInput{
+textarea#graphInput {
   transition: 0.2s ease-in-out;
   height: 378px;
 }
 
 textarea#graphInput:focus {
-  border: 2px solid var(--bs-border-2); /* Sử dụng biến màu primary nếu có */
-  outline: none; /* Loại bỏ viền mặc định */
+  border: 2px solid var(--bs-border-2);
+  outline: none;
 }
 
-.form-floating > .form-select {
-	padding-top: 1.625rem;
-	padding-bottom: .625rem;
-	width: 100%;
-	margin-top: 5px;
+.form-floating>.form-select {
+  padding-top: 1.625rem;
+  padding-bottom: .625rem;
+  width: 100%;
+  margin-top: 5px;
 }
 
-.fakeLang{
+.fakeLang {
   max-width: 100%;
   width: calc(100% - 20px);
   height: 250px;
@@ -318,35 +353,38 @@ textarea#graphInput:focus {
   box-sizing: border-box;
 }
 
-.selectAlg label, .selectGraph label{
+.selectAlg label,
+.selectGraph label {
   font-weight: 600;
   font-size: 1rem;
   left: 10px;
   color: var(--btn-color) !important;
 }
 
-.selectAlg .form-select, .selectGraph .form-select {
+.selectAlg .form-select,
+.selectGraph .form-select {
   width: 100%;
   min-height: fit-content;
   font-size: 1rem;
 }
 
-.selectGraph .form-select option{
+.selectGraph .form-select option {
   position: relative;
 }
 
-.speedSlide span{
+.speedSlide span {
   font-size: 0.7rem;
 }
 
-.speedSlide label{
+.speedSlide label {
   flex: 1;
 }
 
-.speedSlide input{
+.speedSlide input {
   margin: 0px 5px;
 }
-/* From Uiverse.io by Galahhad */ 
+
+/* From Uiverse.io by Galahhad */
 /* level settings 👇 */
 
 .slider {
@@ -406,7 +444,7 @@ textarea#graphInput:focus {
   -webkit-appearance: none;
   width: 12px;
   height: 12px;
-  background: var(--level-color); 
+  background: var(--level-color);
   border-radius: 50%;
   box-shadow: none;
   position: relative;
@@ -416,7 +454,7 @@ textarea#graphInput:focus {
   height: calc(var(--slider-height) * 2);
 }
 
-.result-box{
+.result-box {
   width: 100%;
   height: 100%;
   min-height: 30px;
@@ -430,38 +468,33 @@ textarea#graphInput:focus {
 
 /* Loading overlay */
 #loading-screen {
-    position: fixed;
-    inset: 0;
-    background: #111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
+  position: fixed;
+  inset: 0;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
 /* Ẩn dần khi tải xong */
 #loading-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* Spinner đẹp */
 .spinner {
-    width: 80px;
-    height: 80px;
-    border: 6px solid rgba(255, 255, 255, 0.2);
-    border-top: 6px solid #00d4ff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  width: 80px;
+  height: 80px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid #00d4ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* From Uiverse.io by Pradeepsaranbishnoi */ 
+/* From Uiverse.io by Pradeepsaranbishnoi */
 .mydict div {
   display: flex;
   flex-wrap: wrap;
@@ -480,7 +513,7 @@ textarea#graphInput:focus {
   width: 1px;
 }
 
-.mydict input[type="radio"]:checked + span {
+.mydict input[type="radio"]:checked+span {
   box-shadow: 0 0 0 0.0625em var(--second-color);
   background-color: var(--second-color);
   z-index: 1;
@@ -509,12 +542,107 @@ label:last-child span {
   border-radius: 0 .375em .375em 0;
 }
 
-p{
+p {
   margin: 0;
 }
 
-@media screen and (max-width: 955px) {
-  .all-content{
+
+/* RESPONSIVEEEEEEEEEEEEEEE */
+@media screen and (max-width: 1200px) {
+  .row>* {
+    flex-shrink: unset;
+  }
+
+  .all-content {
     flex-direction: column;
+    align-items: center;
+  }
+
+  .left-col,
+  .right-col,
+  .mid-col {
+    align-items: center;
+  }
+
+  #iptGraph {
+    width: 70%;
+  }
+
+  #btn__input_graph button {
+    width: 70%;
+  }
+}
+
+/* @media screen and (max-width: 955px) {
+
+} */
+
+@media screen and (max-width: 665px) {
+  .header__left a img {
+    width: 70%;
+  }
+
+  .header__left a h1 {
+    font-size: 2.2rem !important;
+  }
+
+  .form-check-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .nodeCount label,
+  .edgeCount label {
+    font-size: 0.9rem;
+  }
+
+  .header__right {
+    justify-content: center;
+  }
+
+  .form-switch {
+    padding: 0;
+  }
+
+  #graphInfo input {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .form-check-label {
+    font-size: 0.75rem;
+  }
+
+  #iptGraph {
+    width: 80%;
+  }
+
+  #btn__input_graph button {
+    width: 80%;
+  }
+
+  .nodeCount, .edgeCount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .nodeCount input, .edgeCount input{
+    width: 40px !important;
+    margin: 0px 2px !important;
+  }
+}
+
+/* ANIMATION HERE */
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
