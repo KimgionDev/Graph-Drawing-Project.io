@@ -353,6 +353,10 @@ textarea#graphInput:focus {
   box-sizing: border-box;
 }
 
+.fakeLang p{
+  font-size: 0.9rem;
+}
+
 .selectAlg label,
 .selectGraph label {
   font-weight: 600;

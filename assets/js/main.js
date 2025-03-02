@@ -249,3 +249,51 @@ document.getElementById("graphInput").addEventListener("input", function(event) 
         event.target.value = cleanedInput;
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectElement = document.getElementById("traversalType");
+    const pseudoCodeContainer = document.querySelector(".fakeLang p");
+
+    const pseudoCodeMap = {
+        bfs: `Đưa 1 đỉnh bất kỳ vào Hàng đợi<br>
+while (Hàng đợi chưa rỗng) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đầu hàng đợi ra<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (u đã duyệt) continue;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Duyệt u<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu u đã được duyệt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for các đỉnh kề v của u {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if v chưa được duyệt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đưa v vào hàng đợi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}`,
+        "bfs-fullGraph": `Đưa các đỉnh chưa duyệt vào hàng đợi, lặp lại BFS cho từng thành phần liên thông.`,
+        dfs: `Đưa 1 đỉnh bất kỳ vào Ngăn xếp<br>
+while (Ngăn xếp chưa rỗng) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đỉnh ngăn xếp ra<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (u đã duyệt) continue;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Duyệt u<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu u đã được duyệt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for các đỉnh kề v của u (duyệt ngược) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if v chưa được duyệt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đưa v vào ngăn xếp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}`,
+        "dfs-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng ngăn xếp.`,
+        "dfs-recursion": `Hàm DFS(u):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (u đã được duyệt) return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Duyệt u;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu u đã được duyệt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for các đỉnh kề v của u {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+Gọi DFS(startNode);`,
+        "dfs-recursion-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng đệ quy.`
+    };
+
+    selectElement.addEventListener("change", function () {
+        const selectedAlgorithm = this.value;
+        pseudoCodeContainer.innerHTML = pseudoCodeMap[selectedAlgorithm] || "Mã giả tại đây";
+    });
+
+    selectElement.dispatchEvent(new Event("change"));
+});
