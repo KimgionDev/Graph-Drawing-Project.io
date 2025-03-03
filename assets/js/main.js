@@ -1,63 +1,53 @@
-window.addEventListener("load", function() {
+//Loading animation
+window.addEventListener("load", function () {
     let loadingScreen = document.getElementById("loading-screen");
-    
+
     setTimeout(() => {
         loadingScreen.style.transition = "opacity 0.6s ease";
         loadingScreen.style.opacity = "0";
-    }, 200); 
-    
+    }, 200);
+
     setTimeout(() => {
         loadingScreen.style.display = "none";
     }, 600);
 });
 
+//Change Theme
 const themeToggle = document.querySelector(".themeInp");
 
-themeToggle.addEventListener('change', ()=> {
+themeToggle.addEventListener('change', () => {
     document.body.classList.toggle('light_theme_var');
 })
 
 let cy = null;
-let nodeCount = 0;    // Biến đếm số lượng đỉnh
-let edgeCount = 0;    // Biến đếm số lượng cung
+let nodeCount = 0;    
+let edgeCount = 0;    
 
-// Hàm thêm đỉnh mới
 function addNode() {
-    // Tăng số lượng đỉnh
     nodeCount++;
 
-    // Tạo đỉnh mới
     const newNode = {
         data: {
-            id: '' + nodeCount,  // Label đỉnh là số đỉnh
+            id: '' + nodeCount,  
             label: '' + nodeCount
         },
         position: {
-            x: Math.random() * 1000,  // Vị trí ngẫu nhiên
+            x: Math.random() * 1000,  
             y: Math.random() * 600
         }
     };
 
-    // Thêm đỉnh mới vào đồ thị
     cy.add(newNode);
-
-    // Cập nhật lại giá trị đỉnh trong input
     document.getElementById('nodeCountInput').value = nodeCount;
-
-    // Cập nhật lại input đồ thị
     updateGraphInput();
 }
 
 function updateGraphInput() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
-
-    // Thêm thông tin đỉnh mới vào textarea nếu có
     let newInputText = lines.join('\n');
     document.getElementById('graphInput').value = newInputText;
 }
-
-// Hàm cập nhật số lượng đỉnh và số lượng cung
 function updateGraphInfo() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -75,8 +65,6 @@ function updateGraphInfo() {
             currentMaxNode = Math.max(currentMaxNode, edgeData);
         }
     });
-
-    // Cập nhật giá trị đỉnh và cung trong input
     nodeCount = currentMaxNode;
     edgeCount = edgeCount;
     document.getElementById('nodeCountInput').value = nodeCount;
@@ -87,13 +75,10 @@ function isValidFloat(num) {
     return !isNaN(num) && num.toString().indexOf('.') !== -1;
 }
 
-// Hàm tạo đồ thị và lưu đồ thị dưới dạng danh sách kề
 function generateGraph() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
-    const graphType = document.querySelector('input[name="graphType"]:checked').value; // Loại đồ thị (có hướng hoặc vô hướng)
-
-    // Danh sách các đỉnh
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
     let nodes = [];
     for (let i = 1; i <= nodeCount; i++) {
         nodes.push({
@@ -104,10 +89,9 @@ function generateGraph() {
         });
     }
 
-    // Danh sách các cung
     let edges = [];
-    let edgeOccurrences = {}; // số lần cung giữa 2 đỉnh xuất hiện
-    let nodePositions = {};  // Lưu vị trí các đỉnh đã có
+    let edgeOccurrences = {}; 
+    let nodePositions = {}; 
 
     // Nếu không có cung nào được nhập
     if (lines.length === 0 && nodeCount > 0) {
@@ -116,13 +100,12 @@ function generateGraph() {
     }
 
     lines.forEach(line => {
-        const edgeData = line.split(' ').map(str => parseFloat(str)); // Sử dụng parseFloat để xử lý cả số âm và số thực
+        const edgeData = line.split(' ').map(str => parseFloat(str)); 
         if (edgeData.length >= 2) {
             const source = edgeData[0];
             const target = edgeData[1];
             const weight = edgeData[2] || 0; // Trọng số có thể là số âm
-            // Kiểm tra xem cung đã tồn tại chưa
-            if (source < 0 || target < 0 || isValidFloat(source) || isValidFloat(target)){
+            if (source < 0 || target < 0 || isValidFloat(source) || isValidFloat(target)) {
                 alert('Cung khong am hoac so thuc');
                 return NULL;
             }
@@ -135,7 +118,7 @@ function generateGraph() {
             // Tính toán vị trí của các cung để tránh trùng lặp
             let offsetX = 0, offsetY = 0;
             if (edgeOccurrences[edgeKey] > 1) {
-                offsetX = (Math.random() - 0.5) * 50;  // Random offset to avoid overlap
+                offsetX = (Math.random() - 0.5) * 50; 
                 offsetY = (Math.random() - 0.5) * 50;
             }
 
@@ -149,8 +132,8 @@ function generateGraph() {
                     'line-color': '#000',
                     'target-arrow-color': '#000',
                     'width': 2,
-                    'line-style': 'bezier', // Default curved edges
-                    'label': weight ? String(weight) : '', // Hiển thị trọng số trên cung
+                    'line-style': 'bezier', 
+                    'label': weight ? String(weight) : '',
                     'text-background-color': '#fff',  // Background color for the label to make it stand out
                     'text-background-opacity': 1,
                     'text-border-width': 1,
@@ -176,10 +159,10 @@ function generateGraph() {
                 style: {
                     'background-color': '#000',
                     'label': 'data(label)',
-                    'color': '#fff',  // Label color is white
-                    'font-size': '15px', // Reduced font size for node labels
-                    'text-valign': 'center', // Vertically center text inside the node
-                    'text-halign': 'center'  // Horizontally center text inside the node
+                    'color': '#fff',  // Label color
+                    'font-size': '15px', 
+                    'text-valign': 'center', 
+                    'text-halign': 'center' 
                 }
             },
             {
@@ -190,14 +173,14 @@ function generateGraph() {
                     'target-arrow-color': '#000',
                     'label': 'data(weight)',
                     'target-arrow-shape': 'triangle',
-                    'curve-style': 'bezier', // Curved edges by default
-                    'color': '#000', // Set weight color to black
-                    'text-background-color': '#fff',  // Background color for edge labels
+                    'curve-style': 'bezier', 
+                    'color': '#000', 
+                    'text-background-color': '#fff',  
                     'text-background-opacity': 1,
                     'text-border-width': 1,
                     'text-border-color': '#000', // Border color for edge weight
-                    'font-size': '12px', // Size of edge weight text
-                    'text-margin-y': -12  // Position weight above the edge
+                    'font-size': '12px', 
+                    'text-margin-y': -12  
                 }
             }
         ],
@@ -211,13 +194,12 @@ function generateGraph() {
     });
 }
 
-document.getElementById("graphInput").addEventListener("input", function(event) {
+document.getElementById("graphInput").addEventListener("input", function (event) {
     let input = event.target.value;
 
     // Chỉ cho phép số nguyên, dấu cách, xuống dòng, và dấu "-" cho số âm
     let cleanedInput = input.replace(/[^0-9\s\n\.\-]/g, '');
 
-    // Xử lý từng dòng nhập vào
     cleanedInput = cleanedInput.split('\n').map(line => {
         let parts = line.split(/\s+/).filter(part => part !== ''); // Loại bỏ khoảng trắng thừa
 
@@ -256,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const pseudoCodeMap = {
         bfs: `Đưa 1 đỉnh bất kỳ vào Hàng đợi<br>
-while (Hàng đợi chưa rỗng) {<br>
+while Hàng đợi chưa rỗng {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đầu hàng đợi ra<br>
 &nbsp;&nbsp;&nbsp;&nbsp;if (u đã duyệt) continue;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Duyệt u<br>
@@ -268,7 +250,7 @@ while (Hàng đợi chưa rỗng) {<br>
 }`,
         "bfs-fullGraph": `Đưa các đỉnh chưa duyệt vào hàng đợi, lặp lại BFS cho từng thành phần liên thông.`,
         dfs: `Đưa 1 đỉnh bất kỳ vào Ngăn xếp<br>
-while (Ngăn xếp chưa rỗng) {<br>
+while Ngăn xếp chưa rỗng {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đỉnh ngăn xếp ra<br>
 &nbsp;&nbsp;&nbsp;&nbsp;if (u đã duyệt) continue;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Duyệt u<br>
@@ -287,7 +269,17 @@ while (Ngăn xếp chưa rỗng) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(v);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
 Gọi DFS(startNode);`,
-        "dfs-recursion-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng đệ quy.`
+        "dfs-recursion-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng đệ quy.`,
+        "mooreDijkstra": `**Khởi tạo:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tất cả các đỉnh đều chưa đánh dấu<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Với mọi u ≠ s, 𝜋[u] = ∞, 𝜋[s] = 0<br>
+**Lặp i từ 1 đến n - 1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tìm u chưa đánh dấu có 𝜋[u] nhỏ nhất<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu u<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for các đỉnh kề v của u:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if v chưa đánh dấu và (𝜋[u] + trọng số (u,v) < 𝜋[v]) then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;𝜋[v] = 𝜋[u] + trọng số (u, v)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u<br>`
     };
 
     selectElement.addEventListener("change", function () {

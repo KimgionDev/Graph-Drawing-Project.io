@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="shortcut icon" href="./assets/img/graph.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/img/graph.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -95,12 +95,19 @@
               <option value="dfs-recursion">Duyệt DFS (Đệ quy)</option>
               <option value="dfs-fullGraph">Duyệt DFS (Stack - full)</option>
               <option value="dfs-recursion-fullGraph">Duyệt DFS (Đệ quy - full)</option>
+              <option value="mooreDijkstra">Moore-Dijkstra</option>
             </select>
             <label for="traversalType">Chọn thuật toán</label>
           </div>
-          <div class="pointStart input-group mb-2">
-            <span class="input-group-text">Đỉnh bắt đầu</span>
-            <input id="startNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
+          <div class="pointChoice d-flex flex-row">
+            <div class="pointStart input-group mb-2">
+              <span class="input-group-text">Đỉnh bắt đầu</span>
+              <input id="startNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
+            </div>
+            <div class="pointEnd input-group mb-2">
+              <span class="input-group-text">Đỉnh kết thúc</span>
+              <input id="endNodeInput" type="number" aria-label="" class="form-control" value="1" min="1">
+            </div>
           </div>
           <div class="input-group speedSlide mb-2">
             <span class="input-group-text">Tốc độ duyệt</span>
@@ -133,5 +140,4 @@
   <script src="assets/js/bfs&dfs.js"></script>
   
 </body>
-
 </html>
