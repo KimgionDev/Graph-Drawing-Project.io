@@ -283,7 +283,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
             const neighbors = graph[vertex].slice().sort((a, b) => a - b);
             let index = 0;
 
-            function visitNextNeighbor() {
+             function visitNextNeighbor() {
                 if (index < neighbors.length) {
                     const neighbor = neighbors[index++];
                     if (!visited.has(neighbor)) {
@@ -295,7 +295,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
                     callback(); 
                 }
             }
-            visitNextNeighbor();
+             visitNextNeighbor();
         } else if (callback) {
             callback();
         }
@@ -307,6 +307,7 @@ async function mooreDijkstra() {
     const endNode = parseInt(document.getElementById("endNodeInput").value);
     const visitedOrder = document.getElementById("visitedOrder");
     const speedSlider = document.getElementById("speedSlider");
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
 
     if (isNaN(startNode) || isNaN(endNode)) {
         visitedOrder.innerHTML = "Vui lòng nhập đỉnh hợp lệ.";
@@ -322,8 +323,14 @@ async function mooreDijkstra() {
         const [u, v, w] = line.split(" ").map(Number);
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
-        allNodes.add(u);
-        allNodes.add(v);
+        if (graphType === 'directed') {
+            allNodes.add(u);
+            allNodes.add(v);
+        }
+        else if (graphType === 'undirected'){
+            allNodes.add(u);
+            allNodes.add(v);
+        }
     });
 
     // Bảng khoảng cách và đường đi
@@ -376,7 +383,6 @@ async function mooreDijkstra() {
     await reconstructPath(prev, startNode, endNode); 
     toggleInputs(false); 
 }
-
 
 
 class MinHeap {
