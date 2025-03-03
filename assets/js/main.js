@@ -289,3 +289,20 @@ Gọi DFS(startNode);`,
 
     selectElement.dispatchEvent(new Event("change"));
 });
+
+//an endNodeInput
+document.addEventListener("DOMContentLoaded", function () {
+    const traversalSelect = document.getElementById("traversalType");
+    const endNodeInputGroup = document.querySelector(".pointEnd");
+
+    // Mặc định ẩn endNodeInput
+    endNodeInputGroup.style.display = "none";
+
+    traversalSelect.addEventListener("change", function () {
+        if (this.value === "mooreDijkstra") {
+            endNodeInputGroup.style.display = "flex";
+        } else {
+            endNodeInputGroup.style.display = "none";
+        }
+    });
+});
