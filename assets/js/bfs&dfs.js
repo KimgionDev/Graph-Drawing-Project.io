@@ -110,22 +110,22 @@ async function performBFS(startNode) {
 }
 
 async function bfs(graph, start) {
-    const queue = [start]; 
-    const visited = new Set(); 
+    const queue = [start];
+    const visited = new Set();
     const result = []; // Mảng lưu thứ tự duyệt
-    const visitedEdges = new Set(); 
-    const delay = parseInt(document.getElementById('speedSlider').value); 
+    const visitedEdges = new Set();
+    const delay = parseInt(document.getElementById('speedSlider').value);
 
     async function visitNext() {
         if (queue.length === 0) {
-            return; 
+            return;
         }
 
-        const vertex = queue.shift(); 
+        const vertex = queue.shift();
 
         if (!visited.has(vertex)) {
-            visited.add(vertex); 
-            result.push(vertex); 
+            visited.add(vertex);
+            result.push(vertex);
 
             cy.$(`#${vertex}`).style('background-color', '#ef476f');
 
@@ -142,19 +142,19 @@ async function bfs(graph, start) {
 
 
             if (neighborsToAdd.length > 1) {
-                neighborsToAdd.sort((a, b) => a - b); 
+                neighborsToAdd.sort((a, b) => a - b);
             }
 
             queue.push(...neighborsToAdd);
         }
 
         if (queue.length > 0) {
-            await new Promise(resolve => setTimeout(resolve, delay)); 
-            await visitNext(); 
+            await new Promise(resolve => setTimeout(resolve, delay));
+            await visitNext();
         }
     }
-    
-    await visitNext(); 
+
+    await visitNext();
 }
 
 async function performDFS(startNode) {
@@ -181,26 +181,26 @@ async function performDFS(startNode) {
         }
     });
 
-    await dfs(graph, startNode); 
+    await dfs(graph, startNode);
 }
 
 async function dfs(graph, start) {
-    const stack = [start]; 
-    const visited = new Set(); 
-    const result = []; 
-    const visitedEdges = new Set(); 
-    const delay = parseInt(document.getElementById('speedSlider').value); 
+    const stack = [start];
+    const visited = new Set();
+    const result = [];
+    const visitedEdges = new Set();
+    const delay = parseInt(document.getElementById('speedSlider').value);
 
     async function visitNext() {
         if (stack.length === 0) {
-            return; 
+            return;
         }
 
-        const vertex = stack.pop(); 
+        const vertex = stack.pop();
 
         if (!visited.has(vertex)) {
-            visited.add(vertex); 
-            result.push(vertex); 
+            visited.add(vertex);
+            result.push(vertex);
 
             cy.$(`#${vertex}`).style('background-color', '#03a9f4');
 
@@ -283,7 +283,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
             const neighbors = graph[vertex].slice().sort((a, b) => a - b);
             let index = 0;
 
-             function visitNextNeighbor() {
+            function visitNextNeighbor() {
                 if (index < neighbors.length) {
                     const neighbor = neighbors[index++];
                     if (!visited.has(neighbor)) {
@@ -292,10 +292,10 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
                         visitNextNeighbor();
                     }
                 } else if (callback) {
-                    callback(); 
+                    callback();
                 }
             }
-             visitNextNeighbor();
+            visitNextNeighbor();
         } else if (callback) {
             callback();
         }
@@ -323,20 +323,28 @@ async function mooreDijkstra() {
         const [u, v, w] = line.split(" ").map(Number);
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
-        if (graphType === 'directed') {
-            allNodes.add(u);
-            allNodes.add(v);
+
+        // Cập nhật chiều ngược lại ( vô hướng lmao)
+        if (graphType === 'undirected') {
+            if (!graph[v]) graph[v] = [];
+            graph[v].push({ node: u, weight: w });
         }
-        else if (graphType === 'undirected'){
-            allNodes.add(u);
-            allNodes.add(v);
-        }
+
+        allNodes.add(u);
+        allNodes.add(v);
     });
+
+    if (!allNodes.has(endNode) || !allNodes.has(startNode)) {
+        visitedOrder.innerHTML = "Không có đường đi.";
+        toggleInputs(false);
+        return;
+    }
 
     // Bảng khoảng cách và đường đi
     let dist = {};
     let prev = {};
-    let queue = new MinHeap(); 
+    let queue = new MinHeap();
+    let pathEdges = []; 
 
     allNodes.forEach(node => {
         dist[node] = Infinity;
@@ -347,20 +355,23 @@ async function mooreDijkstra() {
     queue.push(startNode, 0);
 
     visitedOrder.innerHTML = "";
-    toggleInputs(true); 
-    //to mau StartNode
+    toggleInputs(true);
+    // Tô màu StartNode
     cy.getElementById(startNode.toString()).style("background-color", "#52b788");
+
+    let found = false; 
 
     while (!queue.isEmpty()) {
         let { node: u, cost } = queue.pop();
         if (u === endNode) {
-            //to mau endNode
-            cy.getElementById(endNode.toString()).style("background-color", "#52b788"); 
+            found = true;
+            // Tô màu endNode
+            cy.getElementById(endNode.toString()).style("background-color", "#52b788");
             break;
         }
 
         if (u !== startNode) {
-            //to mau cac node xet duyet
+            // Tô màu các node xét duyệt
             cy.getElementById(u.toString()).style("background-color", "#ef476f");
         }
 
@@ -372,16 +383,45 @@ async function mooreDijkstra() {
                 if (newDist < dist[v]) {
                     dist[v] = newDist;
                     prev[v] = u;
-                    queue.update(v, newDist); 
+                    queue.update(v, newDist);
                 }
             }
         }
 
-        await new Promise(resolve => setTimeout(resolve, speedSlider.value)); 
+        await new Promise(resolve => setTimeout(resolve, speedSlider.value));
     }
 
-    await reconstructPath(prev, startNode, endNode); 
-    toggleInputs(false); 
+    if (found) {
+        await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
+        await reconstructPath(prev, startNode, endNode);
+    } else {
+        visitedOrder.innerHTML = "Không có đường đi.";
+    }
+
+    toggleInputs(false);
+}
+
+async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
+    let path = [];
+    for (let at = endNode; at !== null; at = prev[at]) {
+        path.push(at);
+    }
+    path.reverse();
+
+    // Tô màu các cung theo đường đi
+    for (let i = 1; i < path.length; i++) {
+        let from = path[i - 1];
+        let to = path[i];
+
+        cy.edges().forEach(edge => {
+            if ((edge.source().id() == from.toString() && edge.target().id() == to.toString()) ||
+                (edge.source().id() == to.toString() && edge.target().id() == from.toString())) {
+                edge.style("line-color", "#c9184a");
+            }
+        });
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
 }
 
 
@@ -396,7 +436,7 @@ class MinHeap {
     }
 
     pop() {
-        return this.heap.shift(); 
+        return this.heap.shift();
     }
 
     isEmpty() {
@@ -421,7 +461,7 @@ async function reconstructPath(prev, startNode, endNode) {
     }
     path.reverse();
 
-    document.getElementById("visitedOrder").innerHTML = ""; 
+    document.getElementById("visitedOrder").innerHTML = "";
 
     for (let i = 0; i < path.length; i++) {
         let node = path[i];
