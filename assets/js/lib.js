@@ -1,3 +1,17 @@
+/**
+ * ---Author---
+ * Lexipit3268
+ * TranTrong Fuc
+ * DucFat
+ * DoanTaiLoc
+ * 
+ */
+const colors = {
+    red: "#ef476f",
+    blue: "#03a9f4",
+    green: "#52b788",
+    gray: "#5c677d",
+}
 async function performTraversal() {
     toggleInputs(true); // Khóa input khi thuật toán chạy
     resetTraversal();   // Reset trạng thái đồ thị
@@ -30,12 +44,6 @@ function toggleInputs(disable) {
     document.getElementById("speedSlider").disabled = disable;
 }
 
-
-// function resetTraversal() {
-//     cy.nodes().style("background-color", ""); 
-//     document.getElementById("visitedOrder").innerText = "";
-// }
-
 function resetTraversal() {
     // Reset màu của tất cả đỉnh
     cy.nodes().style("background-color", "");
@@ -46,37 +54,6 @@ function resetTraversal() {
     // Reset thứ tự đã duyệt
     document.getElementById("visitedOrder").innerText = "";
 }
-
-
-// async function performTraversal() {
-//     // Disable các phần nhập liệu khi bắt đầu duyệt
-//     toggleInputs(true);
-
-//     // Reset giá trị trước khi bắt đầu duyệt
-//     resetTraversal();
-
-//     const traversalType = document.getElementById('traversalType').value;
-//     const startNode = parseInt(document.getElementById('startNodeInput').value);
-
-//     if (traversalType === 'bfs') {
-//         await performBFS(startNode);  // Chờ BFS hoàn thành
-//         enableInputs();  // Enable lại các nút khi BFS xong
-//     } else if (traversalType === 'dfs') {
-//         await performDFS(startNode);  // Chờ DFS hoàn thành
-//         enableInputs();  // Enable lại các nút khi DFS xong
-//     } else if (traversalType === 'dfs-recursion') {
-//         performDFSRecursion(startNode);  
-//     }
-// }
-
-// function toggleInputs(disable) {
-//     // Disable hoặc enable các thành phần nhập liệu
-//     document.getElementById('graphInput').disabled = disable;
-//     document.getElementById('creatGraph').disabled = disable; 
-//     document.getElementById('traversalType').disabled = disable;
-//     document.getElementById('startNodeInput').disabled = disable;
-//     document.getElementById('speedSlider').disabled = disable;
-// }
 
 function enableInputs() {
     // Enable lại các thành phần nhập liệu khi duyệt xong
@@ -129,7 +106,7 @@ async function bfs(graph, start) {
             visited.add(vertex);
             result.push(vertex);
 
-            cy.$(`#${vertex}`).style('background-color', '#ef476f');
+            cy.$(`#${vertex}`).style('background-color', colors.red);
 
             document.getElementById('visitedOrder').innerText = result.join(' - ');
 
@@ -204,7 +181,7 @@ async function dfs(graph, start) {
             visited.add(vertex);
             result.push(vertex);
 
-            cy.$(`#${vertex}`).style('background-color', '#03a9f4');
+            cy.$(`#${vertex}`).style('background-color', colors.blue);
 
             // Cập nhật thứ tự đã duyệt
             document.getElementById('visitedOrder').innerText = result.join(' - ');
@@ -273,7 +250,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
     visited.add(vertex);
 
     setTimeout(() => {
-        cy.$(`#${vertex}`).style('background-color', '#52b788');
+        cy.$(`#${vertex}`).style('background-color', colors.green);
         let visitedOrder = document.getElementById('visitedOrder').innerText;
         if (visitedOrder.length > 0) {
             visitedOrder += ' - ';
@@ -529,7 +506,7 @@ async function bfsCheckBipartite(graph) {
     visited.add(startNode);
     group.set(startNode, 1); 
 
-    cy.$(`#${startNode}`).style('background-color', 'red'); // Đỉnh bắt đầu duyệt mặc định đỏ
+    cy.$(`#${startNode}`).style('background-color', colors.red); // Đỉnh bắt đầu duyệt mặc định đỏ
 
     while (queue.length > 0) {
         const node = queue.shift();
@@ -542,16 +519,16 @@ async function bfsCheckBipartite(graph) {
                     group.set(neighbor, group.get(node) === 1 ? 2 : 1);
 
                     if (group.get(neighbor) === 1) {
-                        cy.$(`#${neighbor}`).style('background-color', 'red'); 
+                        cy.$(`#${neighbor}`).style('background-color', colors.red); 
                     } else {
-                        cy.$(`#${neighbor}`).style('background-color', 'blue'); 
+                        cy.$(`#${neighbor}`).style('background-color', colors.blue); 
                     }
 
                     queue.push(neighbor);
                 } else {
                     if (group.get(neighbor) === group.get(node)) {
                         cy.elements().forEach(ele => {
-                            ele.style('background-color', 'gray');
+                            ele.style('background-color', colors.gray);
                         });
                         document.getElementById('visitedOrder').innerText += "Đồ thị không phân đôi.";
                         return;

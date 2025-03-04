@@ -279,7 +279,18 @@ Gọi DFS(startNode);`,
 &nbsp;&nbsp;&nbsp;&nbsp;for các đỉnh kề v của u:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if v chưa đánh dấu và (𝜋[u] + trọng số (u,v) < 𝜋[v]) then<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;𝜋[v] = 𝜋[u] + trọng số (u, v)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u<br>`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u<br>`,
+"bipartite": `Khởi tạo mảng màu -1<br>
+Duyệt i: nếu chưa tô && !bfs(i) → FALSE<br>
+Trả về TRUE;<br>
+Đưa u vào Hàng đợi, tô Xanh (0)<br>
+while (!Hàng đợi rỗng) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Lấy u, duyệt kề v:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (v chưa tô) tô đối lập, đẩy vào Hàng đợi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (color[v] == color[u]) → FALSE;<br>
+}<br>
+Trả về TRUE;`
+
     };
 
     selectElement.addEventListener("change", function () {
