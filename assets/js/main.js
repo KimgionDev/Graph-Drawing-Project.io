@@ -92,7 +92,7 @@ function generateGraph() {
     let edges = [];
     let edgeOccurrences = {}; 
     let nodePositions = {}; 
-
+    const visitedOrder = document.getElementById("visitedOrder");
     // Nếu không có cung nào được nhập
     if (lines.length === 0 && nodeCount > 0) {
         // Nếu có đỉnh nhưng không có cung, ta tạo đồ thị với chỉ 1 đỉnh.
@@ -106,7 +106,7 @@ function generateGraph() {
             const target = edgeData[1];
             const weight = edgeData[2] || 0; // Trọng số có thể là số âm
             if (source < 0 || target < 0 || isValidFloat(source) || isValidFloat(target)) {
-                alert('Cung khong am hoac so thuc');
+                visitedOrder.innerHTML = "Lỗi! Cung không âm hoặc số thực";
                 return NULL;
             }
             const edgeKey = source + '-' + target;
@@ -219,7 +219,7 @@ document.getElementById("graphInput").addEventListener("input", function (event)
         }
         // Nếu nhập quá 3 số, cảnh báo và chỉ giữ 3 số đầu
         if (parts.length > 3) {
-            alert("Mỗi dòng chỉ được nhập tối đa 3 số nguyên!");
+            // visitedOrder.innerHTML = "Mỗi dòng chỉ được nhập tối đa 3 số nguyên!";
             return parts.slice(0, 3).join(' '); // Chỉ lấy 3 số đầu tiên
         }
 
