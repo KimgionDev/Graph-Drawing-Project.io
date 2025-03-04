@@ -12,6 +12,29 @@ const colors = {
     green: "#52b788",
     gray: "#5c677d",
 }
+
+// Ràng buộc nhập đỉnh start/end
+document.getElementById("startNodeInput").addEventListener("input", function() {
+    const startNode = parseInt(this.value);
+    const nodeCount = document.getElementById("nodeCountInput").value;
+    if (startNode > nodeCount) {
+        this.value = nodeCount; 
+    }
+    else if (startNode < 1){
+        this.value = 1;
+    }
+});
+document.getElementById("endNodeInput").addEventListener("input", function() {
+    const endNode = parseInt(this.value);
+    const nodeCount = document.getElementById("nodeCountInput").value;
+    if (endNode > nodeCount) {
+        this.value = nodeCount; 
+    }
+    else if (endNode < 1){
+        this.value = 1;
+    }
+});
+
 async function performTraversal() {
     toggleInputs(true); // Khóa input khi thuật toán chạy
     resetTraversal();   // Reset trạng thái đồ thị
@@ -484,11 +507,10 @@ async function checkBipartite() {
             }
         }
     });
-    const nodeCount = Object.keys(graph).length;
-    const startNode = parseInt(document.getElementById('startNodeInput').value);
-
-    if (startNode > nodeCount || startNode < 1) {
-        document.getElementById('visitedOrder').innerText = "Nhập đỉnh bắt đầu hợp lệ.";
+    const startNode = parseInt(document.getElementById('startNodeInput').value);  
+    if (!graph[startNode] || graph[startNode].length === 0) {
+        cy.$(`#${startNode}`).style('background-color', colors.gray); 
+        document.getElementById('visitedOrder').innerText = "Đồ thị không phân đôi.";
         return;
     }
     await bfsCheckBipartite(graph);
@@ -539,7 +561,6 @@ async function bfsCheckBipartite(graph) {
 
         // await new Promise(resolve => setTimeout(resolve, delay));
     }
-
     const isBipartite = Array.from(group.values()).every(g => g === 1 || g === 2);
     if (isBipartite) {
         document.getElementById('visitedOrder').innerText += "Đồ thị phân đôi";
