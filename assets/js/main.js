@@ -179,7 +179,7 @@ function generateGraph() {
                     'text-background-opacity': 1,
                     'text-border-width': 1,
                     'text-border-color': '#000', // Border color for edge weight
-                    'font-size': '12px', 
+                    'font-size': '14px', 
                     'text-margin-y': -12  
                 }
             }
