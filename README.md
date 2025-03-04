@@ -35,6 +35,10 @@ To view and interact with the graph visualizations:
 ![GitHub watchers](https://img.shields.io/github/watchers/Kimgion840/Graph-Drawing-Project.io?style=social)
 ![License](https://img.shields.io/github/license/Kimgion840/Graph-Drawing-Project.io)
 
+## 🛠 Run Test
+
+[![Run Test](https://img.shields.io/badge/Run%20Test-Live-blue?style=for-the-badge)](https://kimgion840.github.io/Graph-Drawing-Project.io/)
+
 ## 👨‍💻 Contributors
 
 - 🎭 [Nguyen Loc](https://github.com/lexipit3268)
