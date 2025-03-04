@@ -33,7 +33,6 @@ To view and interact with the graph visualizations:
 ![GitHub Repo stars](https://img.shields.io/github/stars/Kimgion840/Graph-Drawing-Project.io?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Kimgion840/Graph-Drawing-Project.io?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/Kimgion840/Graph-Drawing-Project.io?style=social)
-![License](https://img.shields.io/github/license/Kimgion840/Graph-Drawing-Project.io)
 
 ## 🛠 Run Test
 
@@ -45,9 +44,7 @@ To view and interact with the graph visualizations:
 - 🎭 [Phúc Trần](https://github.com/phuctran1501)
 - 🎭 [Kimgion](https://github.com/Kimgion840)
 
-## 📜 License
+---
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
-
-Happy Coding! 🚀🎉
+Thanks for checking out our project! 🎉 If you have any feedback or suggestions, feel free to reach out. Happy coding! 🚀
 
