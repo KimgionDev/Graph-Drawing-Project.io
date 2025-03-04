@@ -132,7 +132,7 @@ function generateGraph() {
                     'line-color': '#000',
                     'target-arrow-color': '#000',
                     'width': 2,
-                    'line-style': '', 
+                    'line-style': 'bezier', 
                     'label': weight ? String(weight) : '',
                     'text-background-color': '#fff',  // Background color for the label to make it stand out
                     'text-background-opacity': 1,
@@ -173,6 +173,7 @@ function generateGraph() {
                     'target-arrow-color': '#000',
                     'label': 'data(weight)',
                     'target-arrow-shape': 'triangle',
+                    'curve-style': 'bezier',
                     'color': '#000', 
                     'text-background-color': '#fff',  
                     'text-background-opacity': 1,
