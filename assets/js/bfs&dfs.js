@@ -13,6 +13,8 @@ async function performTraversal() {
         performDFSRecursion(startNode);
     } else if (traversalType === "mooreDijkstra") {
         await mooreDijkstra();
+    } else if (traversalType === "bipartite") {
+        await checkBipartite();
     }
 
     toggleInputs(false); // Mở lại input sau khi chạy xong
@@ -481,3 +483,94 @@ async function reconstructPath(prev, startNode, endNode) {
         await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
     }
 }
+
+async function checkBipartite() {
+    const inputText = document.getElementById('graphInput').value.trim();
+    const lines = inputText.split('\n');
+    let graph = {};
+
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    lines.forEach(line => {
+        const edgeData = line.split(' ').map(Number);
+        if (edgeData.length >= 2) {
+            const source = edgeData[0];
+            const target = edgeData[1];
+
+            if (!graph[source]) graph[source] = [];
+            if (!graph[target]) graph[target] = [];
+
+            if (graphType === 'directed') {
+                graph[source].push(target);
+            } else if (graphType === 'undirected') {
+                graph[source].push(target);
+                graph[target].push(source);
+            }
+        }
+    });
+    const nodeCount = Object.keys(graph).length;
+    const startNode = parseInt(document.getElementById('startNodeInput').value);
+
+    if (startNode > nodeCount || startNode < 1) {
+        document.getElementById('visitedOrder').innerText = "Nhập đỉnh bắt đầu hợp lệ.";
+        return;
+    }
+    await bfsCheckBipartite(graph);
+}
+
+async function bfsCheckBipartite(graph) {
+    const queue = [];
+    const visited = new Set();
+    const group = new Map();
+    const delay = parseInt(document.getElementById('speedSlider').value);
+    const startNode = parseInt(document.getElementById('startNodeInput').value);
+
+    
+    queue.push(startNode);
+    visited.add(startNode);
+    group.set(startNode, 1); 
+
+    cy.$(`#${startNode}`).style('background-color', 'red'); // Đỉnh bắt đầu duyệt mặc định đỏ
+
+    while (queue.length > 0) {
+        const node = queue.shift();
+
+        if (graph[node]) {
+            for (const neighbor of graph[node]) {
+                if (!visited.has(neighbor)) {
+                    visited.add(neighbor);
+
+                    group.set(neighbor, group.get(node) === 1 ? 2 : 1);
+
+                    if (group.get(neighbor) === 1) {
+                        cy.$(`#${neighbor}`).style('background-color', 'red'); 
+                    } else {
+                        cy.$(`#${neighbor}`).style('background-color', 'blue'); 
+                    }
+
+                    queue.push(neighbor);
+                } else {
+                    if (group.get(neighbor) === group.get(node)) {
+                        cy.elements().forEach(ele => {
+                            ele.style('background-color', 'gray');
+                        });
+                        document.getElementById('visitedOrder').innerText += "Đồ thị không phân đôi.";
+                        return;
+                    }
+                }
+            }
+        }
+
+        // await new Promise(resolve => setTimeout(resolve, delay));
+    }
+
+    const isBipartite = Array.from(group.values()).every(g => g === 1 || g === 2);
+    if (isBipartite) {
+        document.getElementById('visitedOrder').innerText += "Đồ thị phân đôi";
+    } else {
+        document.getElementById('visitedOrder').innerText += "Đồ thị không phân đôi.";
+    }
+}
+
+
+
+
