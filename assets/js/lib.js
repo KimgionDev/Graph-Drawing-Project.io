@@ -11,26 +11,27 @@ const colors = {
     blue: "#03a9f4",
     green: "#52b788",
     gray: "#5c677d",
+    yellow: "#f8c302",
 }
 
 // Ràng buộc nhập đỉnh start/end
-document.getElementById("startNodeInput").addEventListener("input", function() {
+document.getElementById("startNodeInput").addEventListener("input", function () {
     const startNode = parseInt(this.value);
     const nodeCount = document.getElementById("nodeCountInput").value;
     if (startNode > nodeCount) {
-        this.value = nodeCount; 
+        this.value = nodeCount;
     }
-    else if (startNode < 1){
+    else if (startNode < 1) {
         this.value = 1;
     }
 });
-document.getElementById("endNodeInput").addEventListener("input", function() {
+document.getElementById("endNodeInput").addEventListener("input", function () {
     const endNode = parseInt(this.value);
     const nodeCount = document.getElementById("nodeCountInput").value;
     if (endNode > nodeCount) {
-        this.value = nodeCount; 
+        this.value = nodeCount;
     }
-    else if (endNode < 1){
+    else if (endNode < 1) {
         this.value = 1;
     }
 });
@@ -52,8 +53,9 @@ async function performTraversal() {
         await mooreDijkstra();
     } else if (traversalType === "bipartite") {
         await checkBipartite();
+    } else if (traversalType === "Tarjan") {
+        await performTarjan();
     }
-
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
 
@@ -346,7 +348,7 @@ async function mooreDijkstra() {
     let dist = {};
     let prev = {};
     let queue = new MinHeap();
-    let pathEdges = []; 
+    let pathEdges = [];
 
     allNodes.forEach(node => {
         dist[node] = Infinity;
@@ -361,7 +363,7 @@ async function mooreDijkstra() {
     // Tô màu StartNode
     cy.getElementById(startNode.toString()).style("background-color", "#52b788");
 
-    let found = false; 
+    let found = false;
 
     while (!queue.isEmpty()) {
         let { node: u, cost } = queue.pop();
@@ -507,9 +509,9 @@ async function checkBipartite() {
             }
         }
     });
-    const startNode = parseInt(document.getElementById('startNodeInput').value);  
+    const startNode = parseInt(document.getElementById('startNodeInput').value);
     if (!graph[startNode] || graph[startNode].length === 0) {
-        cy.$(`#${startNode}`).style('background-color', colors.gray); 
+        cy.$(`#${startNode}`).style('background-color', colors.gray);
         document.getElementById('visitedOrder').innerText = "Đồ thị không phân đôi.";
         return;
     }
@@ -523,10 +525,10 @@ async function bfsCheckBipartite(graph) {
     const delay = parseInt(document.getElementById('speedSlider').value);
     const startNode = parseInt(document.getElementById('startNodeInput').value);
 
-    
+
     queue.push(startNode);
     visited.add(startNode);
-    group.set(startNode, 1); 
+    group.set(startNode, 1);
 
     cy.$(`#${startNode}`).style('background-color', colors.red); // Đỉnh bắt đầu duyệt mặc định đỏ
 
@@ -541,9 +543,9 @@ async function bfsCheckBipartite(graph) {
                     group.set(neighbor, group.get(node) === 1 ? 2 : 1);
 
                     if (group.get(neighbor) === 1) {
-                        cy.$(`#${neighbor}`).style('background-color', colors.red); 
+                        cy.$(`#${neighbor}`).style('background-color', colors.red);
                     } else {
-                        cy.$(`#${neighbor}`).style('background-color', colors.blue); 
+                        cy.$(`#${neighbor}`).style('background-color', colors.blue);
                     }
 
                     queue.push(neighbor);
@@ -568,6 +570,119 @@ async function bfsCheckBipartite(graph) {
         document.getElementById('visitedOrder').innerText += "Đồ thị không phân đôi.";
     }
 }
+
+// Tarjan
+
+async function performTarjan() {
+    toggleInputs(true); 
+    resetTraversal(); 
+
+    const inputText = document.getElementById('graphInput').value.trim();
+    const lines = inputText.split('\n');
+    let graph = {};
+
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    lines.forEach(line => {
+        const edgeData = line.split(' ').map(Number);
+        if (edgeData.length >= 2) {
+            const source = edgeData[0];
+            const target = edgeData[1];
+
+            if (!graph[source]) graph[source] = [];
+            if (!graph[target]) graph[target] = [];
+
+            if (graphType === 'directed') {
+                graph[source].push(target);
+            } else if (graphType === 'undirected') {
+                graph[source].push(target);
+                graph[target].push(source);
+            }
+        }
+    });
+
+    await tarjan(graph);  
+    toggleInputs(false);  
+}
+
+async function tarjan(graph) {
+    let index = 0;
+    let stack = [];
+    let lowLink = {};
+    let indexMap = {};
+    let onStack = {};
+    let sccs = [];
+    let colorIndex = 0; 
+
+    // LMAO LMAO
+    const colorsArray = [
+        'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta', 'brown',
+        'lime', 'teal', 'indigo', 'violet', 'gold', 'silver', 'beige', 'lavender', 'peach', 'aqua',
+        'maroon', 'olive', 'navy', 'chocolate', 'coral', 'turquoise', 'periwinkle', 'khaki', 'plum', 'crimson',
+        'azure', 'salmon', 'chartreuse', 'orchid', 'sienna', 'tan', 'mint', 'fuchsia', 'steelblue', 'seashell', 'wheat',
+        'saddlebrown', 'mistyrose', 'lightskyblue', 'lightcoral', 'lightgreen', 'palevioletred', 'slateblue', 'tomato', 'yellowgreen'
+    ];    
+
+    const delay = parseInt(document.getElementById('speedSlider').value);
+
+    async function strongConnect(node) {
+        indexMap[node] = index;
+        lowLink[node] = index;
+        index++;
+        stack.push(node);
+        onStack[node] = true;
+
+        cy.$(`#${node}`).style('background-color', ''); 
+
+        for (const neighbor of graph[node]) {
+            if (!(neighbor in indexMap)) {
+                await strongConnect(neighbor); 
+                lowLink[node] = Math.min(lowLink[node], lowLink[neighbor]);
+            } else if (onStack[neighbor]) {
+                lowLink[node] = Math.min(lowLink[node], indexMap[neighbor]);
+            }
+        }
+
+        if (lowLink[node] === indexMap[node]) {
+            let scc = [];
+            let w;
+            const color = colorsArray[colorIndex % colorsArray.length]; 
+
+            do {
+                w = stack.pop();
+                onStack[w] = false;
+                scc.push(w);
+                cy.$(`#${w}`).style('background-color', color); 
+                // await new Promise(resolve => setTimeout(resolve, delay)); 
+            } while (w !== node);
+
+            sccs.push(scc);
+            colorIndex++; 
+        }
+    }
+
+    for (const node in graph) {
+        if (!(node in indexMap)) {
+            await strongConnect(node);
+        }
+    }
+
+    sccs = sccs.map(scc => scc.sort((a, b) => a - b));
+
+    let resultText = '';
+    sccs.forEach((scc, index) => {
+        resultText += `BPLT ${index + 1}: ${scc.join(' ')}\n`;
+    });
+
+    document.getElementById('visitedOrder').innerText = `Số bộ phận liên thông mạnh: ${sccs.length}\n${resultText}`;
+}
+
+
+
+
+
+
+
+
 
 
 
