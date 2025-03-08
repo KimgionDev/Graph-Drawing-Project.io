@@ -283,9 +283,8 @@ function performDFSRecursion(startNode) {
             }
         }
     });
-
     dfsRecursion(graph, startNode, new Set(), parseInt(document.getElementById('speedSlider').value), () => {
-        enableInputs(); // Enable inputs khi DFS đệ quy xong
+        toggleInputs(false); // Enable inputs khi DFS đệ quy xong
     });
 }
 
@@ -312,6 +311,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
                     if (isStopped) return;
                     const neighbor = neighbors[index++];
                     if (!visited.has(neighbor)) {
+                        
                         dfsRecursion(graph, neighbor, visited, delay, visitNextNeighbor);
                     } else {
                         visitNextNeighbor();
@@ -320,11 +320,15 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
                     callback();
                 }
             }
+            
             visitNextNeighbor();
+            
+            
         } else if (callback) {
             callback();
         }
     }, delay);
+    toggleInputs(true);
 }
 
 async function mooreDijkstra() {
@@ -349,7 +353,6 @@ async function mooreDijkstra() {
         const [u, v, w] = line.split(" ").map(Number);
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
-        // Cập nhật chiều ngược lại ( vô hướng lmao)
         if (graphType === 'undirected') {
             if (!graph[v]) graph[v] = [];
             graph[v].push({ node: u, weight: w });
@@ -365,7 +368,6 @@ async function mooreDijkstra() {
         return;
     }
 
-    // Bảng khoảng cách và đường đi
     let dist = {};
     let prev = {};
     let queue = new MinHeap();
@@ -379,9 +381,8 @@ async function mooreDijkstra() {
     dist[startNode] = 0;
     queue.push(startNode, 0);
 
-    visitedOrder.innerHTML = "";
+    visitedOrder.innerHTML = "";  
     toggleInputs(true);
-    // Tô màu StartNode
     cy.getElementById(startNode.toString()).style("background-color", "#52b788");
 
     let found = false;
@@ -392,17 +393,13 @@ async function mooreDijkstra() {
         let { node: u, cost } = queue.pop();
         if (u === endNode) {
             found = true;
-            // Tô màu endNode
             cy.getElementById(endNode.toString()).style("background-color", "#52b788");
             break;
         }
 
         if (u !== startNode) {
-            // Tô màu các node xét duyệt
             cy.getElementById(u.toString()).style("background-color", "#ef476f");
         }
-
-        visitedOrder.innerHTML += visitedOrder.innerHTML ? ` -> ${u}` : `${u}`;
 
         if (graph[u]) {
             for (let { node: v, weight } of graph[u]) {
@@ -420,7 +417,14 @@ async function mooreDijkstra() {
 
     if (found) {
         await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
-        await reconstructPath(prev, startNode, endNode);
+
+        let path = [];
+        for (let at = endNode; at !== null; at = prev[at]) {
+            path.push(at);
+        }
+        path.reverse();
+
+        visitedOrder.innerHTML += path.join(" -> ");
     } else {
         visitedOrder.innerHTML = "Không có đường đi.";
     }
@@ -436,21 +440,39 @@ async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
     if (isStopped) return;
     path.reverse();
 
-    // Tô màu các cung theo đường đi
+    let seenEdges = new Set();
+
     for (let i = 1; i < path.length; i++) {
         let from = path[i - 1];
         let to = path[i];
 
+        let minWeight = Infinity;
+        let minEdge = null;
+
         cy.edges().forEach(edge => {
-            if ((edge.source().id() == from.toString() && edge.target().id() == to.toString()) ||
-                (edge.source().id() == to.toString() && edge.target().id() == from.toString())) {
-                edge.style("line-color", "#c9184a");
+            let edgeSource = edge.source().id();
+            let edgeTarget = edge.target().id();
+            let weight = edge.data('weight');
+
+            if ((edgeSource === from.toString() && edgeTarget === to.toString()) ||
+                (edgeSource === to.toString() && edgeTarget === from.toString())) {
+
+                if (weight < minWeight && !seenEdges.has(edge.id())) {
+                    minWeight = weight;
+                    minEdge = edge;
+                }
             }
         });
+
+        if (minEdge) {
+            minEdge.style("line-color", "#c9184a");
+            seenEdges.add(minEdge.id()); 
+        }
 
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 }
+
 
 
 class MinHeap {
