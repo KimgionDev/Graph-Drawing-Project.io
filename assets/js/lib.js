@@ -14,6 +14,25 @@ const colors = {
     yellow: "#f8c302",
 }
 
+let isStopped = false; //tai moi thuat toan, KIEM TRA isStopped ok?
+
+document.querySelector(".btn-stop").addEventListener("click", function () {
+    stopTraversal();
+});
+
+function stopTraversal() {
+    isStopped = true; 
+    toggleInputs(false);
+    resetTraversal();
+    console.log("Đã dừng thuật toán và khôi phục trạng thái ban đầu.");
+    
+    setTimeout(() => {
+        isStopped = false; 
+        console.log("Đã đặt lại trạng thái isStopped.");
+    }, 1000);
+}
+
+
 // Ràng buộc nhập đỉnh start/end
 document.getElementById("startNodeInput").addEventListener("input", function () {
     const startNode = parseInt(this.value);
@@ -124,7 +143,7 @@ async function bfs(graph, start) {
         if (queue.length === 0) {
             return;
         }
-
+        if (isStopped) return;
         const vertex = queue.shift();
 
         if (!visited.has(vertex)) {
@@ -199,6 +218,7 @@ async function dfs(graph, start) {
         if (stack.length === 0) {
             return;
         }
+        if (isStopped) return;
 
         const vertex = stack.pop();
 
@@ -271,7 +291,7 @@ function performDFSRecursion(startNode) {
 
 function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
     if (visited.has(vertex)) return;
-
+    if (isStopped) return;
     visited.add(vertex);
 
     setTimeout(() => {
@@ -289,6 +309,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
 
             function visitNextNeighbor() {
                 if (index < neighbors.length) {
+                    if (isStopped) return;
                     const neighbor = neighbors[index++];
                     if (!visited.has(neighbor)) {
                         dfsRecursion(graph, neighbor, visited, delay, visitNextNeighbor);
@@ -317,6 +338,7 @@ async function mooreDijkstra() {
         visitedOrder.innerHTML = "Vui lòng nhập đỉnh hợp lệ.";
         return;
     }
+    if (isStopped) return;
 
     const inputText = document.getElementById("graphInput").value.trim();
     const lines = inputText.split("\n");
@@ -327,7 +349,6 @@ async function mooreDijkstra() {
         const [u, v, w] = line.split(" ").map(Number);
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
-
         // Cập nhật chiều ngược lại ( vô hướng lmao)
         if (graphType === 'undirected') {
             if (!graph[v]) graph[v] = [];
@@ -366,6 +387,8 @@ async function mooreDijkstra() {
     let found = false;
 
     while (!queue.isEmpty()) {
+        if (isStopped) return;
+
         let { node: u, cost } = queue.pop();
         if (u === endNode) {
             found = true;
@@ -410,6 +433,7 @@ async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
     for (let at = endNode; at !== null; at = prev[at]) {
         path.push(at);
     }
+    if (isStopped) return;
     path.reverse();
 
     // Tô màu các cung theo đường đi
@@ -459,6 +483,7 @@ class MinHeap {
 }
 
 async function reconstructPath(prev, startNode, endNode) {
+    if (isStopped) return;
     let path = [];
     for (let at = endNode; at !== null; at = prev[at]) {
         path.push(at);
@@ -492,8 +517,12 @@ async function checkBipartite() {
     let graph = {};
 
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    if (isStopped) return;
+
     lines.forEach(line => {
         const edgeData = line.split(' ').map(Number);
+        if (isStopped) return;
+
         if (edgeData.length >= 2) {
             const source = edgeData[0];
             const target = edgeData[1];
@@ -533,6 +562,7 @@ async function bfsCheckBipartite(graph) {
     cy.$(`#${startNode}`).style('background-color', colors.red); // Đỉnh bắt đầu duyệt mặc định đỏ
 
     while (queue.length > 0) {
+        if (isStopped) return;
         const node = queue.shift();
 
         if (graph[node]) {
@@ -574,8 +604,8 @@ async function bfsCheckBipartite(graph) {
 // Tarjan
 
 async function performTarjan() {
-    toggleInputs(true); 
-    resetTraversal(); 
+    toggleInputs(true);
+    resetTraversal();
 
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -600,8 +630,8 @@ async function performTarjan() {
         }
     });
 
-    await tarjan(graph);  
-    toggleInputs(false);  
+    await tarjan(graph);
+    toggleInputs(false);
 }
 
 async function tarjan(graph) {
@@ -611,31 +641,33 @@ async function tarjan(graph) {
     let indexMap = {};
     let onStack = {};
     let sccs = [];
-    let colorIndex = 0; 
-
-    // LMAO LMAO
+    let colorIndex = 0;
+    // FUCK YOU FUCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
     const colorsArray = [
-        'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta', 'brown',
-        'lime', 'teal', 'indigo', 'violet', 'gold', 'silver', 'beige', 'lavender', 'peach', 'aqua',
-        'maroon', 'olive', 'navy', 'chocolate', 'coral', 'turquoise', 'periwinkle', 'khaki', 'plum', 'crimson',
-        'azure', 'salmon', 'chartreuse', 'orchid', 'sienna', 'tan', 'mint', 'fuchsia', 'steelblue', 'seashell', 'wheat',
-        'saddlebrown', 'mistyrose', 'lightskyblue', 'lightcoral', 'lightgreen', 'palevioletred', 'slateblue', 'tomato', 'yellowgreen'
-    ];    
-
+        '#5A96E3', '#A38DC5', '#C4A484', '#184A2C', '#543312',
+        '#A20021', '#2B5252', '#D2B48C', '#B6C4B6', '#5A3C2C',
+        '#7A6590', '#B38A5F', '#406F6E', '#7EBDC2', '#E07B39',
+        '#A15512', '#CBC3E3', '#011F4B', '#D72638', '#8FA08F',
+        '#3D453D', '#A67C52', '#261225', '#FF5733', '#BF6724',
+        '#FFAA00', '#2D5F8B', '#72523A', '#3C324D', '#8D6346',
+        '#8C6D47', '#594A72', '#5A3E6B', '#1E3939', '#62A87C',
+        '#D2B48C', '#730000', '#3B2342', '#A078C2', '#B38A5F',
+        '#38761D', '#5A8C8A', '#00875A', '#002F5E', '#71491E',
+        '#525E52', '#A38DC5', '#563C28', '#CBC3E3', '#0F2A1B'
+    ];
     const delay = parseInt(document.getElementById('speedSlider').value);
-
     async function strongConnect(node) {
         indexMap[node] = index;
         lowLink[node] = index;
         index++;
         stack.push(node);
         onStack[node] = true;
-
-        cy.$(`#${node}`).style('background-color', ''); 
+        if(isStopped) return;
+        cy.$(`#${node}`).style('background-color', '');
 
         for (const neighbor of graph[node]) {
             if (!(neighbor in indexMap)) {
-                await strongConnect(neighbor); 
+                await strongConnect(neighbor);
                 lowLink[node] = Math.min(lowLink[node], lowLink[neighbor]);
             } else if (onStack[neighbor]) {
                 lowLink[node] = Math.min(lowLink[node], indexMap[neighbor]);
@@ -645,18 +677,18 @@ async function tarjan(graph) {
         if (lowLink[node] === indexMap[node]) {
             let scc = [];
             let w;
-            const color = colorsArray[colorIndex % colorsArray.length]; 
+            const color = colorsArray[colorIndex % colorsArray.length];
 
             do {
                 w = stack.pop();
                 onStack[w] = false;
                 scc.push(w);
-                cy.$(`#${w}`).style('background-color', color); 
+                cy.$(`#${w}`).style('background-color', color);
                 // await new Promise(resolve => setTimeout(resolve, delay)); 
             } while (w !== node);
 
             sccs.push(scc);
-            colorIndex++; 
+            colorIndex++;
         }
     }
 
@@ -675,15 +707,3 @@ async function tarjan(graph) {
 
     document.getElementById('visitedOrder').innerText = `Số bộ phận liên thông mạnh: ${sccs.length}\n${resultText}`;
 }
-
-
-
-
-
-
-
-
-
-
-
-

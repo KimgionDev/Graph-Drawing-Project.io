@@ -246,7 +246,7 @@ label>h4 {
   padding: 10px 10px;
   border: 1px solid var(--border-color);
   border-radius: 7px;
-  margin: 0px 5px;
+  margin: 3px 5px;
   transition: all 1s ease;
 }
 
@@ -255,7 +255,7 @@ label>h4 {
 }
 
 .btn-func,
-.btn-browse {
+.btn-alg {
   background-color: var(--btn-color);
   border: none;
   border-radius: 5px;
@@ -265,13 +265,13 @@ label>h4 {
   margin: 5px 5px;
 }
 
-.btn-browse {
+.btn-alg {
   width: 100%;
-  margin: 2px 0px;
+  margin: 2px 2px;
 }
 
 .btn-func:hover,
-.btn-browse:hover {
+.btn-alg:hover {
   background-color: var(--second-color);
   color: black;
   box-shadow: 0px 0px 9px var(--second-color);
@@ -280,7 +280,7 @@ label>h4 {
 }
 
 .btn-func:active,
-.btn-browse:active {
+.btn-alg:active {
   background-color: var(--fifth-color) !important;
   transform: scale(0.9);
   border-color: var(--fifth-color);
@@ -485,8 +485,8 @@ textarea#graphInput:focus {
 
 .result-box {
   width: 100%;
-  height: 100%;
-  min-height: 30px;
+  /* height: 100%; */
+  min-height: 50px;
   border: 2px solid var(--border-color);
   border-radius: 5px;
   display: flex;

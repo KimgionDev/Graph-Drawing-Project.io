@@ -289,7 +289,16 @@ while (!Hàng đợi rỗng) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;if (v chưa tô) tô đối lập, đẩy vào Hàng đợi;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;if (color[v] == color[u]) → FALSE;<br>
 }<br>
-Trả về TRUE;`
+Trả về TRUE;`,
+"Tarjan": `Khởi tạo num, low = -1, stack rỗng  <br>
+Duyệt i: nếu chưa thăm → Tarjan(i)  <br>
+Tarjan(u):  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;Gán num[u] = low[u] = ++index, đẩy vào stack   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;Duyệt kề v:  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (v chưa thăm) Tarjan(v), cập nhật low[u]  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (v trong stack) cập nhật low[u]  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (num[u] == low[u]) → pop stack tạo SCC  <br>
+`,
 
     };
 
@@ -317,3 +326,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.getElementById("traversalType").addEventListener("change", function () {
+    const graphTypeRadios = document.getElementsByName("graphType");
+    const directedRadio = graphTypeRadios[0]; 
+    const undirectedRadio = graphTypeRadios[1]; 
+    const selectedAlgorithm = this.value;
+    const createGraphButton = document.getElementById("creatGraph");
+    
+    if (selectedAlgorithm === "bipartite") {
+        directedRadio.disabled = true;
+        directedRadio.parentElement.style.opacity = "0.75";
+        undirectedRadio.checked = true;
+        
+        updateGraphToUndirected();
+        createGraphButton.click(); 
+    } else {
+        directedRadio.disabled = false;
+        directedRadio.parentElement.style.opacity = "1"; 
+    }
+});
+
+function updateGraphToUndirected() {
+    console.log("Đã đổi đồ thị thành vô hướng.");
+}
