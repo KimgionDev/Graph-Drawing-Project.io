@@ -74,6 +74,8 @@ async function performTraversal() {
         await checkBipartite();
     } else if (traversalType === "Tarjan") {
         await performTarjan();
+    } else if (traversalType === "Circled") { 
+        await checkCycle();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -729,3 +731,111 @@ async function tarjan(graph) {
 
     document.getElementById('visitedOrder').innerText = `Số bộ phận liên thông mạnh: ${sccs.length}\n${resultText}`;
 }
+
+// Circled
+async function checkCycle() {
+    const inputText = document.getElementById('graphInput').value.trim();
+    const lines = inputText.split('\n');
+    let graph = {};
+
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    const startNode = document.getElementById('startNodeInput').value.trim(); 
+    const delay = parseInt(document.getElementById('speedSlider').value);  
+
+    if (isStopped) return;
+
+    lines.forEach(line => {
+        const edgeData = line.split(' ').map(Number);
+        if (isStopped) return;
+
+        if (edgeData.length >= 2) {
+            const source = edgeData[0];
+            const target = edgeData[1];
+
+            if (!graph[source]) graph[source] = [];
+            if (!graph[target]) graph[target] = [];
+
+            if (graphType === 'directed') {
+                graph[source].push(target);
+            } else if (graphType === 'undirected') {
+                graph[source].push(target);
+                graph[target].push(source);
+            }
+        }
+    });
+
+    const visited = new Set();
+    const inStack = new Set();  
+    const cycleNodes = new Set();  
+    const nonCycleNodes = new Set(); 
+    const parentMap = {};  
+
+    async function dfs(node) {
+        if (isStopped) return false;
+
+        visited.add(node);
+        inStack.add(node);
+
+        cy.getElementById(node).style('background-color', colors.gray);  
+        await delayFunction(delay);  
+        const neighbors = graph[node].sort((a, b) => a - b);
+
+        for (const neighbor of neighbors) {
+            if (!visited.has(neighbor)) {
+                parentMap[neighbor] = node;  
+                const foundCycle = await dfs(neighbor);
+                if (foundCycle) {
+                    cycleNodes.add(neighbor); 
+                    return true;
+                }
+            } else if (inStack.has(neighbor) && neighbor !== parentMap[node]) {
+                let current = node;
+                cycleNodes.add(current);
+                while (current !== neighbor) {
+                    current = parentMap[current];
+                    cycleNodes.add(current);
+                }
+                cycleNodes.add(neighbor);  
+                return true;
+            }
+        }
+
+        inStack.delete(node);
+        return false;
+    }
+
+    function delayFunction(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));  
+    }
+
+    if (graph[startNode]) {
+        await dfs(Number(startNode));
+    }
+
+    for (const node in graph) {
+        if (!cycleNodes.has(Number(node)) && !Object.values(parentMap).includes(Number(node))) {
+            nonCycleNodes.add(Number(node)); 
+        }
+    }
+
+    nonCycleNodes.forEach(node => {
+        cy.getElementById(node).style('background-color', colors.gray);  
+    });
+
+    cycleNodes.forEach(node => {
+        cy.getElementById(node).style('background-color', colors.blue); 
+    });
+
+    const resultText = cycleNodes.size > 0 ? `CIRCLED` : "NO CIRCLE";
+    document.getElementById('visitedOrder').innerText = resultText;
+}
+
+    document.getElementById('checkCycleButton').addEventListener('click', async () => {
+        await checkCycle();  
+});
+
+
+
+
+
+
