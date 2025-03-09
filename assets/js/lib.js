@@ -107,6 +107,7 @@ function enableInputs() {
     console.log("Traversal completed successfully.");
 }
 
+// BFSSSSSSSSSSSSS
 async function performBFS(startNode) {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -182,6 +183,7 @@ async function bfs(graph, start) {
     await visitNext();
 }
 
+// DFS STACKKKKKKKKKKKKKKK
 async function performDFS(startNode) {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -262,6 +264,8 @@ async function dfs(graph, start) {
     await visitNext(); // Chờ khi DFS hoàn tất
 }
 
+
+// DFS RECURSIONNNNNNNNNNNNNNNN
 function performDFSRecursion(startNode) {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -333,6 +337,8 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
     toggleInputs(true);
 }
 
+
+// MOOREDIJKSTRAAAAAAAAAAAAAAA
 async function mooreDijkstra() {
     const startNode = parseInt(document.getElementById("startNodeInput").value);
     const endNode = parseInt(document.getElementById("endNodeInput").value);
@@ -351,8 +357,13 @@ async function mooreDijkstra() {
     let graph = {};
     let allNodes = new Set();
 
-    lines.forEach(line => {
+    for (let line of lines) {
         const [u, v, w] = line.split(" ").map(Number);
+        if (w < 0) {
+            visitedOrder.innerHTML = "Trọng số không âm.";  
+            toggleInputs(false); 
+            return;  
+        }
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
         if (graphType === 'undirected') {
@@ -362,7 +373,7 @@ async function mooreDijkstra() {
 
         allNodes.add(u);
         allNodes.add(v);
-    });
+    }
 
     if (!allNodes.has(endNode) || !allNodes.has(startNode)) {
         visitedOrder.innerHTML = "Không có đường đi.";
@@ -535,6 +546,8 @@ async function reconstructPath(prev, startNode, endNode) {
     }
 }
 
+
+// DO THI PHAN DOIIIIIIIIIIIIIIII
 async function checkBipartite() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -625,8 +638,8 @@ async function bfsCheckBipartite(graph) {
     }
 }
 
-// Tarjan
 
+// TARJANNNNNNNNNNNNNNNNNNN
 async function performTarjan() {
     toggleInputs(true);
     resetTraversal();
@@ -666,16 +679,15 @@ async function tarjan(graph) {
     let onStack = {};
     let sccs = [];
     let colorIndex = 0;
-    // FUCK YOU FUCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
     const colorsArray = [
-        '#5A96E3', '#A38DC5', '#C4A484', '#184A2C', '#543312',
+        '#3B2342', '#A38DC5', '#C4A484', '#184A2C', '#543312',
         '#A20021', '#2B5252', '#D2B48C', '#B6C4B6', '#5A3C2C',
         '#7A6590', '#B38A5F', '#406F6E', '#7EBDC2', '#E07B39',
         '#A15512', '#CBC3E3', '#011F4B', '#D72638', '#8FA08F',
         '#3D453D', '#A67C52', '#261225', '#FF5733', '#BF6724',
         '#FFAA00', '#2D5F8B', '#72523A', '#3C324D', '#8D6346',
         '#8C6D47', '#594A72', '#5A3E6B', '#1E3939', '#62A87C',
-        '#D2B48C', '#730000', '#3B2342', '#A078C2', '#B38A5F',
+        '#D2B48C', '#730000', '#A078C2', '#B38A5F', '#5A96E3',
         '#38761D', '#5A8C8A', '#00875A', '#002F5E', '#71491E',
         '#525E52', '#A38DC5', '#563C28', '#CBC3E3', '#0F2A1B'
     ];
@@ -725,14 +737,15 @@ async function tarjan(graph) {
     sccs = sccs.map(scc => scc.sort((a, b) => a - b));
 
     let resultText = '';
-    sccs.forEach((scc, index) => {
-        resultText += `BPLT ${index + 1}: ${scc.join(' ')}\n`;
-    });
+    // sccs.forEach((scc, index) => {
+    //     resultText += `BPLT ${index + 1}: ${scc.join(' ')}\n`;
+    // });
 
     document.getElementById('visitedOrder').innerText = `Số bộ phận liên thông mạnh: ${sccs.length}\n${resultText}`;
 }
 
-// Circled
+
+// KIEM TRA CHU TRINHHHHHHHHHHHHHHHHHHH
 async function checkCycle() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
