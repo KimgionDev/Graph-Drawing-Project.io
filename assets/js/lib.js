@@ -826,7 +826,7 @@ async function checkCycle() {
         cy.getElementById(node).style('background-color', colors.blue); 
     });
 
-    const resultText = cycleNodes.size > 0 ? `CIRCLED` : "NO CIRCLE";
+    const resultText = cycleNodes.size > 0 ? `Có chu trình` : "Không chứa chu trình";
     document.getElementById('visitedOrder').innerText = resultText;
 }
 

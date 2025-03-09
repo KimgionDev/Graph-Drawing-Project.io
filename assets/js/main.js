@@ -299,7 +299,28 @@ Tarjan(u):  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;if (v trong stack) cập nhật low[u]  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;if (num[u] == low[u]) → pop stack tạo SCC  <br>
 `,
+"Circled":
+`**Khởi tạo:**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu tất cả đỉnh là chưa thăm (visited[u] = false)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tạo recStack để theo dõi đỉnh trong ngăn xếp đệ quy<br>
 
+**Kiểm tra chu trình:**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for mỗi đỉnh u chưa thăm:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if DFS(u) trả về true then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kết luận: "Có chu trình"<br>
+
+**Hàm DFS(u):**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu visited[u] = true, recStack[u] = true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for mỗi đỉnh kề v của u:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if v chưa thăm và DFS(v) == true then return true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if recStack[v] == true then return true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu recStack[u] = false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return false<br>
+
+**Kết luận:**<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nếu không có chu trình, trả về "Không chứa chu trình"<br>
+
+`,
     };
 
     selectElement.addEventListener("change", function () {
