@@ -364,6 +364,11 @@ async function mooreDijkstra() {
             toggleInputs(false); 
             return;  
         }
+        if (w == null){
+            visitedOrder.innerHTML = "Vui lòng nhập trọng số.";  
+            toggleInputs(false); 
+            return;  
+        }
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
         if (graphType === 'undirected') {
