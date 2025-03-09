@@ -770,36 +770,39 @@ async function checkCycle() {
     const nonCycleNodes = new Set(); 
     const parentMap = {};  
 
-    async function dfs(node) {
+    async function dfs(node, parent) {
         if (isStopped) return false;
-
+    
         visited.add(node);
         inStack.add(node);
-
-        cy.getElementById(node).style('background-color', colors.gray);  
-        await delayFunction(delay);  
+    
+        cy.getElementById(node).style('background-color', colors.gray);
+        await delayFunction(delay);
         const neighbors = graph[node].sort((a, b) => a - b);
-
+    
         for (const neighbor of neighbors) {
+            if (isStopped) return false;
+    
             if (!visited.has(neighbor)) {
-                parentMap[neighbor] = node;  
-                const foundCycle = await dfs(neighbor);
+                parentMap[neighbor] = node;
+                const foundCycle = await dfs(neighbor, node);
                 if (foundCycle) {
-                    cycleNodes.add(neighbor); 
                     return true;
                 }
-            } else if (inStack.has(neighbor) && neighbor !== parentMap[node]) {
+            } else if (inStack.has(neighbor) && neighbor !== parent) {
                 let current = node;
                 cycleNodes.add(current);
                 while (current !== neighbor) {
                     current = parentMap[current];
                     cycleNodes.add(current);
                 }
-                cycleNodes.add(neighbor);  
+                console.log("parentMap:", JSON.stringify(parentMap, null, 2));
+                console.log("Trước khi cập nhật cycleNodes:", [...cycleNodes]); 
+                cycleNodes.add(neighbor);
                 return true;
             }
         }
-
+        
         inStack.delete(node);
         return false;
     }
@@ -809,7 +812,8 @@ async function checkCycle() {
     }
 
     if (graph[startNode]) {
-        await dfs(Number(startNode));
+        if (isStopped) return;
+        await dfs(Number(startNode), -1);
     }
 
     for (const node in graph) {
@@ -819,10 +823,12 @@ async function checkCycle() {
     }
 
     nonCycleNodes.forEach(node => {
+        if (isStopped) return;
         cy.getElementById(node).style('background-color', colors.gray);  
     });
 
     cycleNodes.forEach(node => {
+        if (isStopped) return;
         cy.getElementById(node).style('background-color', colors.blue); 
     });
 
@@ -833,9 +839,3 @@ async function checkCycle() {
     document.getElementById('checkCycleButton').addEventListener('click', async () => {
         await checkCycle();  
 });
-
-
-
-
-
-
