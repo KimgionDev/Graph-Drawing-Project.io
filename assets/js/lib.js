@@ -76,6 +76,8 @@ async function performTraversal() {
         await performTarjan();
     } else if (traversalType === "Circled") { 
         await checkCycle();
+    } else if (traversalType === "bellmanFord"){
+        await bellmanFord();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -857,3 +859,5 @@ async function checkCycle() {
     document.getElementById('checkCycleButton').addEventListener('click', async () => {
         await checkCycle();  
 });
+
+//BellmanFordddddddddddddd

@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
     endNodeInputGroup.style.display = "none";
 
     traversalSelect.addEventListener("change", function () {
-        if (this.value === "mooreDijkstra") {
+        if (this.value === "mooreDijkstra" || this.value === "bellmanFord") {
             endNodeInputGroup.style.display = "flex";
         } else {
             endNodeInputGroup.style.display = "none";
