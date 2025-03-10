@@ -26,7 +26,7 @@ To view and interact with the graph visualizations:
 
 ## 📦 Dependencies
 
-- 🔗 **vis-network**: A dynamic, browser-based visualization library to display networks and timelines.
+- 🔗 **Cytoscape.js**: Graph theory (network) library for visualisation and analysis 
 
 ## 🏆 Badges
 
