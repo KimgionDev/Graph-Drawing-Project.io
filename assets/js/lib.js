@@ -45,6 +45,7 @@ document.getElementById("startNodeInput").addEventListener("input", function () 
         this.value = 1;
     }
 });
+
 document.getElementById("endNodeInput").addEventListener("input", function () {
     const endNode = parseInt(this.value);
     const nodeCount = document.getElementById("nodeCountInput").value;
@@ -55,6 +56,57 @@ document.getElementById("endNodeInput").addEventListener("input", function () {
         this.value = 1;
     }
 });
+//an endNodeInput
+document.addEventListener("DOMContentLoaded", function () {
+    const traversalSelect = document.getElementById("traversalType");
+    const endNodeInputGroup = document.querySelector(".pointEnd");
+
+    // Mặc định ẩn endNodeInput
+    endNodeInputGroup.style.display = "none";
+
+    traversalSelect.addEventListener("change", function () {
+        if (this.value === "mooreDijkstra" || this.value === "bellmanFord") {
+            endNodeInputGroup.style.display = "flex";
+        } else {
+            endNodeInputGroup.style.display = "none";
+        }
+    });
+});
+
+document.getElementById("traversalType").addEventListener("change", function () {
+    const graphTypeRadios = document.getElementsByName("graphType");
+    const directedRadio = graphTypeRadios[0]; 
+    const undirectedRadio = graphTypeRadios[1]; 
+    const selectedAlgorithm = this.value;
+    const createGraphButton = document.getElementById("creatGraph");
+    const startNodes = document.getElementById("startNodeInput");
+    if (selectedAlgorithm === "bipartite") {
+        directedRadio.disabled = true;
+        directedRadio.parentElement.style.opacity = "0.75";
+        undirectedRadio.checked = true;
+        
+        updateGraphToUndirected();
+        createGraphButton.click(); 
+    } else {
+        directedRadio.disabled = false;
+        directedRadio.parentElement.style.opacity = "1"; 
+    }
+    if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
+        undirectedRadio.disabled = true;
+        undirectedRadio.parentElement.style.opacity = "0.75";
+        directedRadio.checked = true;
+        startNodes.disabled = true;
+        createGraphButton.click(); 
+    } else {
+        undirectedRadio.disabled = false;
+        undirectedRadio.parentElement.style.opacity = "1"; 
+        startNodes.disabled = false; 
+    }
+});
+
+function updateGraphToUndirected() {
+    console.log("Đã đổi đồ thị thành vô hướng.");
+}
 
 async function performTraversal() {
     toggleInputs(true); // Khóa input khi thuật toán chạy
@@ -89,10 +141,14 @@ async function performTraversal() {
 
 
 function toggleInputs(disable) {
+    const traversalType = document.getElementById("traversalType").value;
     document.getElementById("graphInput").disabled = disable;
     document.getElementById("creatGraph").disabled = disable;
     document.getElementById("traversalType").disabled = disable;
     document.getElementById("startNodeInput").disabled = disable;
+    if(traversalType === "topoSort" || traversalType === "ranked"){
+        document.getElementById("startNodeInput").disabled = true;
+    }
     document.getElementById("endNodeInput").disabled = disable;
     document.getElementById("speedSlider").disabled = disable;
 }
@@ -1050,6 +1106,7 @@ function copyList(list1, list2) {
     list1.length = 0; 
     list1.push(...list2); 
 }
+
 async function performRanked() {
     toggleInputs(true);  
     resetTraversal();   
@@ -1109,9 +1166,7 @@ async function performRanked() {
 
     result.sort((a, b) => a.node - b.node);
 
-    document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}(${item.rank})`).join(" ");
-
-    toggleInputs(false); 
+    document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}(${item.rank})`).join(", ");
 }
 
 

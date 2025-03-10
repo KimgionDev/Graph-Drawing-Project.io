@@ -374,58 +374,7 @@ Nếu không có chu trình âm, trả về dist (mảng khoảng cách ngắn n
     selectElement.dispatchEvent(new Event("change"));
 });
 
-//an endNodeInput
-document.addEventListener("DOMContentLoaded", function () {
-    const traversalSelect = document.getElementById("traversalType");
-    const endNodeInputGroup = document.querySelector(".pointEnd");
 
-    // Mặc định ẩn endNodeInput
-    endNodeInputGroup.style.display = "none";
-
-    traversalSelect.addEventListener("change", function () {
-        if (this.value === "mooreDijkstra" || this.value === "bellmanFord") {
-            endNodeInputGroup.style.display = "flex";
-        } else {
-            endNodeInputGroup.style.display = "none";
-        }
-    });
-});
-
-document.getElementById("traversalType").addEventListener("change", function () {
-    const graphTypeRadios = document.getElementsByName("graphType");
-    const directedRadio = graphTypeRadios[0]; 
-    const undirectedRadio = graphTypeRadios[1]; 
-    const selectedAlgorithm = this.value;
-    const createGraphButton = document.getElementById("creatGraph");
-    const startNodes = document.getElementById("startNodeInput");
-    if (selectedAlgorithm === "bipartite") {
-        directedRadio.disabled = true;
-        directedRadio.parentElement.style.opacity = "0.75";
-        undirectedRadio.checked = true;
-        
-        updateGraphToUndirected();
-        createGraphButton.click(); 
-    } else {
-        directedRadio.disabled = false;
-        directedRadio.parentElement.style.opacity = "1"; 
-    }
-    if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
-        undirectedRadio.disabled = true;
-        undirectedRadio.parentElement.style.opacity = "0.75";
-        directedRadio.checked = true;
-        startNodes.disabled = true;
-        createGraphButton.click(); 
-    } else {
-        undirectedRadio.disabled = false;
-        startNodes.disabled = true;
-        undirectedRadio.parentElement.style.opacity = "1"; 
-    }
-
-});
-
-function updateGraphToUndirected() {
-    console.log("Đã đổi đồ thị thành vô hướng.");
-}
 
 // document.getElementById("convertToImageButton").addEventListener("click", function() {
 //     const pngData = cy.png({
