@@ -354,7 +354,7 @@ document.getElementById("traversalType").addEventListener("change", function () 
     const undirectedRadio = graphTypeRadios[1]; 
     const selectedAlgorithm = this.value;
     const createGraphButton = document.getElementById("creatGraph");
-    
+    const startNodes = document.getElementById("startNodeInput");
     if (selectedAlgorithm === "bipartite") {
         directedRadio.disabled = true;
         directedRadio.parentElement.style.opacity = "0.75";
@@ -366,6 +366,18 @@ document.getElementById("traversalType").addEventListener("change", function () 
         directedRadio.disabled = false;
         directedRadio.parentElement.style.opacity = "1"; 
     }
+    if (selectedAlgorithm === "topoSort") {
+        undirectedRadio.disabled = true;
+        undirectedRadio.parentElement.style.opacity = "0.75";
+        directedRadio.checked = true;
+        startNodes.disabled = true;
+        updateGraphToUndirected();
+        createGraphButton.click(); 
+    } else {
+        undirectedRadio.disabled = false;
+        undirectedRadio.parentElement.style.opacity = "1"; 
+    }
+
 });
 
 function updateGraphToUndirected() {

@@ -12,6 +12,7 @@ const colors = {
     green: "#52b788",
     gray: "#5c677d",
     yellow: "#f8c302",
+    bettergreen:"#05c102",
 }
 
 let isStopped = false; //tai moi thuat toan, KIEM TRA isStopped ok?
@@ -78,6 +79,8 @@ async function performTraversal() {
         await checkCycle();
     } else if (traversalType === "bellmanFord"){
         await bellmanFord();
+    } else if (traversalType === "topoSort"){
+        await performTopoSort();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -859,5 +862,70 @@ async function checkCycle() {
     document.getElementById('checkCycleButton').addEventListener('click', async () => {
         await checkCycle();  
 });
+
+
+// TopoSorttttttttttttttttttttttttttttt
+async function performTopoSort() {
+    toggleInputs(true);  
+    resetTraversal(); 
+
+    const nodes = cy.nodes();
+    const edges = cy.edges();
+
+    let adjList = {};
+    let inDegree = {};
+
+    nodes.forEach(node => {
+        adjList[node.id()] = [];
+        inDegree[node.id()] = 0;
+    });
+
+    edges.forEach(edge => {
+        const source = edge.source().id();
+        const target = edge.target().id();
+        adjList[source].push(target);
+        inDegree[target]++;
+    });
+
+    let queue = [];
+    let result = [];
+
+    nodes.forEach(node => {
+        if (inDegree[node.id()] === 0) {
+            queue.push(node.id());
+        }
+    });
+
+    while (queue.length > 0) {
+        if (isStopped) break;
+
+        let node = queue.shift();  
+        result.push(node);
+
+        const neighbors = adjList[node].sort((a, b) => parseInt(a) - parseInt(b));
+
+        for (let neighbor of neighbors) {
+            inDegree[neighbor]--;  
+
+            if (inDegree[neighbor] === 0) {
+                queue.push(neighbor);
+            }
+        }
+
+        let cyNode = cy.getElementById(node);
+        cyNode.style("background-color", colors.bettergreen); 
+        document.getElementById("visitedOrder").innerText += " " + node;
+
+        await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
+    }
+
+    if (result.length !== nodes.length) {
+            // console.log("Có chu trình trong đồ thị!");
+        document.getElementById("visitedOrder").innerText = "Có chu trình! Nhập lại";
+    }
+
+    enableInputs();  
+}
+
 
 //BellmanFordddddddddddddd
