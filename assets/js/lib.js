@@ -997,7 +997,6 @@ async function bellmanFord() {
     const speedSlider = document.getElementById("speedSlider");
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
 
-    
     if (isNaN(startNode) || isNaN(endNode)) {
         visitedOrder.innerHTML = "Vui lòng nhập đỉnh hợp lệ.";
         return;
@@ -1043,14 +1042,18 @@ async function bellmanFord() {
 
     dist[startNode] = 0;
 
+    let hasNegativeCycle = false;
+
     for (let i = 0; i < allNodes.size - 1; i++) {
         cy.getElementById(startNode.toString()).style("background-color", colors.green);
+        let updated = false;
         for (let u of allNodes) {
             if (graph[u]) {
                 for (let { node: v, weight } of graph[u]) {
                     if (dist[u] + weight < dist[v]) {
                         dist[v] = dist[u] + weight;
                         prev[v] = u;
+                        updated = true;
                         if (u !== startNode && u !== endNode) {
                             cy.getElementById(u.toString()).style("background-color", colors.red);
                             await new Promise(resolve => setTimeout(resolve, speedSlider.value)); // Thêm delay để tô màu từ từ
@@ -1059,21 +1062,26 @@ async function bellmanFord() {
                 }
             }
         }
+        // Nếu không có cập nhật nào, thoát vòng lặp luôn cho nóng
+        if (!updated) break; 
     }
 
+    // Kiểm tra chu trình trọng số âm
     for (let u of allNodes) {
         if (graph[u]) {
             for (let { node: v, weight } of graph[u]) {
                 if (dist[u] + weight < dist[v]) {
-                    visitedOrder.innerHTML = "Đồ thị chứa chu trình trọng số âm.";
-                    toggleInputs(false);
-                    return;
+                    hasNegativeCycle = true;
+                    break;
                 }
             }
         }
+        if (hasNegativeCycle) break;
     }
 
-    if (dist[endNode] === Infinity) {
+    if (hasNegativeCycle) {
+        visitedOrder.innerHTML = "Đồ thị chứa chu trình trọng số âm.";
+    } else if (dist[endNode] === Infinity) {
         visitedOrder.innerHTML = "Không có đường đi.";
     } else {
         cy.getElementById(endNode.toString()).style("background-color", colors.green);
