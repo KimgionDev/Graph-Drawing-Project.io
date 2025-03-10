@@ -321,6 +321,49 @@ Tarjan(u):  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;Nếu không có chu trình, trả về "Không chứa chu trình"<br>
 
 `,
+"topoSort":
+`Khởi tạo adjList, inDegree<br>
+for mỗi đỉnh u trong nodes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;adjList[u] = [], inDegree[u] = 0<br>
+
+for mỗi cạnh (u → v) trong edges:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Thêm v vào adjList[u]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tăng inDegree[v]<br>
+
+Khởi tạo queue = []<br>
+for mỗi u trong nodes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if inDegree[u] == 0 then queue.push(u)<br>
+
+Khởi tạo result = []<br>
+while queue không rỗng:<br>
+&nbsp;&nbsp;Lấy node = queue.shift()<br>
+&nbsp;&nbsp;Thêm node vào result<br>
+
+&nbsp;&nbsp;for mỗi neighbor của node:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Giảm inDegree[neighbor]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if inDegree[neighbor] == 0 then queue.push(neighbor)<br>
+
+if result.length != nodes.length:<br>
+&nbsp;&nbsp;return "Có chu trình trong đồ thị!"<br>
+else:<br>
+&nbsp;&nbsp;return result<br>`,
+
+"bellmanFord":
+`Khởi tạo khoảng cách dist với tất cả các đỉnh:<br>
+&nbsp;&nbsp;&nbsp; i từ 0 đến V-1: dist[i] = Infinity<br>
+Đặt dist[src] = 0<br>
+for i từ 1 đến V-1:<br>
+&nbsp;&nbsp;&nbsp; mỗi cạnh (u, v, w) trong graph:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if dist[u] + w < dist[v]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dist[v] = dist[u] + w<br>
+
+for mỗi cạnh (u, v, w) trong graph:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if dist[u] + w < dist[v]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "Đồ thị chứa chu trình âm"<br>
+
+Kết luận:<br>
+Nếu không có chu trình âm, trả về dist (mảng khoảng cách ngắn nhất).<br>`,
+
     };
 
     selectElement.addEventListener("change", function () {
@@ -371,10 +414,10 @@ document.getElementById("traversalType").addEventListener("change", function () 
         undirectedRadio.parentElement.style.opacity = "0.75";
         directedRadio.checked = true;
         startNodes.disabled = true;
-        updateGraphToUndirected();
         createGraphButton.click(); 
     } else {
         undirectedRadio.disabled = false;
+        startNodes.disabled = false;
         undirectedRadio.parentElement.style.opacity = "1"; 
     }
 
@@ -383,3 +426,15 @@ document.getElementById("traversalType").addEventListener("change", function () 
 function updateGraphToUndirected() {
     console.log("Đã đổi đồ thị thành vô hướng.");
 }
+
+// document.getElementById("convertToImageButton").addEventListener("click", function() {
+//     const pngData = cy.png({
+//         bg: 'white'
+//     });
+//     const link = document.createElement('a');
+//     link.href = pngData;
+//     link.download = 'graph.png';
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// });

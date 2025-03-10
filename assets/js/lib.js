@@ -477,9 +477,7 @@ async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
             let edgeTarget = edge.target().id();
             let weight = edge.data('weight');
 
-            if ((edgeSource === from.toString() && edgeTarget === to.toString()) ||
-                (edgeSource === to.toString() && edgeTarget === from.toString())) {
-
+            if (edgeSource === from.toString() && edgeTarget === to.toString()) {
                 if (weight < minWeight && !seenEdges.has(edge.id())) {
                     minWeight = weight;
                     minEdge = edge;
@@ -924,8 +922,111 @@ async function performTopoSort() {
         document.getElementById("visitedOrder").innerText = "Có chu trình! Nhập lại";
     }
 
-    enableInputs();  
+    document.getElementById("graphInput").disabled = false;
+    document.getElementById("creatGraph").disabled = false;
+    document.getElementById("traversalType").disabled = false;
+    document.getElementById("startNodeInput").disabled = false;
+    document.getElementById("endNodeInput").disabled = false;
+
 }
 
 
 //BellmanFordddddddddddddd
+async function bellmanFord() {
+    const startNode = parseInt(document.getElementById("startNodeInput").value);
+    const endNode = parseInt(document.getElementById("endNodeInput").value);
+    const visitedOrder = document.getElementById("visitedOrder");
+    const speedSlider = document.getElementById("speedSlider");
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+
+    
+    if (isNaN(startNode) || isNaN(endNode)) {
+        visitedOrder.innerHTML = "Vui lòng nhập đỉnh hợp lệ.";
+        return;
+    }
+    if (isStopped) return;
+
+    const inputText = document.getElementById("graphInput").value.trim();
+    const lines = inputText.split("\n");
+    let graph = {};
+    let allNodes = new Set();
+
+    for (let line of lines) {
+        const [u, v, w] = line.split(" ").map(Number);
+        if (w == null) {
+            visitedOrder.innerHTML = "Vui lòng nhập trọng số.";
+            toggleInputs(false);
+            return;
+        }
+        if (u == v) continue;
+        if (!graph[u]) graph[u] = [];
+        graph[u].push({ node: v, weight: w });
+        if (graphType === 'undirected') {
+            if (!graph[v]) graph[v] = [];
+            graph[v].push({ node: u, weight: w });
+        }
+
+        allNodes.add(u);
+        allNodes.add(v);
+    }
+
+    if (!allNodes.has(endNode) || !allNodes.has(startNode)) {
+        visitedOrder.innerHTML = "Không có đường đi.";
+        toggleInputs(false);
+        return;
+    }
+
+    let dist = {};
+    let prev = {};
+    allNodes.forEach(node => {
+        dist[node] = Infinity;
+        prev[node] = null;
+    });
+
+    dist[startNode] = 0;
+
+    for (let i = 0; i < allNodes.size - 1; i++) {
+        cy.getElementById(startNode.toString()).style("background-color", colors.green);
+        for (let u of allNodes) {
+            if (graph[u]) {
+                for (let { node: v, weight } of graph[u]) {
+                    if (dist[u] + weight < dist[v]) {
+                        dist[v] = dist[u] + weight;
+                        prev[v] = u;
+                        if (u !== startNode && u !== endNode) {
+                            cy.getElementById(u.toString()).style("background-color", colors.red);
+                            await new Promise(resolve => setTimeout(resolve, speedSlider.value)); // Thêm delay để tô màu từ từ
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for (let u of allNodes) {
+        if (graph[u]) {
+            for (let { node: v, weight } of graph[u]) {
+                if (dist[u] + weight < dist[v]) {
+                    visitedOrder.innerHTML = "Đồ thị chứa chu trình trọng số âm.";
+                    toggleInputs(false);
+                    return;
+                }
+            }
+        }
+    }
+
+    if (dist[endNode] === Infinity) {
+        visitedOrder.innerHTML = "Không có đường đi.";
+    } else {
+        cy.getElementById(endNode.toString()).style("background-color", colors.green);
+        await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
+        let path = [];
+        for (let at = endNode; at !== null; at = prev[at]) {
+            path.push(at);
+        }
+        path.reverse();
+        visitedOrder.innerHTML += path.join(" -> ");
+    }
+
+    toggleInputs(false);
+}
