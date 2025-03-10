@@ -4,7 +4,7 @@ This project is developed as a group assignment for the **LTĐT course**. It foc
 
 ## 🌟 Features
 
-- 🎨 **Interactive Graph Visualization**: Utilizes the [vis-network](https://github.com/visjs/vis-network) library to render and manipulate graphs dynamically.
+- 🎨 **Interactive Graph Visualization**: Utilizes the [Cytoscape.js]([https://github.com/visjs/vis-network](https://js.cytoscape.org/)) library to render and manipulate graphs dynamically.
 - 🔄 **Multiple Versions**:
   - 🟢 `version1.html`: Initial implementation with **basic graph features**.
   - 🔵 `version2.html`: Enhanced version with **additional functionalities**.
