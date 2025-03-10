@@ -12,7 +12,7 @@ const colors = {
     green: "#52b788",
     gray: "#5c677d",
     yellow: "#f8c302",
-    bettergreen:"#05c102",
+    bettergreen: "#05c102",
 }
 
 let isStopped = false; //tai moi thuat toan, KIEM TRA isStopped ok?
@@ -22,13 +22,13 @@ document.querySelector(".btn-stop").addEventListener("click", function () {
 });
 
 function stopTraversal() {
-    isStopped = true; 
+    isStopped = true;
     toggleInputs(false);
     resetTraversal();
     console.log("Đã dừng thuật toán và khôi phục trạng thái ban đầu.");
-    
+
     setTimeout(() => {
-        isStopped = false; 
+        isStopped = false;
         console.log("Đã đặt lại trạng thái isStopped.");
     }, 1000);
 }
@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById("traversalType").addEventListener("change", function () {
     const graphTypeRadios = document.getElementsByName("graphType");
-    const directedRadio = graphTypeRadios[0]; 
-    const undirectedRadio = graphTypeRadios[1]; 
+    const directedRadio = graphTypeRadios[0];
+    const undirectedRadio = graphTypeRadios[1];
     const selectedAlgorithm = this.value;
     const createGraphButton = document.getElementById("creatGraph");
     const startNodes = document.getElementById("startNodeInput");
@@ -84,23 +84,23 @@ document.getElementById("traversalType").addEventListener("change", function () 
         directedRadio.disabled = true;
         directedRadio.parentElement.style.opacity = "0.75";
         undirectedRadio.checked = true;
-        
+
         updateGraphToUndirected();
-        createGraphButton.click(); 
+        createGraphButton.click();
     } else {
         directedRadio.disabled = false;
-        directedRadio.parentElement.style.opacity = "1"; 
+        directedRadio.parentElement.style.opacity = "1";
     }
     if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
         undirectedRadio.disabled = true;
         undirectedRadio.parentElement.style.opacity = "0.75";
         directedRadio.checked = true;
         startNodes.disabled = true;
-        createGraphButton.click(); 
+        createGraphButton.click();
     } else {
         undirectedRadio.disabled = false;
-        undirectedRadio.parentElement.style.opacity = "1"; 
-        startNodes.disabled = false; 
+        undirectedRadio.parentElement.style.opacity = "1";
+        startNodes.disabled = false;
     }
 });
 
@@ -127,13 +127,13 @@ async function performTraversal() {
         await checkBipartite();
     } else if (traversalType === "Tarjan") {
         await performTarjan();
-    } else if (traversalType === "Circled") { 
+    } else if (traversalType === "Circled") {
         await checkCycle();
-    } else if (traversalType === "bellmanFord"){
+    } else if (traversalType === "bellmanFord") {
         await bellmanFord();
-    } else if (traversalType === "topoSort"){
+    } else if (traversalType === "topoSort") {
         await performTopoSort();
-    } else if (traversalType === "ranked"){
+    } else if (traversalType === "ranked") {
         await performRanked();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
@@ -146,7 +146,7 @@ function toggleInputs(disable) {
     document.getElementById("creatGraph").disabled = disable;
     document.getElementById("traversalType").disabled = disable;
     document.getElementById("startNodeInput").disabled = disable;
-    if(traversalType === "topoSort" || traversalType === "ranked"){
+    if (traversalType === "topoSort" || traversalType === "ranked") {
         document.getElementById("startNodeInput").disabled = true;
     }
     document.getElementById("endNodeInput").disabled = disable;
@@ -358,11 +358,12 @@ function performDFSRecursion(startNode) {
 }
 
 function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
-    if (visited.has(vertex)) return;
     if (isStopped) return;
+    if (visited.has(vertex)) return;
     visited.add(vertex);
 
     setTimeout(() => {
+        if (isStopped) return;
         cy.$(`#${vertex}`).style('background-color', colors.green);
         let visitedOrder = document.getElementById('visitedOrder').innerText;
         if (visitedOrder.length > 0) {
@@ -380,7 +381,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
                     if (isStopped) return;
                     const neighbor = neighbors[index++];
                     if (!visited.has(neighbor)) {
-                        
+                        if (isStopped) return;
                         dfsRecursion(graph, neighbor, visited, delay, visitNextNeighbor);
                     } else {
                         visitNextNeighbor();
@@ -389,10 +390,10 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
                     callback();
                 }
             }
-            
+
             visitNextNeighbor();
-            
-            
+
+
         } else if (callback) {
             callback();
         }
@@ -423,14 +424,14 @@ async function mooreDijkstra() {
     for (let line of lines) {
         const [u, v, w] = line.split(" ").map(Number);
         if (w < 0) {
-            visitedOrder.innerHTML = "Trọng số không âm.";  
-            toggleInputs(false); 
-            return;  
+            visitedOrder.innerHTML = "Trọng số không âm.";
+            toggleInputs(false);
+            return;
         }
-        if (w == null){
-            visitedOrder.innerHTML = "Vui lòng nhập trọng số.";  
-            toggleInputs(false); 
-            return;  
+        if (w == null) {
+            visitedOrder.innerHTML = "Vui lòng nhập trọng số.";
+            toggleInputs(false);
+            return;
         }
         if (!graph[u]) graph[u] = [];
         graph[u].push({ node: v, weight: w });
@@ -462,7 +463,7 @@ async function mooreDijkstra() {
     dist[startNode] = 0;
     queue.push(startNode, 0);
 
-    visitedOrder.innerHTML = "";  
+    visitedOrder.innerHTML = "";
     toggleInputs(true);
     cy.getElementById(startNode.toString()).style("background-color", "#52b788");
 
@@ -545,7 +546,7 @@ async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
 
         if (minEdge) {
             minEdge.style("line-color", "#c9184a");
-            seenEdges.add(minEdge.id()); 
+            seenEdges.add(minEdge.id());
         }
 
         await new Promise(resolve => setTimeout(resolve, delay));
@@ -764,7 +765,7 @@ async function tarjan(graph) {
         index++;
         stack.push(node);
         onStack[node] = true;
-        if(isStopped) return;
+        if (isStopped) return;
         cy.$(`#${node}`).style('background-color', '');
 
         for (const neighbor of graph[node]) {
@@ -818,8 +819,8 @@ async function checkCycle() {
     let graph = {};
 
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
-    const startNode = document.getElementById('startNodeInput').value.trim(); 
-    const delay = parseInt(document.getElementById('speedSlider').value);  
+    const startNode = document.getElementById('startNodeInput').value.trim();
+    const delay = parseInt(document.getElementById('speedSlider').value);
 
     if (isStopped) return;
 
@@ -844,24 +845,24 @@ async function checkCycle() {
     });
 
     const visited = new Set();
-    const inStack = new Set();  
-    const cycleNodes = new Set();  
-    const nonCycleNodes = new Set(); 
-    const parentMap = {};  
+    const inStack = new Set();
+    const cycleNodes = new Set();
+    const nonCycleNodes = new Set();
+    const parentMap = {};
 
     async function dfs(node, parent) {
         if (isStopped) return false;
-    
+
         visited.add(node);
         inStack.add(node);
-    
+
         cy.getElementById(node).style('background-color', colors.gray);
         await delayFunction(delay);
         const neighbors = graph[node].sort((a, b) => a - b);
-    
+
         for (const neighbor of neighbors) {
             if (isStopped) return false;
-    
+
             if (!visited.has(neighbor)) {
                 parentMap[neighbor] = node;
                 const foundCycle = await dfs(neighbor, node);
@@ -876,18 +877,18 @@ async function checkCycle() {
                     cycleNodes.add(current);
                 }
                 console.log("parentMap:", JSON.stringify(parentMap, null, 2));
-                console.log("Trước khi cập nhật cycleNodes:", [...cycleNodes]); 
+                console.log("Trước khi cập nhật cycleNodes:", [...cycleNodes]);
                 cycleNodes.add(neighbor);
                 return true;
             }
         }
-        
+
         inStack.delete(node);
         return false;
     }
 
     function delayFunction(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));  
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     if (graph[startNode]) {
@@ -897,33 +898,33 @@ async function checkCycle() {
 
     for (const node in graph) {
         if (!cycleNodes.has(Number(node)) && !Object.values(parentMap).includes(Number(node))) {
-            nonCycleNodes.add(Number(node)); 
+            nonCycleNodes.add(Number(node));
         }
     }
 
     nonCycleNodes.forEach(node => {
         if (isStopped) return;
-        cy.getElementById(node).style('background-color', colors.gray);  
+        cy.getElementById(node).style('background-color', colors.gray);
     });
 
     cycleNodes.forEach(node => {
         if (isStopped) return;
-        cy.getElementById(node).style('background-color', colors.blue); 
+        cy.getElementById(node).style('background-color', colors.blue);
     });
 
     const resultText = cycleNodes.size > 0 ? `Có chu trình` : "Không chứa chu trình";
     document.getElementById('visitedOrder').innerText = resultText;
 }
 
-    document.getElementById('checkCycleButton').addEventListener('click', async () => {
-        await checkCycle();  
+document.getElementById('checkCycleButton').addEventListener('click', async () => {
+    await checkCycle();
 });
 
 
 // TopoSorttttttttttttttttttttttttttttt
 async function performTopoSort() {
-    toggleInputs(true);  
-    resetTraversal(); 
+    toggleInputs(true);
+    resetTraversal();
 
     const nodes = cy.nodes();
     const edges = cy.edges();
@@ -955,13 +956,13 @@ async function performTopoSort() {
     while (queue.length > 0) {
         if (isStopped) break;
 
-        let node = queue.shift();  
+        let node = queue.shift();
         result.push(node);
 
         const neighbors = adjList[node].sort((a, b) => parseInt(a) - parseInt(b));
 
         for (let neighbor of neighbors) {
-            inDegree[neighbor]--;  
+            inDegree[neighbor]--;
 
             if (inDegree[neighbor] === 0) {
                 queue.push(neighbor);
@@ -969,14 +970,14 @@ async function performTopoSort() {
         }
 
         let cyNode = cy.getElementById(node);
-        cyNode.style("background-color", colors.bettergreen); 
+        cyNode.style("background-color", colors.bettergreen);
         document.getElementById("visitedOrder").innerText += " " + node;
 
         await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
     }
 
     if (result.length !== nodes.length) {
-            // console.log("Có chu trình trong đồ thị!");
+        // console.log("Có chu trình trong đồ thị!");
         document.getElementById("visitedOrder").innerText = "Có chu trình! Nhập lại";
     }
 
@@ -1063,7 +1064,7 @@ async function bellmanFord() {
             }
         }
         // Nếu không có cập nhật nào, thoát vòng lặp luôn cho nóng
-        if (!updated) break; 
+        if (!updated) break;
     }
 
     // Kiểm tra chu trình trọng số âm
@@ -1111,30 +1112,30 @@ function elementAt(list, i) {
 }
 
 function copyList(list1, list2) {
-    list1.length = 0; 
-    list1.push(...list2); 
+    list1.length = 0;
+    list1.push(...list2);
 }
 
 async function performRanked() {
-    toggleInputs(true);  
-    resetTraversal();   
+    toggleInputs(true);
+    resetTraversal();
 
     const nodes = cy.nodes();
     const edges = cy.edges();
 
-    let adjList = {}; 
-    let d = {};       
+    let adjList = {};
+    let d = {};
     let r = {};
-        nodes.forEach(node => {
-        d[node.id()] = 0; 
-        r[node.id()] = -1; 
+    nodes.forEach(node => {
+        d[node.id()] = 0;
+        r[node.id()] = -1;
         adjList[node.id()] = [];
     });
     edges.forEach(edge => {
         const source = edge.source().id();
         const target = edge.target().id();
-        adjList[source].push(target); 
-        d[target]++;  
+        adjList[source].push(target);
+        d[target]++;
     });
     let S1 = makeNull();
     nodes.forEach(node => {
@@ -1143,38 +1144,53 @@ async function performRanked() {
         }
     });
 
-    let k = 0;  
+    let k = 0;
+    let hasCycle = false; // Biến cờ để kiểm tra chu trình
+
     while (S1.length > 0) {
-        let S2 = makeNull();  
+        let S2 = makeNull();
 
         for (let i = 0; i < S1.length; i++) {
-            const u = elementAt(S1, i + 1); 
-            r[u] = k;  
+            const u = elementAt(S1, i + 1);
+            r[u] = k;
             adjList[u].forEach(v => {
-                d[v]--;  
+                d[v]--;
                 if (d[v] === 0) {
                     pushBack(S2, v);
                 }
             });
 
             let cyNode = cy.getElementById(u);
-            cyNode.style("background-color", colors.bettergreen); 
+            cyNode.style("background-color", colors.bettergreen);
 
             await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
         }
 
         copyList(S1, S2);
-        k++; 
+        k++;
     }
 
-    let result = [];
+    // Kiểm tra nếu có chu trình
     nodes.forEach(node => {
-        result.push({ node: node.id(), rank: r[node.id()] });
+        if (d[node.id()] > 0) {
+            hasCycle = true;
+        }
     });
 
-    result.sort((a, b) => a.node - b.node);
+    if (hasCycle) {
+        document.getElementById("visitedOrder").innerText = "Có chu trình! Nhập lại!";
+    } else {
+        let result = [];
+        nodes.forEach(node => {
+            result.push({ node: node.id(), rank: r[node.id()] });
+        });
 
-    document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}(${item.rank})`).join(", ");
+        result.sort((a, b) => a.node - b.node);
+
+        document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}[${item.rank}]`).join(", ");
+    }
+
+    toggleInputs(false);
 }
 
 
