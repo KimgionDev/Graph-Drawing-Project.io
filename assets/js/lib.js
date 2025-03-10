@@ -81,6 +81,8 @@ async function performTraversal() {
         await bellmanFord();
     } else if (traversalType === "topoSort"){
         await performTopoSort();
+    } else if (traversalType === "ranked"){
+        await performRanked();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -1030,3 +1032,87 @@ async function bellmanFord() {
 
     toggleInputs(false);
 }
+
+// Xếp hạng đồ thịiiiiiiiiiiiii
+function makeNull() {
+    return [];
+}
+
+function pushBack(list, value) {
+    list.push(value);
+}
+
+function elementAt(list, i) {
+    return list[i - 1];
+}
+
+function copyList(list1, list2) {
+    list1.length = 0; 
+    list1.push(...list2); 
+}
+async function performRanked() {
+    toggleInputs(true);  
+    resetTraversal();   
+
+    const nodes = cy.nodes();
+    const edges = cy.edges();
+
+    let adjList = {}; 
+    let d = {};       
+    let r = {};
+        nodes.forEach(node => {
+        d[node.id()] = 0; 
+        r[node.id()] = -1; 
+        adjList[node.id()] = [];
+    });
+    edges.forEach(edge => {
+        const source = edge.source().id();
+        const target = edge.target().id();
+        adjList[source].push(target); 
+        d[target]++;  
+    });
+    let S1 = makeNull();
+    nodes.forEach(node => {
+        if (d[node.id()] === 0) {
+            pushBack(S1, node.id());
+        }
+    });
+
+    let k = 0;  
+    while (S1.length > 0) {
+        let S2 = makeNull();  
+
+        for (let i = 0; i < S1.length; i++) {
+            const u = elementAt(S1, i + 1); 
+            r[u] = k;  
+            adjList[u].forEach(v => {
+                d[v]--;  
+                if (d[v] === 0) {
+                    pushBack(S2, v);
+                }
+            });
+
+            let cyNode = cy.getElementById(u);
+            cyNode.style("background-color", colors.bettergreen); 
+
+            await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
+        }
+
+        copyList(S1, S2);
+        k++; 
+    }
+
+    let result = [];
+    nodes.forEach(node => {
+        result.push({ node: node.id(), rank: r[node.id()] });
+    });
+
+    result.sort((a, b) => a.node - b.node);
+
+    document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}(${item.rank})`).join(" ");
+
+    toggleInputs(false); 
+}
+
+
+

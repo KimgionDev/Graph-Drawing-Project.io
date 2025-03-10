@@ -409,7 +409,7 @@ document.getElementById("traversalType").addEventListener("change", function () 
         directedRadio.disabled = false;
         directedRadio.parentElement.style.opacity = "1"; 
     }
-    if (selectedAlgorithm === "topoSort") {
+    if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
         undirectedRadio.disabled = true;
         undirectedRadio.parentElement.style.opacity = "0.75";
         directedRadio.checked = true;
@@ -417,7 +417,7 @@ document.getElementById("traversalType").addEventListener("change", function () 
         createGraphButton.click(); 
     } else {
         undirectedRadio.disabled = false;
-        startNodes.disabled = false;
+        startNodes.disabled = true;
         undirectedRadio.parentElement.style.opacity = "1"; 
     }
 
