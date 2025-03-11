@@ -976,7 +976,7 @@ async function performTopoSort() {
         await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
     }
 
-    if (result.length !== nodes.length) {
+    if (result.length !== nodes.length && !isStopped) {
         // console.log("Có chu trình trong đồ thị!");
         document.getElementById("visitedOrder").innerText = "Có chu trình! Nhập lại";
     }
@@ -1146,11 +1146,14 @@ async function performRanked() {
 
     let k = 0;
     let hasCycle = false; // Biến cờ để kiểm tra chu trình
+    let result = [];
 
     while (S1.length > 0) {
+        if(isStopped) break;
         let S2 = makeNull();
 
         for (let i = 0; i < S1.length; i++) {
+            if(isStopped) break;
             const u = elementAt(S1, i + 1);
             r[u] = k;
             adjList[u].forEach(v => {
@@ -1163,6 +1166,9 @@ async function performRanked() {
             let cyNode = cy.getElementById(u);
             cyNode.style("background-color", colors.bettergreen);
 
+            result.push({ node: u, rank: r[u] });
+            document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}[${item.rank}]`).join(", ");
+
             await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
         }
 
@@ -1172,6 +1178,7 @@ async function performRanked() {
 
     // Kiểm tra nếu có chu trình
     nodes.forEach(node => {
+        if(isStopped) return;
         if (d[node.id()] > 0) {
             hasCycle = true;
         }
@@ -1179,19 +1186,7 @@ async function performRanked() {
 
     if (hasCycle) {
         document.getElementById("visitedOrder").innerText = "Có chu trình! Nhập lại!";
-    } else {
-        let result = [];
-        nodes.forEach(node => {
-            result.push({ node: node.id(), rank: r[node.id()] });
-        });
-
-        result.sort((a, b) => a.node - b.node);
-
-        document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}[${item.rank}]`).join(", ");
     }
 
     toggleInputs(false);
 }
-
-
-
