@@ -1,6 +1,6 @@
 # 🚀 Graph Drawing Project
 
-This project is developed as a group assignment for the **LTĐT course**. It focuses on **visualizing and interacting with graphs** using modern web technologies.
+This project is developed as a group assignment for the **Graph Theory course**. It focuses on **visualizing and interacting with graphs** using modern web technologies.
 
 ## 🌟 Features
 
