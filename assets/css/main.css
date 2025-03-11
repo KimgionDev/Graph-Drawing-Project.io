@@ -255,7 +255,8 @@ label>h4 {
 }
 
 .btn-func,
-.btn-alg {
+.btn-alg,
+.download_btn {
   background-color: var(--btn-color);
   border: none;
   border-radius: 5px;
@@ -271,7 +272,8 @@ label>h4 {
 }
 
 .btn-func:hover,
-.btn-alg:hover {
+.btn-alg:hover,
+.download_btn:hover {
   background-color: var(--second-color);
   color: black;
   box-shadow: 0px 0px 9px var(--second-color);
