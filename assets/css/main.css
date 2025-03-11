@@ -171,8 +171,6 @@ label>h4 {
 
 #graphInfo input {
   width: 50px;
-  margin-top: 5px;
-  margin-left: 5px;
   padding: 5px;
   font-size: 1rem;
   border: 1px solid var(--bs-border-2);
@@ -266,6 +264,10 @@ label>h4 {
   margin: 5px 5px;
 }
 
+.download_btn{
+  background-color: var(--second-color);
+}
+
 .btn-alg {
   width: 100%;
   margin: 2px 2px;
@@ -281,8 +283,13 @@ label>h4 {
   transition: 0.2s ease-out;
 }
 
+.download_btn:hover{
+  background-color: var(--fifth-color);
+}
+
 .btn-func:active,
-.btn-alg:active {
+.btn-alg:active,
+.download_btn:active {
   background-color: var(--fifth-color) !important;
   transform: scale(0.9);
   border-color: var(--fifth-color);

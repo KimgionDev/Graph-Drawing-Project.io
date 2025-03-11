@@ -380,7 +380,7 @@ document.getElementById("capture_btn").addEventListener("click", function() {
         return;
     }
 
-    const pngData = cy.png({ bg: 'white', full: true });
+    const pngData = cy.png({ bg: 'white', full: true, scale: 2 });
 
     const link = document.createElement('a');
     link.href = pngData;

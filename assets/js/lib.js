@@ -73,6 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+/**
+ * 
+ * 
+ * Exception check for Algorithm
+ * 
+ * 
+ */
 document.getElementById("traversalType").addEventListener("change", function () {
     const graphTypeRadios = document.getElementsByName("graphType");
     const directedRadio = graphTypeRadios[0];
@@ -101,6 +108,16 @@ document.getElementById("traversalType").addEventListener("change", function () 
         undirectedRadio.disabled = false;
         undirectedRadio.parentElement.style.opacity = "1";
         startNodes.disabled = false;
+    }
+
+    if(selectedAlgorithm === "bellmanFord"){
+        undirectedRadio.disabled = true;
+        undirectedRadio.parentElement.style.opacity = "0.75";
+        directedRadio.checked = true;
+        createGraphButton.click();
+    } else{
+        undirectedRadio.disabled = false;
+        undirectedRadio.parentElement.style.opacity = "1";
     }
 });
 
