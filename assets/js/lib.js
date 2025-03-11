@@ -91,32 +91,27 @@ document.getElementById("traversalType").addEventListener("change", function () 
         directedRadio.disabled = true;
         directedRadio.parentElement.style.opacity = "0.75";
         undirectedRadio.checked = true;
-
+        undirectedRadio.parentElement.style.opacity = "1";
         updateGraphToUndirected();
+        createGraphButton.click();
+    } else if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
+        undirectedRadio.disabled = true;
+        undirectedRadio.parentElement.style.opacity = "0.75";
+        directedRadio.checked = true;
+        directedRadio.parentElement.style.opacity = "1";
+        startNodes.disabled = true;
+        createGraphButton.click();
+    } else if (selectedAlgorithm === "bellmanFord") {
+        undirectedRadio.disabled = true;
+        undirectedRadio.parentElement.style.opacity = "0.75";
+        directedRadio.checked = true;
+        directedRadio.parentElement.style.opacity = "1";
         createGraphButton.click();
     } else {
         directedRadio.disabled = false;
-        directedRadio.parentElement.style.opacity = "1";
-    }
-    if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
-        undirectedRadio.disabled = true;
-        undirectedRadio.parentElement.style.opacity = "0.75";
-        directedRadio.checked = true;
-        startNodes.disabled = true;
-        createGraphButton.click();
-    } else {
         undirectedRadio.disabled = false;
-        undirectedRadio.parentElement.style.opacity = "1";
         startNodes.disabled = false;
-    }
-
-    if(selectedAlgorithm === "bellmanFord"){
-        undirectedRadio.disabled = true;
-        undirectedRadio.parentElement.style.opacity = "0.75";
-        directedRadio.checked = true;
-        createGraphButton.click();
-    } else{
-        undirectedRadio.disabled = false;
+        directedRadio.parentElement.style.opacity = "1";
         undirectedRadio.parentElement.style.opacity = "1";
     }
 });
