@@ -33,7 +33,8 @@ To view and interact with the graph visualizations:
 ![GitHub Repo stars](https://img.shields.io/github/stars/Kimgion840/Graph-Drawing-Project.io?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Kimgion840/Graph-Drawing-Project.io?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/Kimgion840/Graph-Drawing-Project.io?style=social)
-
+![GitHub contributors](https://img.shields.io/github/contributors/Kimgion840/Graph-Drawing-Project.io)
+![GitHub last commit](https://img.shields.io/github/last-commit/Kimgion840/Graph-Drawing-Project.io)
 ## 🛠 Run Test
 
 [![Run Test](https://img.shields.io/badge/Run%20Test-Live-blue?style=for-the-badge)](https://kimgion840.github.io/Graph-Drawing-Project.io/)
