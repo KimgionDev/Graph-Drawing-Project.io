@@ -69,17 +69,19 @@
       </div>
       <!--MID COLUMN-->
         <!-- GRAPH HERE -->
-      <div class="mid-col col-xl-6 d-flex justify-content-center">
+      <div class="mid-col col-xl-6 d-flex">
         <div id="cy" class=""></div>
         <!-- Infor Graph -->
         <div id="graphInfo" class="graphInfor d-flex flex-row justify-content-center align-items-center">
-          <div class="nodeCount">
-            <label for="nodeCountInput">Số lượng đỉnh</label>
-            <input type="" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
-          </div>
-          <div class="edgeCount">
-            <label for="edgeCountInput">Số lượng cung</label>
-            <input type="" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+          <div class="graphInfo__content d-flex flex-row justify-content-center align-items-center">
+            <div class="nodeCount">
+              <label for="nodeCountInput">Số lượng đỉnh</label>
+              <input type="" id="nodeCountInput" value="0" oninput="updateGraphInfo()">
+            </div>
+            <div class="edgeCount">
+              <label for="edgeCountInput">Số lượng cung</label>
+              <input type="" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
+            </div>
           </div>
           <div class="download_icon">
             <button class="btn download_btn" id="capture_btn" title="Tải ảnh đồ thị" type="button">

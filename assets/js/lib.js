@@ -1022,6 +1022,7 @@ async function bellmanFord() {
     let allNodes = new Set();
 
     for (let line of lines) {
+        if (isStopped) return;
         const [u, v, w] = line.split(" ").map(Number);
         if (w == null) {
             visitedOrder.innerHTML = "Vui lòng nhập trọng số.";
@@ -1072,11 +1073,15 @@ async function bellmanFord() {
                             await new Promise(resolve => setTimeout(resolve, speedSlider.value)); // Thêm delay để tô màu từ từ
                         }
                     }
+                    if (isStopped) break;
+
                 }
             }
+            if (isStopped) break;
         }
         // Nếu không có cập nhật nào, thoát vòng lặp luôn cho nóng
         if (!updated) break;
+        if (isStopped) break;
     }
 
     // Kiểm tra chu trình trọng số âm
@@ -1091,21 +1096,23 @@ async function bellmanFord() {
         }
         if (hasNegativeCycle) break;
     }
-
-    if (hasNegativeCycle) {
-        visitedOrder.innerHTML = "Đồ thị chứa chu trình trọng số âm.";
-    } else if (dist[endNode] === Infinity) {
-        visitedOrder.innerHTML = "Không có đường đi.";
-    } else {
-        cy.getElementById(endNode.toString()).style("background-color", colors.green);
-        await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
-        let path = [];
-        for (let at = endNode; at !== null; at = prev[at]) {
-            path.push(at);
+    if(!isStopped){
+        if (hasNegativeCycle) {
+            visitedOrder.innerHTML = "Đồ thị chứa chu trình trọng số âm.";
+        } else if (dist[endNode] === Infinity) {
+            visitedOrder.innerHTML = "Không có đường đi.";
+        } else {
+            cy.getElementById(endNode.toString()).style("background-color", colors.green);
+            await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
+            let path = [];
+            for (let at = endNode; at !== null; at = prev[at]) {
+                path.push(at);
+            }
+            path.reverse();
+            visitedOrder.innerHTML += path.join(" -> ");
         }
-        path.reverse();
-        visitedOrder.innerHTML += path.join(" -> ");
     }
+
 
     toggleInputs(false);
 }
