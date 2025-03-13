@@ -147,6 +147,8 @@ async function performTraversal() {
         await performTopoSort();
     } else if (traversalType === "ranked") {
         await performRanked();
+    } else if (traversalType === "bfsfull"){
+        await performBFSFull();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -1209,3 +1211,64 @@ async function performRanked() {
 
     toggleInputs(false);
 }
+
+// BFS full do thiiiiiiiiiiiiiii
+async function performBFSFull() {
+    let queue = [];
+    let visited = new Set();
+    let delay = document.getElementById("speedSlider").value; 
+    let nodes = cy.nodes().map(n => n.id()).sort((a, b) => a - b); 
+    let startNode = document.getElementById("startNodeInput").value;
+
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    const isDirected = (graphType === "directed"); 
+
+    resetTraversal();
+
+    async function bfs(start) {
+        queue.push(start);
+
+        while (queue.length > 0) {
+            if (isStopped) return;
+
+            let current = queue.shift();
+            if (visited.has(current)) continue;
+
+            visited.add(current);
+            cy.getElementById(current).style("background-color", colors.red);
+            document.getElementById("visitedOrder").innerText += " " + current;
+
+            await new Promise(resolve => setTimeout(resolve, delay));
+
+            let neighbors;
+            if (isDirected) {
+                neighbors = cy.getElementById(current).outgoers("node")
+                    .filter(n => !visited.has(n.id()))
+                    .map(n => n.id());
+            } else {
+                neighbors = cy.getElementById(current).neighborhood("node")
+                    .filter(n => !visited.has(n.id()))
+                    .map(n => n.id());
+            }
+
+            neighbors.sort((a, b) => a - b); 
+            queue.push(...neighbors);
+        }
+    }
+
+    if (cy.getElementById(startNode).length > 0) {
+        await bfs(startNode);
+    }
+
+    for (let u of nodes) {
+        if (!visited.has(u)) {
+            await bfs(u);
+        }
+    }
+
+    enableInputs();
+}
+
+
+
+
