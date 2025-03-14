@@ -149,10 +149,13 @@ async function performTraversal() {
         await performRanked();
     } else if (traversalType === "bfsfull"){
         await performBFSFull();
+    } else if (traversalType === "dfs-fullGraph") {
+        await performDFSFull();
+    } else if (traversalType === "dfs-recursion-fullGraph") {
+        await performDFSRecursionFull();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
-
 
 function toggleInputs(disable) {
     const traversalType = document.getElementById("traversalType").value;
@@ -1253,7 +1256,7 @@ async function performBFSFull() {
                     .map(n => n.id());
             }
 
-            neighbors.sort((a, b) => a - b); 
+            neighbors.sort((a, b) => b - a); 
             queue.push(...neighbors);
         }
     }
@@ -1265,6 +1268,114 @@ async function performBFSFull() {
     for (let u of nodes) {
         if (!visited.has(u)) {
             await bfs(u);
+        }
+    }
+
+    enableInputs();
+}
+
+async function performDFSFull() {
+    let stack = [];
+    let visited = new Set();
+    let delay = document.getElementById("speedSlider").value; 
+    let nodes = cy.nodes().map(n => n.id()).sort((a, b) => a - b); 
+    let startNode = document.getElementById("startNodeInput").value;
+
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    const isDirected = (graphType === "directed"); 
+
+    resetTraversal();
+
+    async function dfs(start) {
+        stack.push(start);
+
+        while (stack.length > 0) {
+            if (isStopped) return;
+
+            let current = stack.pop();
+            if (visited.has(current)) continue;
+
+            visited.add(current);
+            cy.getElementById(current).style("background-color", colors.blue);
+            document.getElementById("visitedOrder").innerText += " " + current;
+
+            await new Promise(resolve => setTimeout(resolve, delay));
+
+            let neighbors;
+            if (isDirected) {
+                neighbors = cy.getElementById(current).outgoers("node")
+                    .filter(n => !visited.has(n.id()))
+                    .map(n => n.id());
+            } else {
+                neighbors = cy.getElementById(current).neighborhood("node")
+                    .filter(n => !visited.has(n.id()))
+                    .map(n => n.id());
+            }
+
+            neighbors.sort((a, b) => b - a); 
+            stack.push(...neighbors);
+        }
+    }
+
+    if (cy.getElementById(startNode).length > 0) {
+        await dfs(startNode);
+    }
+
+    for (let u of nodes) {
+        if (!visited.has(u)) {
+            await dfs(u);
+        }
+    }
+
+    enableInputs();
+}
+
+async function performDFSRecursionFull() {
+    let visited = new Set();
+    let delay = document.getElementById("speedSlider").value;
+    let nodes = cy.nodes().map(n => n.id()).sort((a, b) => a - b);
+    let startNode = document.getElementById("startNodeInput").value;
+
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    const isDirected = (graphType === "directed");
+
+    resetTraversal();
+
+    async function dfsRecursionFull(node) {
+        if (isStopped) return;
+        if (visited.has(node)) return;
+
+        visited.add(node);
+        cy.getElementById(node).style("background-color", colors.green);
+        document.getElementById("visitedOrder").innerText += " " + node;
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        let neighbors;
+        if (isDirected) {
+            neighbors = cy.getElementById(node).outgoers("node")
+                .filter(n => !visited.has(n.id()))
+                .map(n => n.id());
+        } else {
+            neighbors = cy.getElementById(node).neighborhood("node")
+                .filter(n => !visited.has(n.id()))
+                .map(n => n.id());
+        }
+
+        neighbors.sort((a, b) => a - b);
+
+        for (let neighbor of neighbors) {
+            await dfsRecursionFull(neighbor);
+        }
+    }
+
+    if (cy.getElementById(startNode).length > 0) {
+        await dfsRecursionFull(startNode);
+    }
+
+    for (let u of nodes) {
+        if (!visited.has(u)) {
+            await dfsRecursionFull(u);
         }
     }
 

@@ -27,6 +27,7 @@ function updateGraphInput() {
     let newInputText = lines.join('\n');
     document.getElementById('graphInput').value = newInputText;
 }
+
 function updateGraphInfo() {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -49,6 +50,7 @@ function updateGraphInfo() {
     document.getElementById('nodeCountInput').value = nodeCount;
     document.getElementById('edgeCountInput').value = edgeCount;
 }
+
 function isValidFloat(num) {
     // Kiểm tra xem num có phải là số thực hợp lệ không
     return !isNaN(num) && num.toString().indexOf('.') !== -1;
@@ -167,9 +169,46 @@ function generateGraph() {
             name: 'grid',
             rows: 3
         },
+        userZoomingEnabled: true,
+        zoomingEnabled: true,
+        minZoom: 0.1,
+        maxZoom: 10,
+        zoom: 1,
+        wheelSensitivity: 0.2, //độ nhạy khi zoom bằng chuột
         ready: function () {
             console.log('Graph is ready!');
         }
+    });
+
+    // Prevent nodes from being dragged out of the visible area
+    cy.on('drag', 'node', function(evt) {
+        const node = evt.target;
+        const pos = node.position();
+        const container = cy.container();
+        const containerRect = container.getBoundingClientRect();
+
+        const margin = 25;
+        if (pos.x < margin) pos.x = margin;
+        if (pos.y < margin) pos.y = margin;
+        if (pos.x > containerRect.width - margin) pos.x = containerRect.width - margin;
+        if (pos.y > containerRect.height - margin) pos.y = containerRect.height - margin;
+
+        node.position(pos);
+    });
+
+    // Ensure nodes maintain a margin from the edges when resizing
+    cy.on('resize', function() {
+        const margin = 25;
+        cy.nodes().forEach(node => {
+            const pos = node.position();
+            const container = cy.container();
+            const containerRect = container.getBoundingClientRect();
+            if (pos.x < margin) pos.x = margin;
+            if (pos.y < margin) pos.y = margin;
+            if (pos.x > containerRect.width - margin) pos.x = containerRect.width - margin;
+            if (pos.y > containerRect.height - margin) pos.y = containerRect.height - margin;
+            node.position(pos);
+        });
     });
 }
 
@@ -210,6 +249,3 @@ document.getElementById("graphInput").addEventListener("input", function (event)
         event.target.value = cleanedInput;
     }
 });
-
-
-
