@@ -10,7 +10,7 @@ Article 1 - Definitions
 
 1.3 “Non-commercial User” shall mean a person using the Software for non-commercial research purposes on its own behalf or on behalf of a legal entity. In case the Non-commercial User is acting on behalf of an entity, use of the Software is only permitted by the Non-Commercial User in the event the Software License Agreement is approved and signed by the authorized signatories of such legal entity and returned to KU LEUVEN.
 
-Article 2 - License
+Article 2 - Licenses
 
 2.1 As long as you qualify as a Non-commercial User, KU LEUVEN hereby grants you a royalty-free, non-exclusive, non-transferable license to the Software supplied by KU LEUVEN for strictly internal, non-commercial research use only.
 
