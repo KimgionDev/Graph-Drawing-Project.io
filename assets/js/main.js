@@ -162,7 +162,7 @@ function generateGraph() {
                     'color': '#fff',  // Label color
                     'font-size': '15px', 
                     'text-valign': 'center', 
-                    'text-halign': 'center' 
+                    'text-halign': 'center',
                 }
             },
             {
@@ -248,7 +248,7 @@ while Hàng đợi chưa rỗng {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đưa v vào hàng đợi<br>
 &nbsp;&nbsp;&nbsp;&nbsp;}<br>
 }`,
-        "bfs-fullGraph": `Đưa các đỉnh chưa duyệt vào hàng đợi, lặp lại BFS cho từng thành phần liên thông.`,
+        "bfsfull": `Đưa các đỉnh chưa duyệt vào hàng đợi, lặp lại BFS cho từng thành phần liên thông.`,
         dfs: `Đưa 1 đỉnh bất kỳ vào Ngăn xếp<br>
 while Ngăn xếp chưa rỗng {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đỉnh ngăn xếp ra<br>

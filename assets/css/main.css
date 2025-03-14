@@ -259,7 +259,7 @@ label>h4 {
 
 .btn-func,
 .btn-alg,
-.download_btn {
+.btn-addon {
   background-color: var(--btn-color);
   border: none;
   border-radius: 5px;
@@ -269,7 +269,7 @@ label>h4 {
   margin: 5px 5px;
 }
 
-.download_btn{
+.btn-addon{
   background-color: var(--second-color);
 }
 
@@ -281,7 +281,7 @@ label>h4 {
 
 .btn-func:hover,
 .btn-alg:hover,
-.download_btn:hover {
+.btn-addon:hover {
   background-color: var(--second-color);
   color: black;
   box-shadow: 0px 0px 9px var(--second-color);
@@ -289,13 +289,13 @@ label>h4 {
   transition: 0.2s ease-out;
 }
 
-.download_btn:hover{
+.btn-addon:hover{
   background-color: var(--fifth-color);
 }
 
 .btn-func:active,
 .btn-alg:active,
-.download_btn:active {
+.btn-addon:active {
   background-color: var(--fifth-color) !important;
   transform: scale(0.9);
   border-color: var(--fifth-color);
@@ -663,7 +663,7 @@ p {
 
   .nodeCount label,
   .edgeCount label {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
 
   .header__right {

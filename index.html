@@ -7,6 +7,7 @@
   <title>LÝ THUYẾT ĐỒ THỊ</title>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
   <link rel="stylesheet" href="assets/css/main.css">
@@ -83,11 +84,14 @@
               <input type="" id="edgeCountInput" value="0" oninput="updateGraphInfo()">
             </div>
           </div>
+          <div class="fullScreen">
+            <button class="btn btn-addon" id="fullScreen" title="Toàn màn hình" type="button">
+              <i class="fa-solid fa-expand"></i>
+            </button> 
+          </div>
           <div class="download_icon">
-            <button class="btn download_btn" id="capture_btn" title="Tải ảnh đồ thị" type="button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
-              </svg>
+            <button class="btn btn-addon" id="capture_btn" title="Tải ảnh đồ thị" type="button">
+              <i class="fa-solid fa-arrow-down"></i>
             </button> 
           </div>
         </div>
@@ -126,7 +130,7 @@
             <span class="input-group-text">Tốc độ duyệt</span>
             <label class="slider">
               <p id="decreaseSpeed">+</p>
-              <input type="range" id="speedSlider" class="level" min="0" max="1000" step="100">
+              <input type="range" id="speedSlider" class="level" min="0" max="2005" step="100">
               <p id="increaseSpeed">-</p>
             </label>
           </div>

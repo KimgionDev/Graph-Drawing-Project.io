@@ -761,17 +761,19 @@ async function tarjan(graph) {
     let sccs = [];
     let colorIndex = 0;
     const colorsArray = [
-        '#3B2342', '#A38DC5', '#C4A484', '#184A2C', '#543312',
-        '#A20021', '#2B5252', '#D2B48C', '#B6C4B6', '#5A3C2C',
-        '#7A6590', '#B38A5F', '#406F6E', '#7EBDC2', '#E07B39',
-        '#A15512', '#CBC3E3', '#011F4B', '#D72638', '#8FA08F',
-        '#3D453D', '#A67C52', '#261225', '#FF5733', '#BF6724',
-        '#FFAA00', '#2D5F8B', '#72523A', '#3C324D', '#8D6346',
-        '#8C6D47', '#594A72', '#5A3E6B', '#1E3939', '#62A87C',
-        '#D2B48C', '#730000', '#A078C2', '#B38A5F', '#5A96E3',
-        '#38761D', '#5A8C8A', '#00875A', '#002F5E', '#71491E',
-        '#525E52', '#A38DC5', '#563C28', '#CBC3E3', '#0F2A1B'
+        '#A6B1E1', '#FFB7B2', '#F7D08A', '#9AC2C9', '#D4A5A5',
+        '#B0A8B9', '#EEC4C4', '#89A7A7', '#F6AE99', '#C2C5BB',
+        '#B8A1C7', '#F3C98B', '#A1C3D1', '#EAB4A2', '#A5C4C9',
+        '#D3B1C2', '#90AFC5', '#E6A57E', '#AC92A6', '#C9ADA7',
+        '#8DA7BE', '#E8AEB7', '#B5D8CC', '#C6C5B9', '#F4A259',
+        '#A2A8D3', '#DBB8A8', '#C1B2AB', '#F3D1A1', '#B4A2A8',
+        '#D1A3A6', '#90BAAD', '#E8C1C5', '#A6C7D8', '#DABFAF',
+        '#B89F94', '#D3A587', '#A6A5C4', '#E4B7A0', '#C8B4C8',
+        '#96C0B7', '#F2A679', '#B6D8A9', '#A4B8C4', '#D7AFAF',
+        '#B1C5C8', '#E3B5A4', '#A4A1C5', '#C8A8B7', '#F1B494'
     ];
+    
+    
     const delay = parseInt(document.getElementById('speedSlider').value);
     async function strongConnect(node) {
         indexMap[node] = index;
