@@ -107,6 +107,13 @@ document.getElementById("traversalType").addEventListener("change", function () 
         directedRadio.checked = true;
         directedRadio.parentElement.style.opacity = "1";
         createGraphButton.click();
+    } else if (selectedAlgorithm === "kruskal") {
+        directedRadio.disabled = true;
+        directedRadio.parentElement.style.opacity = "0.75";
+        undirectedRadio.checked = true;
+        undirectedRadio.parentElement.style.opacity = "1";
+        startNodes.disabled = true;
+        createGraphButton.click();
     } else {
         directedRadio.disabled = false;
         undirectedRadio.disabled = false;
@@ -153,6 +160,8 @@ async function performTraversal() {
         await performDFSFull();
     } else if (traversalType === "dfs-recursion-fullGraph") {
         await performDFSRecursionFull();
+    } else if (traversalType === "kruskal"){
+        await Kruskal();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -163,7 +172,7 @@ function toggleInputs(disable) {
     document.getElementById("creatGraph").disabled = disable;
     document.getElementById("traversalType").disabled = disable;
     document.getElementById("startNodeInput").disabled = disable;
-    if (traversalType === "topoSort" || traversalType === "ranked") {
+    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "kruskal") {
         document.getElementById("startNodeInput").disabled = true;
     }
     document.getElementById("endNodeInput").disabled = disable;
@@ -1380,4 +1389,125 @@ async function performDFSRecursionFull() {
     }
 
     enableInputs();
+}
+
+// Kruskalllllllllllll
+async function Kruskal() {
+    const visitedOrder = document.getElementById("visitedOrder");
+    const speedSlider = document.getElementById("speedSlider");
+    // const graphType = document.querySelector('input[name="graphType"]:checked').value;
+    
+    const inputText = document.getElementById("graphInput").value.trim();
+    const lines = inputText.split("\n");
+    let edges = [];
+    let allNodes = new Set();
+
+    for (let line of lines) {
+        const [u, v, w] = line.split(" ").map(Number);
+        if (w == null) {
+            visitedOrder.innerHTML = "Vui lòng nhập trọng số.";
+            toggleInputs(false);
+            return;
+        }
+        if (w < 0) {
+            visitedOrder.innerHTML = "Trọng số là số không âm.";
+            toggleInputs(false);
+            return;
+        }
+        edges.push({ u, v, w });
+        allNodes.add(u);
+        allNodes.add(v);
+    }
+
+    if (!isConnected(allNodes)) {
+        visitedOrder.innerHTML = "Đồ thị không liên thông.";
+        toggleInputs(false);
+        return;
+    }
+
+    const mstEdges = [];
+    let totalWeight = 0;
+    // edges.sort((a, b) => a.w - b.w); 
+    let parent = {};
+    let rank = {};
+
+    for (let node of allNodes) {
+        parent[node] = node;
+        rank[node] = 0;
+    }
+
+    function find(u) {
+        if (parent[u] !== u) {
+            parent[u] = find(parent[u]);
+        }
+        return parent[u];
+    }
+
+    function union(u, v) {
+        const rootU = find(u);
+        const rootV = find(v);
+
+        if (rootU !== rootV) {
+            if (rank[rootU] > rank[rootV]) {
+                parent[rootV] = rootU;
+            } else if (rank[rootU] < rank[rootV]) {
+                parent[rootU] = rootV;
+            } else {
+                parent[rootV] = rootU;
+                rank[rootU]++;
+            }
+        }
+    }
+
+    for (let { u, v, w } of edges) {
+        if (find(u) !== find(v)) {
+            mstEdges.push({ u, v, w });
+            totalWeight += w;
+            union(u, v);
+
+            cy.$(`#${u}`).style('background-color', colors.green);
+            cy.$(`#${v}`).style('background-color', colors.green);
+            cy.edges(`[source="${u}"][target="${v}"]`).style('line-color', colors.green);
+
+            await new Promise(resolve => setTimeout(resolve, speedSlider.value));
+        }
+    }
+
+    visitedOrder.innerHTML = `Trọng lượng cây: ${totalWeight}`;
+
+    for (let { u, v } of mstEdges) {
+        cy.edges(`[source="${u}"][target="${v}"]`).style('line-color', colors.red);
+    }
+
+    toggleInputs(false);
+}
+
+function isConnected(nodes) {
+    const parent = {};
+    const find = (u) => {
+        if (parent[u] !== u) parent[u] = find(parent[u]);
+        return parent[u];
+    };
+    const union = (u, v) => {
+        const rootU = find(u);
+        const rootV = find(v);
+        if (rootU !== rootV) parent[rootV] = rootU;
+    };
+
+    for (let node of nodes) {
+        parent[node] = node;
+    }
+
+    const edges = document.getElementById("graphInput").value.trim().split("\n");
+    for (let edge of edges) {
+        const [u, v] = edge.split(" ").map(Number);
+        union(u, v);
+    }
+
+    const roots = new Set();
+    for (let node of nodes) {
+        roots.add(find(node));
+    }
+
+    return roots.size === 1;
 }
