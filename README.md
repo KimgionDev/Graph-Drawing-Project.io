@@ -1,4 +1,4 @@
-# 🚀 Dự Án Vẽ Đồ Thị
+# 🚀 Graphify
 
 Dự án này được phát triển như một bài tập nhóm cho **khóa học Lý Thuyết Đồ Thị**. Nó tập trung vào **việc trực quan hóa và tương tác với đồ thị** bằng cách sử dụng các công nghệ web hiện đại.
 
@@ -69,7 +69,7 @@ Cảm ơn bạn đã xem dự án của chúng tôi! 🎉 Nếu bạn có bất 
 
 ---
 
-# 🚀 Graph Drawing Project
+# 🚀 Graphify
 
 This project is developed as a group assignment for the **Graph Theory course**. It focuses on **visualizing and interacting with graphs** using modern web technologies.
 
