@@ -1394,14 +1394,12 @@ async function performDFSRecursionFull() {
 // Kruskalllllllllllll
 async function Kruskal() {
     const visitedOrder = document.getElementById("visitedOrder");
-    const speedSlider = document.getElementById("speedSlider");
+    const delay = document.getElementById("speedSlider").value;
     // const graphType = document.querySelector('input[name="graphType"]:checked').value;
-    
     const inputText = document.getElementById("graphInput").value.trim();
     const lines = inputText.split("\n");
     let edges = [];
     let allNodes = new Set();
-
     for (let line of lines) {
         const [u, v, w] = line.split(" ").map(Number);
         if (w == null) {
@@ -1460,6 +1458,10 @@ async function Kruskal() {
     }
 
     for (let { u, v, w } of edges) {
+        if (isStopped) {
+            resetTraversal();
+            return;
+        }
         if (find(u) !== find(v)) {
             mstEdges.push({ u, v, w });
             totalWeight += w;
@@ -1469,7 +1471,7 @@ async function Kruskal() {
             cy.$(`#${v}`).style('background-color', colors.green);
             cy.edges(`[source="${u}"][target="${v}"]`).style('line-color', colors.green);
 
-            await new Promise(resolve => setTimeout(resolve, speedSlider.value));
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
     }
 
