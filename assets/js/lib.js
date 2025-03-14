@@ -1270,7 +1270,3 @@ async function performBFSFull() {
 
     enableInputs();
 }
-
-
-
-

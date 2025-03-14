@@ -6,9 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LÝ THUYẾT ĐỒ THỊ</title>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
   <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="shortcut icon" href="assets/img/graph.ico" type="image/x-icon">
@@ -19,19 +24,19 @@
   <div id="loading-screen">
     <div class="spinner"></div>
   </div>
-  <script src="./assets/js/load.js"></script>
   <div class="container-fluid container__head">
     <div class="row head">
       <header class="d-flex">
         <div class="header__left">
-            <a href="./index.html" class="header__icon"></a>
+          <a href="./index.html" class="header__icon"></a>
           <a href="./index.html">
             <h1 id="header__left-heading">Graphify</h1>
           </a>
         </div>
         <div class="header__right d-flex">
           <div class="form-check form-switch darkLight">
-            <input class="form-check-input themeInp m-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+            <input class="form-check-input themeInp m-1" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+              checked>
             <label class="form-check-label" for="flexSwitchCheckChecked">Chế độ tối</label>
           </div>
         </div>
@@ -49,17 +54,17 @@
 
           <div class="mydict">
             <div id="graphType">
-                <label>
-                    <input type="radio" name="graphType" value="directed" checked>
-                    <span>Có hướng</span>
-                </label>
-                <label>
-                    <input type="radio" name="graphType" value="undirected">
-                    <span>Vô hướng</span>
-                </label>
+              <label>
+                <input type="radio" name="graphType" value="directed" checked>
+                <span>Có hướng</span>
+              </label>
+              <label>
+                <input type="radio" name="graphType" value="undirected">
+                <span>Vô hướng</span>
+              </label>
             </div>
           </div>
-           <br>
+          <br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
         <!-- Button -->
@@ -69,7 +74,7 @@
 
       </div>
       <!--MID COLUMN-->
-        <!-- GRAPH HERE -->
+      <!-- GRAPH HERE -->
       <div class="mid-col col-xl-6 d-flex">
         <div id="cy" class=""></div>
         <!-- Infor Graph -->
@@ -87,16 +92,15 @@
           <div class="fullScreen">
             <button class="btn btn-addon" id="fullScreen" title="Toàn màn hình" type="button">
               <i class="fa-solid fa-expand"></i>
-            </button> 
+            </button>
           </div>
           <div class="download_icon">
             <button class="btn btn-addon" id="capture_btn" title="Tải ảnh đồ thị" type="button">
               <i class="fa-solid fa-arrow-down"></i>
-            </button> 
+            </button>
           </div>
         </div>
       </div>
-      <script src="./assets/js/capture.js"></script>
       <!--RIGHT COLUMN-->
       <div class="right-col col-xl-3 container">
         <div class="right-col__content row d-flex flex-column">
@@ -151,11 +155,14 @@
       </div>
     </div>
   </div>
-  <script>
-
-  </script> 
+  <script src="assets/js/fullScreen.js"></script>
+  <script src="assets/js/load.js"></script>
+  <script src="assets/js/changeTheme.js"></script>
+  <script src="assets/js/fakelang.js"></script>
+  <script src="assets/js/capture.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/lib.js"></script>
-  
+
 </body>
+
 </html>
