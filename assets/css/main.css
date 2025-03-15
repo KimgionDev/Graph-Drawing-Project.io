@@ -723,3 +723,17 @@ p {
     transform: rotate(360deg);
   }
 }
+
+#nodeRadius {
+  width: 60px;        /* Thay đổi chiều rộng của ô input */
+  height: 30px;       /* Thay đổi chiều cao của ô input */
+  border: 1px solid #fff; /* Đổi màu viền cho ô input */
+  font-size: 14px;     /* Kích thước chữ */
+  padding: 5px;       /* Thêm khoảng cách giữa chữ và viền */
+  border-radius: 5px; /* Thêm góc bo tròn cho ô input */
+}
+
+#nodeRad{
+  color: #fff;        /* Màu chữ trắng */
+  margin-right: 10px;
+}

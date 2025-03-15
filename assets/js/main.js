@@ -2,6 +2,8 @@ let cy = null;
 let nodeCount = 0;    
 let edgeCount = 0;    
 
+let nodeRadius = 17; 
+
 function addNode() {
     nodeCount++;
 
@@ -144,6 +146,8 @@ function generateGraph() {
                     'font-size': '15px', 
                     'text-valign': 'center', 
                     'text-halign': 'center',
+                    'width': nodeRadius * 2,  // Thiết lập kích thước node
+                    'height': nodeRadius * 2   // Thiết lập kích thước node
                 }
             },
             {
@@ -161,7 +165,7 @@ function generateGraph() {
                     'text-border-width': 1,
                     'text-border-color': '#000', // Border color for edge weight
                     'font-size': '14px', 
-                    'text-margin-y': -12  
+                    'text-margin-y': -12,
                 }
             }
         ],
@@ -244,8 +248,14 @@ document.getElementById("graphInput").addEventListener("input", function (event)
         return "";
     }).join('\n');
 
-    // Cập nhật lại giá trị vào ô nhập liệu (chỉ khi có sự thay đổi thực sự)
     if (event.target.value !== cleanedInput) {
         event.target.value = cleanedInput;
     }
 });
+
+function updateGraphAttributes() {
+    nodeRadius = document.getElementById('nodeRadius').value;
+    generateGraph();
+}
+
+document.getElementById('nodeRadius').addEventListener('input', updateGraphAttributes);
