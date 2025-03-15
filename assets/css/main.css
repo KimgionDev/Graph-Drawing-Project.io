@@ -604,24 +604,30 @@ p {
 }
 
 .edgeStyle {
-  background-color: var(--btn-color);
+  background-color: white;
   border-radius: 5px;
+  border: 2px solid var(--bs-border-2);
   width: 90%;
+  margin: 5px 0px;
 }
 
 .edgeStyle label {
   margin: 0px 5px;
-  color: var(--btn-text-color);
+  color: #333;
   flex: 1;
   text-align: center;
 }
 
 .edgeStyle select {
-  border: 1px solid transparent;
-  border-radius: 5px;
+  border-left: 2px solid var(--border-color);
+  border-radius: 0px;
   width: 35%;
+  min-width: fit-content;
 }
 
+.edgeStyle select:focus{
+  border-left: 2px solid black; 
+}
 select option {
   font-size: 0.9rem;
   max-width: fit-content;
@@ -818,6 +824,7 @@ body.dark_theme_var {
   #graphInfo input {
     margin: 0;
   }
+
 }
 
 @media screen and (max-width: 360px) {
