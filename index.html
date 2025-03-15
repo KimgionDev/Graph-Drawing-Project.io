@@ -34,11 +34,12 @@
           </a>
         </div>
         <div class="header__right d-flex">
-          <div class="form-check form-switch darkLight">
-            <input class="form-check-input themeInp m-1" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-              checked>
-            <label class="form-check-label" for="flexSwitchCheckChecked">Chế độ tối</label>
-          </div>
+          <div class="darkLight" onclick="toggleTheme()">
+            <div class="theme-toggle-container">
+              <i class="fas fa-sun sun"></i> 
+              <i class="fas fa-moon moon"></i> 
+              <label>Mode</label>
+            </div>
         </div>
       </header>
     </div>
@@ -177,7 +178,6 @@
   <script src="assets/js/capture.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/lib.js"></script>
-
 </body>
 
 </html>

@@ -757,3 +757,62 @@ p {
   background: #4CAF50;
 }
 
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--third-color);
+  padding: 10px 15px;
+  border-radius: 25px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 2px solid var(--border-color); 
+}
+
+.theme-toggle-container:hover {
+  background-color: var(--second-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.theme-toggle-container i {
+  margin-right: 8px; 
+  font-size: 1.5rem;
+  transition: 0.3s ease-in-out; 
+}
+
+.darkLight i.sun {
+  color: yellow; 
+}
+
+.darkLight i.moon {
+  color: gray; 
+  display: none; 
+}
+
+body.light_theme_var .darkLight i.moon {
+  display: block; 
+}
+
+body.dark_theme_var .darkLight i.sun {
+  display: block; 
+}
+
+body.light_theme_var .darkLight i.sun {
+  display: none; 
+}
+
+.theme-toggle-container label {
+  font-weight: 600;
+  color: var(--btn-text-color);
+  font-size: 1rem;
+}
+
+body.light_theme_var {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.dark_theme_var {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color); 
+}
+
