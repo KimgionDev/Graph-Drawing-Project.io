@@ -27,6 +27,8 @@ Dự án này được phát triển như một bài tập nhóm cho **khóa h�
 ## 📦 Thư viện
 
 - 🔗 **Cytoscape.js**: Thư viện lý thuyết đồ thị (mạng) để trực quan hóa và phân tích
+- 🔗 **Bootstrap**: Một framework phổ biến để xây dựng các trang web và ứng dụng web đáp ứng, ưu tiên di động.
+- 🔗 **Font Awesome**: Thư viện phổ biến và công cụ để thêm các biểu tượng vector có thể mở rộng vào các dự án web.
 
 ## 🏆 Huy Hiệu
 
@@ -98,6 +100,8 @@ To view and interact with the graph visualizations:
 ## 📦 Dependencies
 
 - 🔗 **Cytoscape.js**: Graph theory (network) library for visualisation and analysis 
+- 🔗 **Bootstrap**: A popular framework for building responsive, mobile-first websites and web applications.
+- 🔗 **Font Awesome**: A popular library and toolkit for adding scalable vector icons to web projects.
 
 ## 🏆 Badges
 
