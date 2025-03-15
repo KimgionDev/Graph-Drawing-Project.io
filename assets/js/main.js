@@ -191,7 +191,7 @@ function generateGraph() {
         const container = cy.container();
         const containerRect = container.getBoundingClientRect();
 
-        const margin = 25;
+        const margin = 0;
         if (pos.x < margin) pos.x = margin;
         if (pos.y < margin) pos.y = margin;
         if (pos.x > containerRect.width - margin) pos.x = containerRect.width - margin;
@@ -202,7 +202,7 @@ function generateGraph() {
 
     // Ensure nodes maintain a margin from the edges when resizing
     cy.on('resize', function() {
-        const margin = 25;
+        const margin = 0;
         cy.nodes().forEach(node => {
             const pos = node.position();
             const container = cy.container();
@@ -215,7 +215,6 @@ function generateGraph() {
         });
     });
 }
-
 document.getElementById("graphInput").addEventListener("input", function (event) {
     let input = event.target.value;
 

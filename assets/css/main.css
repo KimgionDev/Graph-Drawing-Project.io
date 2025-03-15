@@ -23,6 +23,8 @@
   --btn-text-color: #F5F5F5;
   --btn-swt-color: white;
   --header-icon: url("../img/graph.png");
+  --dark-moon-icon: #14213d;
+  --light-sun-icon: #ffd60a;
 }
 
 .light_theme_var {
@@ -80,7 +82,7 @@ label>h4 {
   max-height: 78px;
 }
 
-.header__icon{
+.header__icon {
   width: 60px;
   max-width: 60px;
   background-image: var(--header-icon);
@@ -132,9 +134,12 @@ label>h4 {
 }
 
 #iptGraph {
-  margin: 10px;
+  margin: 0px 10px;
 }
 
+#iptGraph div.mydict{
+  margin: 8px 0px;
+}
 #iptGraph h4 {
   height: 35px;
   min-height: 35px;
@@ -152,11 +157,13 @@ label>h4 {
 }
 
 #btn__input_graph {
-  width: 100%;
+  width: 90%;
 }
 
 #btn__input_graph button {
-  width: 90%;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 #cy {
@@ -177,16 +184,16 @@ label>h4 {
   border-radius: 4px;
 }
 
-.graphInfo__content > div{
+.graphInfo__content>div {
   margin: 5px 5px;
 }
 
-.graphInfo__content{
+.graphInfo__content {
   width: 100%;
   flex: 1;
 }
 
-#graphInfo{
+#graphInfo {
   position: relative;
 }
 
@@ -269,7 +276,7 @@ label>h4 {
   margin: 5px 5px;
 }
 
-.btn-addon{
+.btn-addon {
   background-color: var(--second-color);
 }
 
@@ -289,7 +296,7 @@ label>h4 {
   transition: 0.2s ease-out;
 }
 
-.btn-addon:hover{
+.btn-addon:hover {
   background-color: var(--fifth-color);
 }
 
@@ -319,16 +326,20 @@ label>h4 {
   outline: none;
   border: 1px solid var(--bs-border-2);
 }
-.pointChoice{
+
+.pointChoice {
   margin: 0 !important;
 }
-.pointStart, .pointEnd {
+
+.pointStart,
+.pointEnd {
   width: 100%;
   flex-direction: row;
   flex-wrap: nowrap;
 }
 
-.pointStart span, .pointEnd span {
+.pointStart span,
+.pointEnd span {
   font-size: 0.7rem;
 }
 
@@ -392,7 +403,7 @@ textarea#graphInput:focus {
 
 }
 
-.fakeLang p{
+.fakeLang p {
   font-size: 0.9rem;
   transition: 0.15s ease-in-out;
 }
@@ -496,9 +507,9 @@ textarea#graphInput:focus {
   position: relative;
 }
 
-.slider:hover .level {
+/* .slider:hover .level {
   height: calc(var(--slider-height) * 2);
-}
+} */
 
 .result-box {
   width: 100%;
@@ -545,7 +556,6 @@ textarea#graphInput:focus {
 .mydict div {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 0.5rem;
   justify-content: center;
 
 }
@@ -593,55 +603,176 @@ p {
   margin: 0;
 }
 
+.edgeStyle {
+  background-color: var(--btn-color);
+  border-radius: 5px;
+  width: 90%;
+}
+
+.edgeStyle label {
+  margin: 0px 5px;
+  color: var(--btn-text-color);
+  flex: 1;
+  text-align: center;
+}
+
+.edgeStyle select {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  width: 35%;
+}
+
+select option {
+  font-size: 0.9rem;
+  max-width: fit-content;
+}
+
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--third-color);
+  padding: 10px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.theme-toggle-container:hover {
+  background-color: var(--second-color);
+}
+
+.theme-toggle-container i {
+  margin-right: 9px;
+  font-size: 1.5rem;
+  transition: 0.3s ease-in-out;
+}
+
+/*Tai day, Lexipit3268 da switch icon voi nhau, qua la 1 phat kien vi daiiiii*/
+i.sun::before {
+  content: "\f186";
+}
+
+i.moon::before {
+  content: "\f185";
+}
+
+.darkLight i.sun {
+  color: var(--light-sun-icon);
+}
+
+.darkLight i.moon {
+  color: var(--dark-moon-icon);
+  display: none;
+}
+
+body.light_theme_var .darkLight i.moon {
+  display: block;
+}
+
+body.dark_theme_var .darkLight i.sun {
+  display: block;
+}
+
+body.light_theme_var .darkLight i.sun {
+  display: none;
+}
+
+.theme-toggle-container label {
+  font-weight: 600;
+  color: var(--btn-text-color);
+  font-size: 1rem;
+}
+
+body.light_theme_var {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.dark_theme_var {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
+}
 
 /* RESPONSIVEEEEEEEEEEEEEEE */
-@media screen and (min-width: 1200px) and (max-width: 1430px) {
+@media screen and (min-width: 1430px) and (min-height: 800px) {
+  textarea#graphInput {
+    height: 450px;
+  }
+  .fakeLang{
+    height: 330px;
+  }
   .fakeLang p{
+    font-size: 1rem !important;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1430px) {
+  .fakeLang p {
     font-size: 0.8rem !important;
   }
 }
 
-@media screen and (max-width: 1200px) {
-  .row>* {
-    flex-shrink: unset;
-  }
-  .all-content {
-    align-items: center;
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
+  .row {
+    display: flex;
   }
 
   .left-col,
   .right-col,
   .mid-col {
-    align-items: center;
+    flex: 1;
+    max-width: 33%;
+    box-sizing: border-box;
   }
-  #cy{
+
+  .mid-col {
+    max-width: 34%;
+  }
+
+  #cy {
     height: 500px;
   }
-  #iptGraph {
+
+  #iptGraph,
+  .edgeStyle {
     width: 70%;
   }
 
-  #btn__input_graph button {
+  #btn__input_graph {
     width: 70%;
   }
 }
 
 @media screen and (min-width: 1000px) and (max-width: 1100px) {
-  .fakeLang p{
+  .fakeLang p {
     font-size: 0.82rem !important;
   }
-  #cy{
+
+  #cy {
     height: 470px;
   }
-  #graphType label span{
+
+  #graphType label span {
     font-size: 0.8rem;
   }
 }
+
 @media screen and (max-width:999px) {
   .all-content {
     flex-direction: column;
   }
+  #iptGraph{
+    width: 80% !important;
+  }
+  textarea#graphInput{
+    height: 440px;
+  }
+  .edgeStyle, #btn__input_graph {
+    width: 80%;
+  }
 }
+
 @media screen and (max-width: 665px) {
   .header__left a img {
     width: 70%;
@@ -650,12 +781,22 @@ p {
   .header__left a h1 {
     font-size: 2.2rem !important;
   }
-  .header__icon{
+
+  .header__icon {
     width: 40px;
     height: 40px;
   }
+
   .form-check-label {
     font-size: 0.9rem;
+  }
+
+  .theme-toggle-container {
+    padding: 7px 10px;
+  }
+
+  .theme-toggle-container lable {
+    font-size: 0.8rem;
   }
 }
 
@@ -666,9 +807,9 @@ p {
     font-size: 0.75rem;
   }
 
-  .header__right {
+  /* .header__right {
     justify-content: center;
-  }
+  } */
 
   .form-switch {
     padding: 0;
@@ -688,16 +829,19 @@ p {
     width: 85%;
   }
 
-  #btn__input_graph button {
+  #btn__input_graph {
     width: 85%;
   }
 
-  .nodeCount, .edgeCount {
+  .nodeCount,
+  .edgeCount {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .nodeCount input, .edgeCount input{
+
+  .nodeCount input,
+  .edgeCount input {
     width: 40px !important;
     margin: 0px 2px !important;
   }
@@ -706,12 +850,16 @@ p {
     font-size: 0.78rem;
   }
 }
+
 @media screen and (max-width: 320px) {
-  .pointStart span, .pointEnd span{
+
+  .pointStart span,
+  .pointEnd span {
     font-size: 0.5rem;
   }
 
 }
+
 /* ANIMATION HERE */
 
 @keyframes spin {
@@ -723,96 +871,3 @@ p {
     transform: rotate(360deg);
   }
 }
-
-.d-flex #edgeStyle{
-  display: flex;
-  align-items: center;  
-  justify-content: space-between; 
-}
-
-.edgeStyle {
-  margin-right: 15px; 
-}
-
-#edgeStyle {
-  font-size: 14px; 
-  padding: 5px 10px;  
-  height: 30px;  
-  width: 90px;  
-}
-
-#edgeStyles{
-  margin-right: 10px;
-}
-.edgeStyle label{
-  color: var(--btn-swt-color);
-}
-
-#edgeStyle option {
-  font-size: 14px;  
-  padding: 5px;
-}
-
-.level:active {
-  background: #4CAF50;
-}
-
-.theme-toggle-container {
-  display: flex;
-  align-items: center;
-  background-color: var(--third-color);
-  padding: 10px 15px;
-  border-radius: 25px; 
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border: 2px solid var(--border-color); 
-}
-
-.theme-toggle-container:hover {
-  background-color: var(--second-color);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-}
-
-.theme-toggle-container i {
-  margin-right: 9px; 
-  font-size: 1.5rem;
-  transition: 0.3s ease-in-out; 
-}
-
-.darkLight i.sun {
-  color: yellow; 
-}
-
-.darkLight i.moon {
-  color: black; 
-  display: none; 
-}
-
-body.light_theme_var .darkLight i.moon {
-  display: block; 
-}
-
-body.dark_theme_var .darkLight i.sun {
-  display: block; 
-}
-
-body.light_theme_var .darkLight i.sun {
-  display: none; 
-}
-
-.theme-toggle-container label {
-  font-weight: 600;
-  color: var(--btn-text-color);
-  font-size: 1rem;
-}
-
-body.light_theme_var {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-body.dark_theme_var {
-  background-color: var(--dark-bg-color);
-  color: var(--dark-text-color); 
-}
-

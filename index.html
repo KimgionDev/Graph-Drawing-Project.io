@@ -36,8 +36,8 @@
         <div class="header__right d-flex">
           <div class="darkLight" onclick="toggleTheme()">
             <div class="theme-toggle-container">
-              <i class="fa-solid fa-cloud-sun sun"></i>
               <i class="fa-solid fa-cloud-moon moon"></i>
+              <i class="fa-solid fa-sun-sun sun"></i>
               <label for="theme-switch">Mode</label>
             </div>            
         </div>
@@ -65,17 +65,10 @@
               </label>
             </div>
           </div>
-          <br>
           <textarea id="graphInput" rows="8" cols="40" oninput="updateGraphInfo()"></textarea>
         </div>
-        <!-- Button -->
-        <div id="btn__input_graph" class="d-flex justify-content-center">
-          <button onclick="generateGraph()" type="button" class="btn-func btn" id="creatGraph">Tạo đồ thị</button>
-        </div>
-
-        <div class="mydict mt-2">
-          <!-- Kiểu cung -->
-          <div class="edgeStyle">
+        <!--Edge Style -->
+          <div class="edgeStyle d-flex align-items-center">
             <label id="edgeStyles" for="edgeStyle">Kiểu cung</label>
             <select id="edgeStyle" class="form-select" aria-label="Chọn kiểu cung">
               <option value="straight">Thẳng</option>           
@@ -83,8 +76,12 @@
               <option value="dashed">Gạch</option>
             </select>
           </div>
+        <!-- Button -->
+        <div id="btn__input_graph" class="createGraph d-flex justify-content-center">
+          <button onclick="generateGraph()" type="button" class="btn-func btn" id="creatGraph">Tạo đồ thị</button>
         </div>
 
+        
       </div>
       <!--MID COLUMN-->
       <!-- GRAPH HERE -->
