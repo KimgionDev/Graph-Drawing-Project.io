@@ -74,7 +74,6 @@ function generateGraph() {
 
     let edges = [];
     let edgeOccurrences = {}; 
-    let nodePositions = {}; 
     const visitedOrder = document.getElementById("visitedOrder");
     const edgeStyle = document.getElementById("edgeStyle").value;
     // Nếu không có cung nào được nhập
@@ -254,13 +253,6 @@ document.getElementById("graphInput").addEventListener("input", function (event)
     }
 });
 
-function updateGraphAttributes() {
-    nodeRadius = document.getElementById('nodeRadius').value;
-    generateGraph();
-}
-
-document.getElementById('nodeRadius').addEventListener('input', updateGraphAttributes);
-
 function updateEdgeStyle() {
     const edgeStyle = document.getElementById("edgeStyle").value;
     
@@ -283,4 +275,9 @@ function updateEdgeStyle() {
 }
   
 document.getElementById("edgeStyle").addEventListener("change", updateEdgeStyle);
+document.querySelectorAll('input[name="graphType"]').forEach((radio) => {
+    radio.addEventListener("change", function () {
+      generateGraph();
+    });
+  });
   

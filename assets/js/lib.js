@@ -168,6 +168,19 @@ async function performTraversal() {
 
 function toggleInputs(disable) {
     const traversalType = document.getElementById("traversalType").value;
+    const graphTypeRadios = document.getElementsByName("graphType");
+    const directedRadio = graphTypeRadios[0];
+    const undirectedRadio = graphTypeRadios[1];
+    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "bellmanFord") {
+        directedRadio.disabled = disable; 
+    }
+    else if (traversalType === "kruskal" || traversalType === "bipartite"){
+        undirectedRadio.disabled = disable;
+    }
+    else {
+        directedRadio.disabled = disable;
+        undirectedRadio.disabled = disable; 
+    }
     document.getElementById("graphInput").disabled = disable;
     document.getElementById("creatGraph").disabled = disable;
     document.getElementById("traversalType").disabled = disable;

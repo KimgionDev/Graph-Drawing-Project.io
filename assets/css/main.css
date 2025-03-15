@@ -730,16 +730,8 @@ p {
   justify-content: space-between; 
 }
 
-.edgeStyle,
-.nodeSize {
+.edgeStyle {
   margin-right: 15px; 
-}
-#nodeRadius {
-  font-size: 14px;  
-  height: 30px; 
-  width: 50px;  
-  padding: 5px;  
-  text-align: center; 
 }
 
 #edgeStyle {
@@ -749,9 +741,14 @@ p {
   width: 90px;  
 }
 
+#edgeStyles{
+  margin-right: 10px;
+  color: white;
+}
+
 #edgeStyle option {
   font-size: 14px;  
-  padding: 5px; 
+  padding: 5px;
 }
 
 
