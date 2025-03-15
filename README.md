@@ -46,6 +46,12 @@ Dự án này được phát triển như một bài tập nhóm cho **khóa h�
       3 4
       1 3
    ```
+   Có trọng số
+  ```bash
+      1 2 -68
+      3 4 32
+      1 3 3268
+   ```
 - Sau khi nhập xong, nhấn **Tạo đồ thị**
 - Lựa chọn các thuật toán ở cột bên trái, nhập đỉnh bắt đầu và kết thúc (nếu có)
 - Chọn tốc độ duyệt của thuật toán.
@@ -118,6 +124,12 @@ To view and interact with the graph visualizations:
       1 2
       3 4
       1 3
+   ```
+   Weights
+  ```bash
+      1 2 -68
+      3 4 32
+      1 3 3268
    ```
 - After entering, click **Tạo đồ thị**
 - Select the algorithms from the left column, enter the start and end nodes (if applicable)
