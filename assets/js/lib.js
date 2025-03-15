@@ -568,6 +568,7 @@ async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
     path.reverse();
 
     let seenEdges = new Set();
+    const graphType = document.querySelector('input[name="graphType"]:checked').value;
 
     for (let i = 1; i < path.length; i++) {
         let from = path[i - 1];
@@ -581,7 +582,14 @@ async function highlightShortestPathEdges(prev, startNode, endNode, delay) {
             let edgeTarget = edge.target().id();
             let weight = edge.data('weight');
 
-            if (edgeSource === from.toString() && edgeTarget === to.toString()) {
+            if (edgeSource === from.toString() && edgeTarget === to.toString() && graphType === 'directed') {
+                if (weight < minWeight && !seenEdges.has(edge.id())) {
+                    minWeight = weight;
+                    minEdge = edge;
+                }
+            }
+            else if ((edgeSource === from.toString() && edgeTarget === to.toString() && graphType === 'undirected') ||
+            (edgeSource === to.toString() && edgeTarget === from.toString() && graphType ==='undirected')) {
                 if (weight < minWeight && !seenEdges.has(edge.id())) {
                     minWeight = weight;
                     minEdge = edge;
