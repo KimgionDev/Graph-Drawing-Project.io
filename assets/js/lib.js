@@ -1452,7 +1452,7 @@ async function Kruskal() {
 
     const mstEdges = [];
     let totalWeight = 0;
-    // edges.sort((a, b) => a.w - b.w); 
+    edges.sort((a, b) => a.w - b.w); 
     let parent = {};
     let rank = {};
 
@@ -1540,3 +1540,4 @@ function isConnected(nodes) {
 
     return roots.size === 1;
 }
+
