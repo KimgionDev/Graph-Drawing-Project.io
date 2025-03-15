@@ -626,7 +626,7 @@ p {
 }
 
 .edgeStyle select:focus{
-  border-left: 2px solid black; 
+  border-left: 2px solid var(--border-color); 
 }
 select option {
   font-size: 0.9rem;
