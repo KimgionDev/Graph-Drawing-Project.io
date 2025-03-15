@@ -743,7 +743,9 @@ p {
 
 #edgeStyles{
   margin-right: 10px;
-  color: white;
+}
+.edgeStyle label{
+  color: var(--btn-swt-color);
 }
 
 #edgeStyle option {
