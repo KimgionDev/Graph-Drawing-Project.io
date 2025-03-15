@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
      const selectElement = document.getElementById("traversalType");
      const pseudoCodeContainer = document.querySelector(".fakeLang p");
  
-     const pseudoCodeMap = {
-         bfs: `Đưa 1 đỉnh bất kỳ vào Hàng đợi<br>
+const pseudoCodeMap = {
+        bfs: `Đưa 1 đỉnh bất kỳ vào Hàng đợi<br>
  while Hàng đợi chưa rỗng {<br>
  &nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đầu hàng đợi ra<br>
  &nbsp;&nbsp;&nbsp;&nbsp;if (u đã duyệt) continue;<br>
@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đưa v vào hàng đợi<br>
  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
  }`,
-         "bfsfull": `Đưa các đỉnh chưa duyệt vào hàng đợi, lặp lại BFS cho từng thành phần liên thông.`,
-         dfs: `Đưa 1 đỉnh bất kỳ vào Ngăn xếp<br>
+        "bfsfull": `Đưa các đỉnh chưa duyệt vào hàng đợi, lặp lại BFS cho từng thành phần liên thông.`,
+        dfs: `Đưa 1 đỉnh bất kỳ vào Ngăn xếp<br>
  while Ngăn xếp chưa rỗng {<br>
  &nbsp;&nbsp;&nbsp;&nbsp;u = lấy đỉnh ở đỉnh ngăn xếp ra<br>
  &nbsp;&nbsp;&nbsp;&nbsp;if (u đã duyệt) continue;<br>
@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đưa v vào ngăn xếp<br>
  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
  }`,
-         "dfs-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng ngăn xếp.`,
-         "dfs-recursion": `Hàm DFS(u):<br>
+        "dfs-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng ngăn xếp.`,
+        "dfs-recursion": `Hàm DFS(u):<br>
  &nbsp;&nbsp;&nbsp;&nbsp;if (u đã được duyệt) return;<br>
  &nbsp;&nbsp;&nbsp;&nbsp;Duyệt u;<br>
  &nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu u đã được duyệt;<br>
@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DFS(v);<br>
  &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
  Gọi DFS(startNode);`,
-         "dfs-recursion-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng đệ quy.`,
-         "mooreDijkstra": `**Khởi tạo:<br>
+        "dfs-recursion-fullGraph": `Lặp lại DFS cho từng thành phần liên thông, dùng đệ quy.`,
+        "mooreDijkstra": `**Khởi tạo:<br>
  &nbsp;&nbsp;&nbsp;&nbsp;Tất cả các đỉnh đều chưa đánh dấu<br>
  &nbsp;&nbsp;&nbsp;&nbsp;Với mọi u ≠ s, 𝜋[u] = ∞, 𝜋[s] = 0<br>
  **Lặp i từ 1 đến n - 1:<br>
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if v chưa đánh dấu và (𝜋[u] + trọng số (u,v) < 𝜋[v]) then<br>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;𝜋[v] = 𝜋[u] + trọng số (u, v)<br>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u<br>`,
- "bipartite": `Khởi tạo mảng màu -1<br>
+        "bipartite": `Khởi tạo mảng màu -1<br>
  Duyệt i: nếu chưa tô && !bfs(i) → FALSE<br>
  Trả về TRUE;<br>
  Đưa u vào Hàng đợi, tô Xanh (0)<br>
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;if (color[v] == color[u]) → FALSE;<br>
  }<br>
  Trả về TRUE;`,
- "Tarjan": `Khởi tạo num, low = -1, stack rỗng  <br>
+        "Tarjan": `Khởi tạo num, low = -1, stack rỗng  <br>
  Duyệt i: nếu chưa thăm → Tarjan(i)  <br>
  Tarjan(u):  <br>
  &nbsp;&nbsp;&nbsp;&nbsp;Gán num[u] = low[u] = ++index, đẩy vào stack   <br>
@@ -66,13 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;if (v trong stack) cập nhật low[u]  <br>
  &nbsp;&nbsp;&nbsp;&nbsp;if (num[u] == low[u]) → pop stack tạo SCC  <br>
  `,
- "Circled":
+        "Circled":
  `**Khởi tạo:**<br>
- &nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu tất cả đỉnh là chưa thăm (visited[u] = false)<br>
- &nbsp;&nbsp;&nbsp;&nbsp;Tạo recStack để theo dõi đỉnh trong ngăn xếp đệ quy<br>
- 
- **Kiểm tra chu trình:**<br>
- &nbsp;&nbsp;&nbsp;&nbsp;for mỗi đỉnh u chưa thăm:<br>
+ &nbspo: &nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu tất cả đỉnh là chưa thăm (visited[u] = false)<br>ếp &nbsp;&nbsp;&nbsp;&nbsp;Tạo recStack để theo dõi đỉnh trong ngăn xếp đệ quy<br>đệ  t **Kiểm tra chu trình:**<br>;for mỗi đỉnh u chưa thăm:<br>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if DFS(u) trả về true then<br>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kết luận: "Có chu trình"<br>
  
@@ -88,7 +84,10 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;Nếu không có chu trình, trả về "Không chứa chu trình"<br>
  
  `,
- "topoSort":
+        "topoSort":
+ `Khởi tạo adjList,
+ `,
+        "topoSort":
  `Khởi tạo adjList, inDegree<br>
  for mỗi đỉnh u trong nodes:<br>
  &nbsp;&nbsp;&nbsp;&nbsp;adjList[u] = [], inDegree[u] = 0<br>
@@ -115,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
  else:<br>
  &nbsp;&nbsp;return result<br>`,
  
- "bellmanFord":
+        "bellmanFord":
  `Khởi tạo khoảng cách dist với tất cả các đỉnh:<br>
  &nbsp;&nbsp;&nbsp; i từ 0 đến V-1: dist[i] = Infinity<br>
  Đặt dist[src] = 0<br>
@@ -130,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
  
  Kết luận:<br>
  Nếu không có chu trình âm, trả về dist (mảng khoảng cách ngắn nhất).<br>`,
- "ranked":
+        "ranked":
  `&nbsp;&nbsp;Khởi tạo d[u] = bậc vào của u <br>
  &nbsp;&nbsp;S[0] = tập các đỉnh có d[u] = 0<br>
  &nbsp;&nbsp;k = 0<br>
@@ -143,7 +142,32 @@ document.addEventListener("DOMContentLoaded", function () {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nếu d[v] == 0:<br>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;đưa v vào S[k+1]<br>
  &nbsp;&nbsp;&nbsp;&nbsp;k++<br></br>`,
-     };
+        "kruskal":
+ `Khởi tạo:<br>
+&nbsp;&nbsp;&nbsp;T = ∅ // Cây khung nhỏ nhất ban đầu rỗng <br>
+&nbsp;&nbsp;&nbsp;Sắp xếp tất cả các cung (u, v) theo trọng số tăng dần<br>
+&nbsp;&nbsp;&nbsp;Mỗi đỉnh ban đầu là một tập riêng biệt (makeSet(n))<br>
+<br>
+&nbsp;&nbsp;&nbsp;Lặp qua từng cung (u, v) theo thứ tự đã sắp xếp:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nếu findSet(u) ≠ findSet(v): // Nếu u và v thuộc hai tập hợp khác nhau<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thêm cung (u, v) vào T<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hợp nhất hai tập chứa u và v (unionSet(u, v))<br>
+&nbsp;&nbsp;&nbsp;Nếu số cung trong T đạt n - 1: // Nếu đủ n - 1 cạnh thì dừng<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dừng vòng lặp<br>
+&nbsp;&nbsp;&nbsp;Trả về T // Cây khung nhỏ nhất`,
+ "prim":
+ ` Khởi tạo:<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tất cả các đỉnh đều chưa đánh dấu<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Với mọi u != s, 𝜋[u] = oo<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;𝜋[s] = 0<br>
+&nbsp;&nbsp;Lặp i từ 1 đến n - 1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tìm u chưa đánh dấu có 𝜋[u] nhỏ nhất.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đánh dấu u<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xét các đỉnh kề v của u, nếu v chưa đánh dấu và (𝜋[u] + trọng số cung (u,v) < 𝜋[v]) thì cập nhật:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;𝜋[v] = trọng số cung (u, v)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u`,
+ 
+};
  
      selectElement.addEventListener("change", function () {
          const selectedAlgorithm = this.value;

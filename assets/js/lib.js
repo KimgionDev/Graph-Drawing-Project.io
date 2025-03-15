@@ -107,7 +107,7 @@ document.getElementById("traversalType").addEventListener("change", function () 
         directedRadio.checked = true;
         directedRadio.parentElement.style.opacity = "1";
         createGraphButton.click();
-    } else if (selectedAlgorithm === "kruskal") {
+    } else if (selectedAlgorithm === "kruskal" || selectedAlgorithm === "prim") {
         directedRadio.disabled = true;
         directedRadio.parentElement.style.opacity = "0.75";
         undirectedRadio.checked = true;
@@ -162,6 +162,8 @@ async function performTraversal() {
         await performDFSRecursionFull();
     } else if (traversalType === "kruskal"){
         await Kruskal();
+    } else if (traversalType === "prim"){
+        await Prim();
     }
     toggleInputs(false); // Mở lại input sau khi chạy xong
 }
@@ -174,7 +176,7 @@ function toggleInputs(disable) {
     if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "bellmanFord") {
         directedRadio.disabled = disable; 
     }
-    else if (traversalType === "kruskal" || traversalType === "bipartite"){
+    else if (traversalType === "kruskal" || traversalType === "bipartite" || traversalType === "prim") {
         undirectedRadio.disabled = disable;
     }
     else {
@@ -214,7 +216,7 @@ document.getElementById('speedSlider').addEventListener('input', function() {
     delay = parseInt(this.value); 
 });
 
-// BFSSSSSSSSSSSSS
+// BFSSSSSSSSSSSSSSS
 async function performBFS(startNode) {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
@@ -1595,6 +1597,132 @@ function isConnected(nodes) {
     }
 
     return roots.size === 1;
+}
+
+async function Prim() {
+    const visitedOrder = document.getElementById("visitedOrder");
+    const inputText = document.getElementById("graphInput").value.trim();
+    const lines = inputText.split("\n");
+    let edges = [];
+    let allNodes = new Set();
+    let graph = {};
+
+    for (let line of lines) {
+        if(isStopped) return;
+        const [u, v, w] = line.split(" ").map(Number);
+        if (w == null) {
+            visitedOrder.innerHTML = "Vui lòng nhập trọng số.";
+            toggleInputs(false);
+            return;
+        }
+        if (w < 0) {
+            visitedOrder.innerHTML = "Trọng số là số không âm.";
+            toggleInputs(false);
+            return;
+        }
+        edges.push({ u, v, w });
+        if (!graph[u]) graph[u] = [];
+        if (!graph[v]) graph[v] = [];
+        graph[u].push({ node: v, weight: w });
+        graph[v].push({ node: u, weight: w });
+        allNodes.add(u);
+        allNodes.add(v);
+    }
+
+    const components = getConnectedComponents(allNodes, edges);
+    let mstResults = [];
+
+    for (let component of components) {
+        if(isStopped) return;
+        let pi = {};
+        let p = {};
+        let mark = {};
+        let mstEdges = [];
+        let totalWeight = 0;
+
+        component.forEach(node => {
+            pi[node] = Infinity;
+            p[node] = -1;
+            mark[node] = false;
+        });
+
+        const startNode = component[0];
+        pi[startNode] = 0;
+
+        for (let i = 0; i < component.length - 1; i++) {
+            if(isStopped) return;
+            let minDist = Infinity;
+            let u = null;
+
+            //Cập nhật như SGK lmaoooo
+            for (let node of component) {
+                if (!mark[node] && pi[node] < minDist) {
+                    minDist = pi[node];
+                    u = node;
+                }
+            }
+
+            if (u === null) break;
+            mark[u] = true;
+            cy.$(`#${u}`).style('background-color', colors.green);
+
+            for (let { node: v, weight: w } of graph[u]) {
+                if (!mark[v] && w < pi[v]) {
+                    pi[v] = w;
+                    p[v] = u;
+                }
+            }
+
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+
+        let seenEdges = new Set();
+
+        for (let v of component) {
+            if(isStopped) return;
+            if (p[v] !== -1) {
+                mstEdges.push({ u: p[v], v: v, w: pi[v] });
+                totalWeight += pi[v];
+
+                let minWeight = Infinity;
+                let minEdge = null;
+
+                cy.edges().forEach(edge => {
+                    let edgeSource = edge.source().id();
+                    let edgeTarget = edge.target().id();
+                    let weight = edge.data('weight');
+
+                    if ((edgeSource === p[v].toString() && edgeTarget === v.toString()) || 
+                        (edgeSource === v.toString() && edgeTarget === p[v].toString())) {
+                        
+                        if (weight < minWeight && !seenEdges.has(edge.id())) {
+                            minWeight = weight;
+                            minEdge = edge;
+                        }
+                    }
+                });
+                //tô màu cung có trọng số nhỏ nhất chuẩn SGKKKK
+                if (minEdge) {
+                    minEdge.style("line-color", colors.red);
+                    seenEdges.add(minEdge.id());
+                }
+            }
+        }
+
+        component.forEach(node => {
+            if (!mark[node]) {
+                cy.$(`#${node}`).style('background-color', colors.green);
+            }
+        });
+
+        mstResults.push(totalWeight);
+    }
+
+    mstResults.forEach((weight, index) => {
+        visitedOrder.innerHTML += `Trọng lượng cây khung ${index + 1}: ${weight}<br>`;
+    });
+
+    toggleInputs(false);
 }
 
 
