@@ -774,7 +774,7 @@ p {
 }
 
 .theme-toggle-container i {
-  margin-right: 8px; 
+  margin-right: 9px; 
   font-size: 1.5rem;
   transition: 0.3s ease-in-out; 
 }
@@ -784,7 +784,7 @@ p {
 }
 
 .darkLight i.moon {
-  color: gray; 
+  color: black; 
   display: none; 
 }
 
