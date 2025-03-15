@@ -262,7 +262,7 @@ async function bfs(graph, start) {
 
             cy.$(`#${vertex}`).style('background-color', colors.red);
 
-            document.getElementById('visitedOrder').innerText = result.join(' - ');
+            document.getElementById('visitedOrder').innerText = result.join('  ');
 
             const neighborsToAdd = [];
             if (graph[vertex]) {
@@ -340,7 +340,7 @@ async function dfs(graph, start) {
             cy.$(`#${vertex}`).style('background-color', colors.blue);
 
             // Cập nhật thứ tự đã duyệt
-            document.getElementById('visitedOrder').innerText = result.join(' - ');
+            document.getElementById('visitedOrder').innerText = result.join('  ');
 
             // Thêm các đỉnh kề chưa duyệt vào ngăn xếp
             const neighborsToAdd = [];
@@ -412,7 +412,7 @@ function dfsRecursion(graph, vertex, visited = new Set(), delay, callback) {
         cy.$(`#${vertex}`).style('background-color', colors.green);
         let visitedOrder = document.getElementById('visitedOrder').innerText;
         if (visitedOrder.length > 0) {
-            visitedOrder += ' - ';
+            visitedOrder += '  ';
         }
         visitedOrder += vertex;
         document.getElementById('visitedOrder').innerText = visitedOrder;
