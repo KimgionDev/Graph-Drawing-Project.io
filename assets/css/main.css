@@ -751,4 +751,7 @@ p {
   padding: 5px;
 }
 
+.level:active {
+  background: #4CAF50;
+}
 

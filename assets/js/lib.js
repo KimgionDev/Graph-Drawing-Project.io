@@ -189,7 +189,6 @@ function toggleInputs(disable) {
         document.getElementById("startNodeInput").disabled = true;
     }
     document.getElementById("endNodeInput").disabled = disable;
-    document.getElementById("speedSlider").disabled = disable;
 }
 
 function resetTraversal() {
@@ -208,6 +207,12 @@ function enableInputs() {
     toggleInputs(false);
     console.log("Traversal completed successfully.");
 }
+
+// Cap nhat delay
+let delay = parseInt(document.getElementById('speedSlider').value); 
+document.getElementById('speedSlider').addEventListener('input', function() {
+    delay = parseInt(this.value); 
+});
 
 // BFSSSSSSSSSSSSS
 async function performBFS(startNode) {
@@ -242,7 +247,7 @@ async function bfs(graph, start) {
     const visited = new Set();
     const result = []; // Mảng lưu thứ tự duyệt
     const visitedEdges = new Set();
-    const delay = parseInt(document.getElementById('speedSlider').value);
+    // const delay = parseInt(document.getElementById('speedSlider').value);
 
     async function visitNext() {
         if (queue.length === 0) {
@@ -318,7 +323,7 @@ async function dfs(graph, start) {
     const visited = new Set();
     const result = [];
     const visitedEdges = new Set();
-    const delay = parseInt(document.getElementById('speedSlider').value);
+    // const delay = parseInt(document.getElementById('speedSlider').value);
 
     async function visitNext() {
         if (stack.length === 0) {
@@ -371,6 +376,7 @@ async function dfs(graph, start) {
 function performDFSRecursion(startNode) {
     const inputText = document.getElementById('graphInput').value.trim();
     const lines = inputText.split('\n');
+    let delay = parseInt(document.getElementById('speedSlider').value); 
     let graph = {};
 
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
@@ -391,7 +397,7 @@ function performDFSRecursion(startNode) {
             }
         }
     });
-    dfsRecursion(graph, startNode, new Set(), parseInt(document.getElementById('speedSlider').value), () => {
+    dfsRecursion(graph, startNode, new Set(), delay, () => {
         toggleInputs(false); // Enable inputs khi DFS đệ quy xong
     });
 }
@@ -446,7 +452,7 @@ async function mooreDijkstra() {
     const startNode = parseInt(document.getElementById("startNodeInput").value);
     const endNode = parseInt(document.getElementById("endNodeInput").value);
     const visitedOrder = document.getElementById("visitedOrder");
-    const speedSlider = document.getElementById("speedSlider");
+    // const speedSlider = document.getElementById("speedSlider");
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
 
     if (isNaN(startNode) || isNaN(endNode)) {
@@ -533,11 +539,11 @@ async function mooreDijkstra() {
             }
         }
 
-        await new Promise(resolve => setTimeout(resolve, speedSlider.value));
+        await new Promise(resolve => setTimeout(resolve, delay));
     }
 
     if (found) {
-        await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
+        await highlightShortestPathEdges(prev, startNode, endNode, delay);
 
         let path = [];
         for (let at = endNode; at !== null; at = prev[at]) {
@@ -648,7 +654,7 @@ async function reconstructPath(prev, startNode, endNode) {
                 }
             });
         }
-        await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
+        await new Promise(resolve => setTimeout(resolve, delay));
     }
 }
 
@@ -694,7 +700,7 @@ async function bfsCheckBipartite(graph) {
     const queue = [];
     const visited = new Set();
     const group = new Map();
-    const delay = parseInt(document.getElementById('speedSlider').value);
+    // const delay = parseInt(document.getElementById('speedSlider').value);
     const startNode = parseInt(document.getElementById('startNodeInput').value);
 
 
@@ -799,7 +805,7 @@ async function tarjan(graph) {
     ];
     
     
-    const delay = parseInt(document.getElementById('speedSlider').value);
+    // const delay = parseInt(document.getElementById('speedSlider').value);
     async function strongConnect(node) {
         indexMap[node] = index;
         lowLink[node] = index;
@@ -861,7 +867,7 @@ async function checkCycle() {
 
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
     const startNode = document.getElementById('startNodeInput').value.trim();
-    const delay = parseInt(document.getElementById('speedSlider').value);
+    // const delay = parseInt(document.getElementById('speedSlider').value);
 
     if (isStopped) return;
 
@@ -1014,7 +1020,7 @@ async function performTopoSort() {
         cyNode.style("background-color", colors.bettergreen);
         document.getElementById("visitedOrder").innerText += " " + node;
 
-        await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
+        await new Promise(resolve => setTimeout(resolve, delay));
     }
 
     if (result.length !== nodes.length && !isStopped) {
@@ -1036,7 +1042,7 @@ async function bellmanFord() {
     const startNode = parseInt(document.getElementById("startNodeInput").value);
     const endNode = parseInt(document.getElementById("endNodeInput").value);
     const visitedOrder = document.getElementById("visitedOrder");
-    const speedSlider = document.getElementById("speedSlider");
+    // const speedSlider = document.getElementById("speedSlider");
     const graphType = document.querySelector('input[name="graphType"]:checked').value;
 
     if (isNaN(startNode) || isNaN(endNode)) {
@@ -1099,7 +1105,7 @@ async function bellmanFord() {
                         updated = true;
                         if (u !== startNode && u !== endNode) {
                             cy.getElementById(u.toString()).style("background-color", colors.red);
-                            await new Promise(resolve => setTimeout(resolve, speedSlider.value)); // Thêm delay để tô màu từ từ
+                            await new Promise(resolve => setTimeout(resolve, delay)); // Thêm delay để tô màu từ từ
                         }
                     }
                     if (isStopped) break;
@@ -1132,7 +1138,7 @@ async function bellmanFord() {
             visitedOrder.innerHTML = "Không có đường đi.";
         } else {
             cy.getElementById(endNode.toString()).style("background-color", colors.green);
-            await highlightShortestPathEdges(prev, startNode, endNode, speedSlider.value);
+            await highlightShortestPathEdges(prev, startNode, endNode, delay);
             let path = [];
             for (let at = endNode; at !== null; at = prev[at]) {
                 path.push(at);
@@ -1217,7 +1223,7 @@ async function performRanked() {
             result.push({ node: u, rank: r[u] });
             document.getElementById("visitedOrder").innerText = result.map(item => `${item.node}[${item.rank}]`).join(", ");
 
-            await new Promise(resolve => setTimeout(resolve, document.getElementById("speedSlider").value));
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
 
         copyList(S1, S2);
@@ -1243,7 +1249,7 @@ async function performRanked() {
 async function performBFSFull() {
     let queue = [];
     let visited = new Set();
-    let delay = document.getElementById("speedSlider").value; 
+    // let delay = document.getElementById("speedSlider").value; 
     let nodes = cy.nodes().map(n => n.id()).sort((a, b) => a - b); 
     let startNode = document.getElementById("startNodeInput").value;
 
@@ -1299,7 +1305,7 @@ async function performBFSFull() {
 async function performDFSFull() {
     let stack = [];
     let visited = new Set();
-    let delay = document.getElementById("speedSlider").value; 
+    // let delay = document.getElementById("speedSlider").value; 
     let nodes = cy.nodes().map(n => n.id()).sort((a, b) => a - b); 
     let startNode = document.getElementById("startNodeInput").value;
 
@@ -1354,7 +1360,7 @@ async function performDFSFull() {
 
 async function performDFSRecursionFull() {
     let visited = new Set();
-    let delay = document.getElementById("speedSlider").value;
+    // let delay = document.getElementById("speedSlider").value;
     let nodes = cy.nodes().map(n => n.id()).sort((a, b) => a - b);
     let startNode = document.getElementById("startNodeInput").value;
 
@@ -1407,7 +1413,7 @@ async function performDFSRecursionFull() {
 // Kruskalllllllllllll
 async function Kruskal() {
     const visitedOrder = document.getElementById("visitedOrder");
-    const delay = document.getElementById("speedSlider").value;
+    // const delay = document.getElementById("speedSlider").value;
     // const graphType = document.querySelector('input[name="graphType"]:checked').value;
     const inputText = document.getElementById("graphInput").value.trim();
     const lines = inputText.split("\n");
