@@ -71,10 +71,24 @@
         <div id="btn__input_graph" class="d-flex justify-content-center">
           <button onclick="generateGraph()" type="button" class="btn-func btn" id="creatGraph">Tạo đồ thị</button>
         </div>
-        <!-- Node Size -->
-        <div class="mydict mt-3">
-          <label id="nodeRad" for="nodeRadius">Node Size</label>
-          <input type="number" id="nodeRadius" value="17" min="10" max="50" step="1" oninput="updateGraphAttributes()">
+        <!-- Kiểu cung và Node Size -->
+        <div class="d-flex align-items-center justify-content-between">
+          <!-- Kiểu cung -->
+          <div class="edgeStyle">
+            <label style="color:white" for="edgeStyle">Kiểu cung</label>
+            <select id="edgeStyle" class="form-select" aria-label="Chọn kiểu cung">
+              <option value="straight">Thẳng</option>           
+              <option value="dotted">Chấm</option>
+              <option value="dashed">Gạch</option>
+            </select>
+          </div>
+
+          <!-- Node Size -->
+          <div class="nodeSize">
+            <label style="color:white" for="nodeRadius">Node Size</label>
+            <input type="number" id="nodeRadius" value="17" min="10" max="50" step="1"
+              oninput="updateGraphAttributes()">
+          </div>
         </div>
 
       </div>

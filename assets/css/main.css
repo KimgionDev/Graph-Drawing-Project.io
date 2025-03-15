@@ -724,16 +724,34 @@ p {
   }
 }
 
-#nodeRadius {
-  width: 60px;        /* Thay đổi chiều rộng của ô input */
-  height: 30px;       /* Thay đổi chiều cao của ô input */
-  border: 1px solid #fff; /* Đổi màu viền cho ô input */
-  font-size: 14px;     /* Kích thước chữ */
-  padding: 5px;       /* Thêm khoảng cách giữa chữ và viền */
-  border-radius: 5px; /* Thêm góc bo tròn cho ô input */
+.d-flex #edgeStyle{
+  display: flex;
+  align-items: center;  
+  justify-content: space-between; 
 }
 
-#nodeRad{
-  color: #fff;        /* Màu chữ trắng */
-  margin-right: 10px;
+.edgeStyle,
+.nodeSize {
+  margin-right: 15px; 
 }
+#nodeRadius {
+  font-size: 14px;  
+  height: 30px; 
+  width: 50px;  
+  padding: 5px;  
+  text-align: center; 
+}
+
+#edgeStyle {
+  font-size: 14px; 
+  padding: 5px 10px;  
+  height: 30px;  
+  width: 90px;  
+}
+
+#edgeStyle option {
+  font-size: 14px;  
+  padding: 5px; 
+}
+
+

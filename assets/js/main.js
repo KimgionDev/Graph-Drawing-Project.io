@@ -76,6 +76,7 @@ function generateGraph() {
     let edgeOccurrences = {}; 
     let nodePositions = {}; 
     const visitedOrder = document.getElementById("visitedOrder");
+    const edgeStyle = document.getElementById("edgeStyle").value;
     // Nếu không có cung nào được nhập
     if (lines.length === 0 && nodeCount > 0) {
         // Nếu có đỉnh nhưng không có cung, ta tạo đồ thị với chỉ 1 đỉnh.
@@ -115,7 +116,7 @@ function generateGraph() {
                     'line-color': '#000',
                     'target-arrow-color': '#000',
                     'width': 2,
-                    'line-style': 'bezier', 
+                    'line-style': edgeStyle, 
                     'label': weight ? String(weight) : '',
                     'text-background-color': '#fff',  // Background color for the label to make it stand out
                     'text-background-opacity': 1,
@@ -259,3 +260,27 @@ function updateGraphAttributes() {
 }
 
 document.getElementById('nodeRadius').addEventListener('input', updateGraphAttributes);
+
+function updateEdgeStyle() {
+    const edgeStyle = document.getElementById("edgeStyle").value;
+    
+    cy.edges().forEach(edge => {
+      switch(edgeStyle) {
+        case 'straight':
+          edge.style('curve-style', 'bezier');  // thẳng
+          edge.style('line-style', 'solid');   
+          break;
+        case 'dotted':
+          edge.style('line-style', 'dotted');  // Chấm
+          edge.style('curve-style', 'bezier'); 
+          break;
+        case 'dashed':
+          edge.style('line-style', 'dashed');  // Gạch
+          edge.style('curve-style', 'bezier'); 
+        break;
+      }
+    });
+}
+  
+document.getElementById("edgeStyle").addEventListener("change", updateEdgeStyle);
+  
