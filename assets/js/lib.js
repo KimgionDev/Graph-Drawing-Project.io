@@ -1421,12 +1421,11 @@ async function performDFSRecursionFull() {
 // Kruskalllllllllllll
 async function Kruskal() {
     const visitedOrder = document.getElementById("visitedOrder");
-    // const delay = document.getElementById("speedSlider").value;
-    // const graphType = document.querySelector('input[name="graphType"]:checked').value;
     const inputText = document.getElementById("graphInput").value.trim();
     const lines = inputText.split("\n");
     let edges = [];
     let allNodes = new Set();
+
     for (let line of lines) {
         const [u, v, w] = line.split(" ").map(Number);
         if (w == null) {
@@ -1444,71 +1443,128 @@ async function Kruskal() {
         allNodes.add(v);
     }
 
-    if (!isConnected(allNodes)) {
-        visitedOrder.innerHTML = "Đồ thị không liên thông.";
-        toggleInputs(false);
-        return;
-    }
+    const components = getConnectedComponents(allNodes, edges);
+    let mstResults = [];
+    
+    for (let component of components) {
+        let mstEdges = [];
+        let totalWeight = 0;
+        
+        let parent = {};
+        let rank = {};
 
-    const mstEdges = [];
-    let totalWeight = 0;
-    edges.sort((a, b) => a.w - b.w); 
-    let parent = {};
-    let rank = {};
-
-    for (let node of allNodes) {
-        parent[node] = node;
-        rank[node] = 0;
-    }
-
-    function find(u) {
-        if (parent[u] !== u) {
-            parent[u] = find(parent[u]);
+        for (let node of component) {
+            parent[node] = node;
+            rank[node] = 0;
         }
-        return parent[u];
-    }
 
-    function union(u, v) {
-        const rootU = find(u);
-        const rootV = find(v);
+        function find(u) {
+            if (parent[u] !== u) {
+                parent[u] = find(parent[u]);
+            }
+            return parent[u];
+        }
 
-        if (rootU !== rootV) {
-            if (rank[rootU] > rank[rootV]) {
-                parent[rootV] = rootU;
-            } else if (rank[rootU] < rank[rootV]) {
-                parent[rootU] = rootV;
-            } else {
-                parent[rootV] = rootU;
-                rank[rootU]++;
+        function union(u, v) {
+            const rootU = find(u);
+            const rootV = find(v);
+
+            if (rootU !== rootV) {
+                if (rank[rootU] > rank[rootV]) {
+                    parent[rootV] = rootU;
+                } else if (rank[rootU] < rank[rootV]) {
+                    parent[rootU] = rootV;
+                } else {
+                    parent[rootV] = rootU;
+                    rank[rootU]++;
+                }
             }
         }
-    }
 
-    for (let { u, v, w } of edges) {
-        if (isStopped) {
-            resetTraversal();
-            return;
+        edges.sort((a, b) => a.w - b.w);
+
+        let seenEdges = new Set();
+
+        for (let { u, v, w } of edges) {
+            if (isStopped) {
+                resetTraversal();
+                return;
+            }
+
+            if (component.includes(u) && component.includes(v) && find(u) !== find(v)) {
+                mstEdges.push({ u, v, w });
+                totalWeight += w;
+                union(u, v);
+
+                cy.nodes(`#${u}`).style("background-color", colors.green); 
+                cy.nodes(`#${v}`).style("background-color", colors.green); 
+                let minWeight = Infinity;
+                let minEdge = null;
+
+                cy.edges().forEach(edge => {
+                    let edgeSource = edge.source().id();
+                    let edgeTarget = edge.target().id();
+                    let weight = edge.data('weight');
+
+                    if ((edgeSource === u.toString() && edgeTarget === v.toString()) || 
+                        (edgeSource === v.toString() && edgeTarget === u.toString())) {
+                        
+                        if (weight < minWeight && !seenEdges.has(edge.id())) {
+                            minWeight = weight;
+                            minEdge = edge;
+                        }
+                    }
+                });
+
+                if (minEdge) {
+                    minEdge.style("line-color", colors.red); 
+                    seenEdges.add(minEdge.id()); 
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
         }
-        if (find(u) !== find(v)) {
-            mstEdges.push({ u, v, w });
-            totalWeight += w;
-            union(u, v);
 
-            cy.$(`#${u}`).style('background-color', colors.green);
-            cy.$(`#${v}`).style('background-color', colors.green);
-            cy.edges(`[source="${u}"][target="${v}"]`).style('line-color', colors.green);
-
-            await new Promise(resolve => setTimeout(resolve, delay));
-        }
+        mstResults.push(totalWeight); 
     }
 
-    visitedOrder.innerHTML = `Trọng lượng cây: ${totalWeight}`;
-
-    for (let { u, v } of mstEdges) {
-        cy.edges(`[source="${u}"][target="${v}"]`).style('line-color', colors.red);
-    }
+    mstResults.forEach((weight, index) => {
+        visitedOrder.innerHTML += `Trọng lượng cây khung ${index + 1}: ${weight}<br>`;
+    });
 
     toggleInputs(false);
+}
+
+function getConnectedComponents(nodes, edges) {
+    const visited = new Set();
+    const components = [];
+    
+    const adjList = {};
+    nodes.forEach(node => adjList[node] = []);
+    edges.forEach(({ u, v }) => {
+        adjList[u].push(v);
+        adjList[v].push(u);
+    });
+
+    function dfs(node, component) {
+        visited.add(node);
+        component.push(node);
+        adjList[node].forEach(neighbor => {
+            if (!visited.has(neighbor)) {
+                dfs(neighbor, component);
+            }
+        });
+    }
+
+    nodes.forEach(node => {
+        if (!visited.has(node)) {
+            let component = [];
+            dfs(node, component);
+            components.push(component);
+        }
+    });
+
+    return components;
 }
 
 function isConnected(nodes) {
@@ -1540,4 +1596,5 @@ function isConnected(nodes) {
 
     return roots.size === 1;
 }
+
 

@@ -447,7 +447,7 @@ textarea#graphInput:focus {
 .slider {
   /* slider */
   --slider-width: 100%;
-  --slider-height: 6px;
+  --slider-height: 11px;
   --slider-bg: var(--fifth-color);
   --slider-border-radius: 999px;
   /* level */
