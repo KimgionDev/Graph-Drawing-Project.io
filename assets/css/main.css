@@ -619,6 +619,7 @@ p {
 }
 
 .edgeStyle select {
+  border: none;
   border-left: 2px solid var(--border-color);
   border-radius: 0px;
   width: 35%;
@@ -626,8 +627,10 @@ p {
 }
 
 .edgeStyle select:focus{
+  border: none;
   border-left: 2px solid var(--border-color); 
 }
+
 select option {
   font-size: 0.9rem;
   max-width: fit-content;
