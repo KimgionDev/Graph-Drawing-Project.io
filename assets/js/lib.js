@@ -1492,35 +1492,34 @@ async function Kruskal() {
                 resetTraversal();
                 return;
             }
-
             if (component.includes(u) && component.includes(v) && find(u) !== find(v)) {
                 mstEdges.push({ u, v, w });
                 totalWeight += w;
                 union(u, v);
-
-                cy.nodes(`#${u}`).style("background-color", colors.green); 
-                cy.nodes(`#${v}`).style("background-color", colors.green); 
-                let minWeight = Infinity;
-                let minEdge = null;
-
+                cy.nodes(`#${u}`).style("background-color", colors.green);
+                cy.nodes(`#${v}`).style("background-color", colors.green);
+                
+                // Find the specific edge with the exact weight w
+                let matchedEdge = null;
+                
                 cy.edges().forEach(edge => {
                     let edgeSource = edge.source().id();
                     let edgeTarget = edge.target().id();
                     let weight = edge.data('weight');
-
+                    
                     if ((edgeSource === u.toString() && edgeTarget === v.toString()) || 
                         (edgeSource === v.toString() && edgeTarget === u.toString())) {
                         
-                        if (weight < minWeight && !seenEdges.has(edge.id())) {
-                            minWeight = weight;
-                            minEdge = edge;
+                        // Match the exact weight that was used in the MST
+                        if (weight == w && !seenEdges.has(edge.id())) {
+                            matchedEdge = edge;
                         }
                     }
                 });
-
-                if (minEdge) {
-                    minEdge.style("line-color", colors.red); 
-                    seenEdges.add(minEdge.id()); 
+                
+                if (matchedEdge) {
+                    matchedEdge.style("line-color", colors.red);
+                    seenEdges.add(matchedEdge.id());
                 }
                 
                 await new Promise(resolve => setTimeout(resolve, delay));
@@ -1679,32 +1678,29 @@ async function Prim() {
         let seenEdges = new Set();
 
         for (let v of component) {
-            if(isStopped) return;
+            if (isStopped) return;
             if (p[v] !== -1) {
-                mstEdges.push({ u: p[v], v: v, w: pi[v] });
-                totalWeight += pi[v];
-
-                let minWeight = Infinity;
-                let minEdge = null;
-
+                const edgeWeight = pi[v]; // This is the exact weight used in the MST
+                mstEdges.push({ u: p[v], v: v, w: edgeWeight });
+                totalWeight += edgeWeight;
+        
+                let matchedEdge = null;
+        
                 cy.edges().forEach(edge => {
                     let edgeSource = edge.source().id();
                     let edgeTarget = edge.target().id();
                     let weight = edge.data('weight');
-
-                    if ((edgeSource === p[v].toString() && edgeTarget === v.toString()) || 
-                        (edgeSource === v.toString() && edgeTarget === p[v].toString())) {
-                        
-                        if (weight < minWeight && !seenEdges.has(edge.id())) {
-                            minWeight = weight;
-                            minEdge = edge;
-                        }
+        
+                    if (((edgeSource === p[v].toString() && edgeTarget === v.toString()) || 
+                        (edgeSource === v.toString() && edgeTarget === p[v].toString())) && 
+                        weight == edgeWeight) { // Match the exact weight
+                        matchedEdge = edge;
                     }
                 });
-                //tô màu cung có trọng số nhỏ nhất chuẩn SGKKKK
-                if (minEdge) {
-                    minEdge.style("line-color", colors.red);
-                    seenEdges.add(minEdge.id());
+        
+                if (matchedEdge) {
+                    matchedEdge.style("line-color", colors.red);
+                    seenEdges.add(matchedEdge.id());
                 }
             }
         }
