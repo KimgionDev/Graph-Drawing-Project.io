@@ -1294,7 +1294,7 @@ async function performBFSFull() {
                     .map(n => n.id());
             }
 
-            neighbors.sort((a, b) => b - a); 
+            neighbors.sort((a, b) => a - b); 
             queue.push(...neighbors);
         }
     }
@@ -1350,7 +1350,7 @@ async function performDFSFull() {
                     .map(n => n.id());
             }
 
-            neighbors.sort((a, b) => b - a); 
+            neighbors.sort((a, b) => a - b); 
             stack.push(...neighbors);
         }
     }
