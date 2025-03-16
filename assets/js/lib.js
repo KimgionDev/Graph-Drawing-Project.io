@@ -94,7 +94,7 @@ document.getElementById("traversalType").addEventListener("change", function () 
         undirectedRadio.parentElement.style.opacity = "1";
         updateGraphToUndirected();
         createGraphButton.click();
-    } else if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked") {
+    } else if (selectedAlgorithm === "topoSort" || selectedAlgorithm === "ranked" || selectedAlgorithm === "Tarjan") {
         undirectedRadio.disabled = true;
         undirectedRadio.parentElement.style.opacity = "0.75";
         directedRadio.checked = true;
@@ -173,7 +173,7 @@ function toggleInputs(disable) {
     const graphTypeRadios = document.getElementsByName("graphType");
     const directedRadio = graphTypeRadios[0];
     const undirectedRadio = graphTypeRadios[1];
-    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "bellmanFord") {
+    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "bellmanFord" || traversalType === "Tarjan") {
         directedRadio.disabled = disable; 
     }
     else if (traversalType === "kruskal" || traversalType === "bipartite" || traversalType === "prim") {
@@ -187,7 +187,7 @@ function toggleInputs(disable) {
     document.getElementById("creatGraph").disabled = disable;
     document.getElementById("traversalType").disabled = disable;
     document.getElementById("startNodeInput").disabled = disable;
-    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "kruskal") {
+    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "kruskal" || traversalType === "Tarjan") {
         document.getElementById("startNodeInput").disabled = true;
     }
     document.getElementById("endNodeInput").disabled = disable;
