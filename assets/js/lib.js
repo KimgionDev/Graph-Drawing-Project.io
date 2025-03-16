@@ -187,7 +187,7 @@ function toggleInputs(disable) {
     document.getElementById("creatGraph").disabled = disable;
     document.getElementById("traversalType").disabled = disable;
     document.getElementById("startNodeInput").disabled = disable;
-    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "kruskal" || traversalType === "Tarjan") {
+    if (traversalType === "topoSort" || traversalType === "ranked" || traversalType === "kruskal" || traversalType === "Tarjan" || traversalType === "prim") {
         document.getElementById("startNodeInput").disabled = true;
     }
     document.getElementById("endNodeInput").disabled = disable;
