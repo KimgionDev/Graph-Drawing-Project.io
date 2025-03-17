@@ -68,12 +68,16 @@ function generateGraph() {
             data: {
                 id: '' + i,
                 label: '' + i
+            },
+            position: {
+                x: Math.random() * 1000,
+                y: Math.random() * 600
             }
         });
     }
 
     let edges = [];
-    let edgeOccurrences = {}; 
+    let edgeOccurrences = {};
     const visitedOrder = document.getElementById("visitedOrder");
     const edgeStyle = document.getElementById("edgeStyle").value;
     // Nếu không có cung nào được nhập
@@ -83,7 +87,7 @@ function generateGraph() {
     }
 
     lines.forEach(line => {
-        const edgeData = line.split(' ').map(str => parseFloat(str)); 
+        const edgeData = line.split(' ').map(str => parseFloat(str));
         if (edgeData.length >= 2) {
             const source = edgeData[0];
             const target = edgeData[1];
@@ -101,7 +105,7 @@ function generateGraph() {
             // Tính toán vị trí của các cung để tránh trùng lặp
             let offsetX = 0, offsetY = 0;
             if (edgeOccurrences[edgeKey] > 1) {
-                offsetX = (Math.random() - 0.5) * 50; 
+                offsetX = (Math.random() - 0.5) * 50;
                 offsetY = (Math.random() - 0.5) * 50;
             }
 
@@ -115,7 +119,7 @@ function generateGraph() {
                     'line-color': '#000',
                     'target-arrow-color': '#000',
                     'width': 2,
-                    'line-style': edgeStyle, 
+                    'line-style': edgeStyle,
                     'label': weight ? String(weight) : '',
                     'text-background-color': '#fff',  // Background color for the label to make it stand out
                     'text-background-opacity': 1,
@@ -143,8 +147,8 @@ function generateGraph() {
                     'background-color': '#000',
                     'label': 'data(label)',
                     'color': '#fff',  // Label color
-                    'font-size': '15px', 
-                    'text-valign': 'center', 
+                    'font-size': '15px',
+                    'text-valign': 'center',
                     'text-halign': 'center',
                     'width': nodeRadius * 2,  // Thiết lập kích thước node
                     'height': nodeRadius * 2   // Thiết lập kích thước node
@@ -159,12 +163,12 @@ function generateGraph() {
                     'label': 'data(weight)',
                     'target-arrow-shape': 'triangle',
                     'curve-style': 'bezier',
-                    'color': '#000', 
-                    'text-background-color': '#fff',  
+                    'color': '#000',
+                    'text-background-color': '#fff',
                     'text-background-opacity': 1,
                     'text-border-width': 1,
                     'text-border-color': '#000', // Border color for edge weight
-                    'font-size': '14px', 
+                    'font-size': '14px',
                     'text-margin-y': -12,
                 }
             }
@@ -214,7 +218,31 @@ function generateGraph() {
             node.position(pos);
         });
     });
+
+    adjustNodePositions();
 }
+
+function adjustNodePositions() {
+    const nodes = cy.nodes();
+    const edges = cy.edges();
+
+    edges.forEach(edge => {
+        const sourceNode = edge.source();
+        const targetNode = edge.target();
+
+        const sourcePos = sourceNode.position();
+        const targetPos = targetNode.position();
+
+        // Check if the edge is vertical or horizontal
+        if (sourcePos.x === targetPos.x || sourcePos.y === targetPos.y) {
+            targetNode.position({
+                x: targetPos.x + (Math.random() - 0.5) * 50,
+                y: targetPos.y + (Math.random() - 0.5) * 50
+            });
+        }
+    });
+}
+
 document.getElementById("graphInput").addEventListener("input", function (event) {
     let input = event.target.value;
 
@@ -279,4 +307,3 @@ document.querySelectorAll('input[name="graphType"]').forEach((radio) => {
       generateGraph();
     });
   });
-  
