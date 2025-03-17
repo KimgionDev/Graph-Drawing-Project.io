@@ -1440,16 +1440,16 @@ async function Kruskal() {
             toggleInputs(false);
             return;
         }
-        if (!isConnected(allNodes)) {
-            visitedOrder.innerHTML = "Đồ thị không liên thông.";
-            toggleInputs(false);
-            return;
-        }
+
         edges.push({ u, v, w });
         allNodes.add(u);
         allNodes.add(v);
     }
-
+    if (!isConnected(allNodes)) {
+        visitedOrder.innerHTML = "Đồ thị không liên thông.";
+        toggleInputs(false);
+        return;
+    }
     const components = getConnectedComponents(allNodes, edges);
     let mstResults = [];
     
@@ -1624,11 +1624,7 @@ async function Prim() {
             toggleInputs(false);
             return;
         }
-        if (!isConnected(allNodes)) {
-            visitedOrder.innerHTML = "Đồ thị không liên thông.";
-            toggleInputs(false);
-            return;
-        }
+
         edges.push({ u, v, w });
         if (!graph[u]) graph[u] = [];
         if (!graph[v]) graph[v] = [];
@@ -1637,7 +1633,11 @@ async function Prim() {
         allNodes.add(u);
         allNodes.add(v);
     }
-
+    if (!isConnected(allNodes)) {
+        visitedOrder.innerHTML = "Đồ thị không liên thông.";
+        toggleInputs(false);
+        return;
+    }
     const components = getConnectedComponents(allNodes, edges);
     let mstResults = [];
 
