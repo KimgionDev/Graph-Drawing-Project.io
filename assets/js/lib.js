@@ -1440,6 +1440,11 @@ async function Kruskal() {
             toggleInputs(false);
             return;
         }
+        if (!isConnected(allNodes)) {
+            visitedOrder.innerHTML = "Đồ thị không liên thông.";
+            toggleInputs(false);
+            return;
+        }
         edges.push({ u, v, w });
         allNodes.add(u);
         allNodes.add(v);
@@ -1616,6 +1621,11 @@ async function Prim() {
         }
         if (w < 0) {
             visitedOrder.innerHTML = "Trọng số là số không âm.";
+            toggleInputs(false);
+            return;
+        }
+        if (!isConnected(allNodes)) {
+            visitedOrder.innerHTML = "Đồ thị không liên thông.";
             toggleInputs(false);
             return;
         }
