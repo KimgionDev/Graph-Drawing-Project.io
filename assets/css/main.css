@@ -770,6 +770,7 @@ body.dark_theme_var {
 @media screen and (max-width:999px) {
   .all-content {
     flex-direction: column;
+    align-items: center;
   }
   #iptGraph{
     width: 80% !important;
