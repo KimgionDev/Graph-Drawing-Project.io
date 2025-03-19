@@ -60,7 +60,7 @@ Dự án này được phát triển như một bài tập nhóm cho **khóa h�
 
 ## 🛠 Chạy Kiểm Tra
 
-[![Run Test](https://img.shields.io/badge/Run%20Test-Live-blue?style=for-the-badge)](https://kimgion840.github.io/Graph-Drawing-Project.io/)
+[![Run Test](https://img.shields.io/badge/Run%20Test-Live-blue?style=for-the-badge)](https://kimgiondev.github.io/Graph-Drawing-Project.io/)
 
 
 ## 👨‍💻 Người Đóng Góp
@@ -139,7 +139,7 @@ To view and interact with the graph visualizations:
 
 ## 🛠 Run Test
 
-[![Run Test](https://img.shields.io/badge/Run%20Test-Live-blue?style=for-the-badge)](https://kimgion840.github.io/Graph-Drawing-Project.io/)
+[![Run Test](https://img.shields.io/badge/Run%20Test-Live-blue?style=for-the-badge)](https://kimgiondev.github.io/Graph-Drawing-Project.io/)
 
 ## 👨‍💻 Contributors
 
