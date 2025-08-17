@@ -236,8 +236,8 @@ function adjustNodePositions() {
         // Check if the edge is vertical or horizontal
         if (sourcePos.x === targetPos.x || sourcePos.y === targetPos.y) {
             targetNode.position({
-                x: targetPos.x + (Math.random() - 0.5) * 50,
-                y: targetPos.y + (Math.random() - 0.5) * 50
+                x: targetPos.x + (Math.random() - 1) * 100,
+                y: targetPos.y + (Math.random() - 1) * 100
             });
         }
     });
